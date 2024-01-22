@@ -1,0 +1,16 @@
+.NavBar {
+  width: 1280px;
+  height: 50px;
+  flex-shrink: 0;
+  background: #56478f;
+  flex: auto;
+}
+
+.NavBarItem {
+  color: #fff;
+  font-family: Lato;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
