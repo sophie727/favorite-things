@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import { CredentialResponse } from "@react-oauth/google";
+import { GoogleOAuthProvider, CredentialResponse } from "@react-oauth/google";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { get, post } from "../utilities";
@@ -9,6 +9,10 @@ import Home from "./pages/Home";
 import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
+import NavBar from "./NavBar";
+import Add from "./Add";
+
+const GOOGLE_CLIENT_ID = "480391270274-2g6n3lmsb18t38qcem0vco150buo8l3v.apps.googleusercontent.com";
 
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
@@ -46,15 +50,18 @@ const App = () => {
   // NOTE:
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          element={<Home handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />}
-          path="/"
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+        <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Home />} path="/" />
+            <Route element={<Add />} path="/add" />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </GoogleOAuthProvider>
+    </>
   );
 };
 

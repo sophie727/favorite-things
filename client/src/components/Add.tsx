@@ -1,10 +1,10 @@
 import React from "react";
 
-import "./Home.css";
+import "./Add.css";
 
 type Props = {};
-const Home = (props: Props) => {
+const Add = (props: Props) => {
   return <>Hello world!</>;
 };
 
-export default Home;
+export default Add;
