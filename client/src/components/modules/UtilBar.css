@@ -1,0 +1,38 @@
+.UtilBarButton {
+  border-radius: 10px;
+  background: #56478f;
+  width: 58px;
+  height: 27px;
+  flex-shrink: 0;
+
+  color: #fff;
+  text-align: center;
+  font-family: Lato;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.SearchBar {
+  width: 1025px;
+  height: 27px;
+  flex-shrink: 0;
+  color: #56478f;
+
+  font-family: Lato;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 10px;
+  background: rgba(86, 71, 143, 0.4);
+}
+
+.AddButton {
+  width: 27px;
+  height: 27px;
+  flex-shrink: 0;
+  border-radius: 30px;
+  background: #56478f;
+}
