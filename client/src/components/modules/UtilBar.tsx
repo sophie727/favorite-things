@@ -7,7 +7,7 @@ const UtilBar = (props: Props) => {
     console.log("Clicked Filters Button");
   };
   return (
-    <>
+    <div className="UtilBarContainer">
       <span>
         <button className="UtilBarButton" onClick={makeFiltersDropdown}>
           Filters
@@ -19,7 +19,7 @@ const UtilBar = (props: Props) => {
       <span>
         <button className="UtilBarButton AddButton">+</button>
       </span>
-    </>
+    </div>
   );
 };
 

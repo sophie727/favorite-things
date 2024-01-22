@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../../utilities.css";
 import "./NavBar.css";
-import { GoogleLogin, googleLogout, CredentialResponse } from "@react-oauth/google";
+import {
+  GoogleLogin,
+  googleLogout,
+  CredentialResponse,
+} from "@react-oauth/google";
 
 type Props = {
   userId?: string;
@@ -14,9 +18,9 @@ const NavBar = (props: Props) => {
 
   return (
     <nav className="NavBar">
-      <span className="NavBarItem">Menu button</span>
-      <span className="NavBarItem">My Favorite Things</span>
-      <span className="NavBarItem">
+      <div className="NavBarItem">Menu button</div>
+      <div className="NavBarItem">My Favorite Things</div>
+      <div className="NavBarGoogleAuth">
         {props.userId ? (
           <button
             onClick={() => {
@@ -27,9 +31,12 @@ const NavBar = (props: Props) => {
             Logout
           </button>
         ) : (
-          <GoogleLogin onSuccess={handleLogin} onError={() => console.log("Error Logging in")} />
+          <GoogleLogin
+            onSuccess={handleLogin}
+            onError={() => console.log("Error Logging in")}
+          />
         )}
-      </span>
+      </div>
     </nav>
   );
 };

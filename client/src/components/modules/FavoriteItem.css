@@ -6,6 +6,11 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .Tag {

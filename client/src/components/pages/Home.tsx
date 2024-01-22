@@ -43,7 +43,8 @@ const Home = (props: Props) => {
       picture: "big_bang_picture",
       stars: 5,
       name: "The Big Bang Theory",
-      description: "I mean, explosions are great, so naturally, big explosions are even greater.",
+      description:
+        "I mean, explosions are great, so naturally, big explosions are even greater.",
       links: ["https://www.space.com/25126-big-bang-theory.html"],
       tags: ["science"],
     },
@@ -60,7 +61,7 @@ const Home = (props: Props) => {
       </div>
       <div>
         {favoriteItems.map((item, index) => (
-          <div className="FavoriteItemContainer" key={index}>
+          <div className="HomeFavoriteItemContainer" key={index}>
             <FavoriteItem item={item} />
           </div>
         ))}

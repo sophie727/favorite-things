@@ -1,9 +1,9 @@
 .NavBar {
-  width: 1280px;
-  height: 50px;
+  width: 100%;
   flex-shrink: 0;
   background: #56478f;
   flex: auto;
+  padding: 5px;
 }
 
 .NavBarItem {
@@ -13,4 +13,12 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  padding: var(--s);
+  display: inline-flex;
+}
+
+.NavBarGoogleAuth {
+  display: inline-flex;
+  margin-right: 10px;
+  padding: var(--s);
 }

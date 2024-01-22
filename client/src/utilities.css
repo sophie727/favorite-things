@@ -15,10 +15,10 @@
 */
 
 /* TODO: REPLACE WITH YOUR OWN FONT! */
-@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 
 :root {
-  --primary: #396dff;
+  --primary: #56478f;
   --primary--dim: #6987db;
   --darkgrey: #d4d4d4;
   --medgrey: #e0e0e0;

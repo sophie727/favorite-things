@@ -1,3 +1,7 @@
+.UtilBarContainer {
+  padding: var(--s);
+}
+
 .UtilBarButton {
   border-radius: 10px;
   background: #56478f;
@@ -12,10 +16,12 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  border: none;
+  margin: 0 var(--s);
 }
 
 .SearchBar {
-  width: 1025px;
+  width: 80%;
   height: 27px;
   flex-shrink: 0;
   color: #56478f;

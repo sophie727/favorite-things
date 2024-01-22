@@ -14,17 +14,17 @@ type Item = {
 type Props = { item: Item };
 const FavoriteItem = (props: Props) => {
   return (
-    <>
-      <span className="FavoriteItemContainer FavoriteItemLeftCol">
+    <div className="FavoriteItemContainer">
+      <div className="FavoriteItemLeftCol">
         <div>
           <p>{props.item.picture}</p>
         </div>
         <div>
           <p>{props.item.stars} out of 5 stars</p>
         </div>
-      </span>
+      </div>
 
-      <span className="FavoriteItemContainer FavoriteItemRightCol">
+      <div className="FavoriteItemRightCol">
         <div>
           <h1>{props.item.name}</h1>
           <p>{props.item.description}</p>
@@ -47,8 +47,8 @@ const FavoriteItem = (props: Props) => {
             );
           })}
         </div>
-      </span>
-    </>
+      </div>
+    </div>
   );
 };
 
