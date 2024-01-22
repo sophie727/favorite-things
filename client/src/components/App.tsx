@@ -9,8 +9,8 @@ import Home from "./pages/Home";
 import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
-import NavBar from "./NavBar";
-import Add from "./Add";
+import NavBar from "./modules/NavBar";
+import Add from "./pages/Add";
 
 const GOOGLE_CLIENT_ID = "480391270274-2g6n3lmsb18t38qcem0vco150buo8l3v.apps.googleusercontent.com";
 

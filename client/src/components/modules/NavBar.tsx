@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../utilities.css";
+import "../../utilities.css";
 import "./NavBar.css";
 import { GoogleLogin, googleLogout, CredentialResponse } from "@react-oauth/google";
 
