@@ -1,20 +1,7 @@
 import React, { useState, useEffect } from "react";
-import jwt_decode from "jwt-decode";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-import { get, post } from "../utilities";
-import { socket } from "../client-socket";
-import User from "../../../shared/User";
 import "../utilities.css";
 import "./NavBar.css";
-import {
-  GoogleOAuthProvider,
-  GoogleLogin,
-  googleLogout,
-  CredentialResponse,
-} from "@react-oauth/google";
-
-const GOOGLE_CLIENT_ID = "480391270274-2g6n3lmsb18t38qcem0vco150buo8l3v.apps.googleusercontent.com";
+import { GoogleLogin, googleLogout, CredentialResponse } from "@react-oauth/google";
 
 type Props = {
   userId?: string;

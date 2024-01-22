@@ -1,15 +1,9 @@
 import React from "react";
-import {
-  GoogleOAuthProvider,
-  GoogleLogin,
-  googleLogout,
-  CredentialResponse,
-} from "@react-oauth/google";
+import { GoogleOAuthProvider, CredentialResponse } from "@react-oauth/google";
 
 import "./Skeleton.css";
 import NavBar from "../NavBar";
 
-//TODO(weblab student): REPLACE WITH YOUR OWN CLIENT_ID
 const GOOGLE_CLIENT_ID = "480391270274-2g6n3lmsb18t38qcem0vco150buo8l3v.apps.googleusercontent.com";
 
 type Props = {
