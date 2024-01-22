@@ -1,5 +1,18 @@
 .UtilBarContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   padding: var(--s);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.UtilBarItem {
+  flex: auto;
+  margin: 0 var(--s);
 }
 
 .UtilBarButton {
@@ -17,7 +30,6 @@
   font-weight: 400;
   line-height: normal;
   border: none;
-  margin: 0 var(--s);
 }
 
 .SearchBar {
@@ -33,6 +45,7 @@
   line-height: normal;
   border-radius: 10px;
   background: rgba(86, 71, 143, 0.4);
+  border: none;
 }
 
 .AddButton {

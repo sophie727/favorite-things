@@ -8,14 +8,26 @@
   line-height: normal;
 
   width: 80%;
-  display: block;
+  display: flex;
   margin-left: auto;
   margin-right: auto;
 }
 
+.FavoriteItemLeftCol {
+  margin: var(--s);
+}
+
+.FavoriteItemRightCol {
+  margin: 0 var(--s);
+}
+
 .Tag {
-  height: 27px;
+  height: 19px;
+  font-size: 10px;
   flex-shrink: 0;
   border-radius: 10px;
+  border: none;
+  margin: 10px 4px 5px 0px;
   background: #56478f;
+  color: white;
 }

@@ -8,17 +8,14 @@ const UtilBar = (props: Props) => {
   };
   return (
     <div className="UtilBarContainer">
-      <span>
-        <button className="UtilBarButton" onClick={makeFiltersDropdown}>
-          Filters
-        </button>
-      </span>
-      <span>
-        <input className="SearchBar" defaultValue="Search" />
-      </span>
-      <span>
-        <button className="UtilBarButton AddButton">+</button>
-      </span>
+      <button
+        className="UtilBarButton UtilBarItem"
+        onClick={makeFiltersDropdown}
+      >
+        Filters
+      </button>
+      <input className="SearchBar UtilBarItem" defaultValue=" Search" />
+      <button className="UtilBarButton UtilBarItem AddButton">+</button>
     </div>
   );
 };
