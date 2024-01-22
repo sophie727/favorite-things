@@ -1,0 +1,16 @@
+.FavoriteItemContainer {
+  color: #56478f;
+
+  font-family: Lato;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.Tag {
+  height: 27px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #56478f;
+}

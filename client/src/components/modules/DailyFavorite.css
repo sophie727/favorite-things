@@ -1,0 +1,6 @@
+.DailyFavorite {
+  width: 1280px;
+  height: 250px;
+  flex-shrink: 0;
+  background: #c1b7e7;
+}

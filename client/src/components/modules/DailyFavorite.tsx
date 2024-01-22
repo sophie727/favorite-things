@@ -1,8 +1,24 @@
 import React from "react";
 
-type Props = {};
+import "./DailyFavorite.css";
+import FavoriteItem from "./FavoriteItem";
+
+type Item = {
+  picture: string;
+  stars: number;
+  name: string;
+  description: string;
+  links: string[];
+  tags: string[];
+};
+
+type Props = { item: Item };
 const DailyFavorite = (props: Props) => {
-  return <>Daily Favorite says: Hello world!</>;
+  return (
+    <div className="DailyFavorite">
+      <FavoriteItem item={props.item} />
+    </div>
+  );
 };
 
 export default DailyFavorite;
