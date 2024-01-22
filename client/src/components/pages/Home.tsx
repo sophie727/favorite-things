@@ -1,7 +1,7 @@
 import React from "react";
 import { GoogleOAuthProvider, CredentialResponse } from "@react-oauth/google";
 
-import "./Skeleton.css";
+import "./Home.css";
 import NavBar from "../NavBar";
 
 const GOOGLE_CLIENT_ID = "480391270274-2g6n3lmsb18t38qcem0vco150buo8l3v.apps.googleusercontent.com";
@@ -11,7 +11,7 @@ type Props = {
   handleLogin: (credentialResponse: CredentialResponse) => void;
   handleLogout: () => void;
 };
-const Skeleton = (props: Props) => {
+const Home = (props: Props) => {
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <NavBar
@@ -23,4 +23,4 @@ const Skeleton = (props: Props) => {
   );
 };
 
-export default Skeleton;
+export default Home;
