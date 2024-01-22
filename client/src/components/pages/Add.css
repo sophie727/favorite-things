@@ -1,0 +1,62 @@
+.AddContent {
+  color: #3a297b;
+
+  text-align: center;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.AddItemName {
+  border-radius: 10px;
+  background: rgba(86, 71, 143, 0.4);
+  width: 971px;
+  height: 36px;
+}
+
+.AddDescription {
+  border-radius: 10px;
+  background: rgba(86, 71, 143, 0.4);
+  width: 906px;
+  height: 142px;
+}
+
+.AddTags {
+  border-radius: 10px;
+  background: rgba(86, 71, 143, 0.4);
+  height: 36px;
+}
+
+.AddedTag {
+  color: #fff;
+
+  text-align: center;
+  font-family: Lato;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  border-radius: 10px;
+  background: #56478f;
+
+  height: 27px;
+}
+
+.AddButton {
+  border-radius: 10px;
+  background: #56478f;
+  width: 58px;
+  height: 27px;
+  flex-shrink: 0;
+
+  color: #fff;
+  text-align: center;
+  font-family: Lato;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: none;
+}
