@@ -15,10 +15,14 @@
   margin: 0 var(--s);
 }
 
+.UtilBarFilter {
+  padding: 3px;
+  width: 58px;
+}
+
 .UtilBarButton {
   border-radius: 10px;
   background: #56478f;
-  width: 58px;
   height: 27px;
   flex-shrink: 0;
 
@@ -30,6 +34,42 @@
   font-weight: 400;
   line-height: normal;
   border: none;
+}
+
+.UtilBarPopupText {
+  visibility: hidden;
+  background-color: #56478f;
+  width: 160px;
+  text-align: center;
+  display: block;
+  padding: var(--s);
+  position: relative;
+  z-index: 1000;
+  margin: auto;
+}
+
+.UtilBarFilter .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .SearchBar {
@@ -46,6 +86,7 @@
   border-radius: 10px;
   background: rgba(86, 71, 143, 0.4);
   border: none;
+  padding: 0px var(--s);
 }
 
 .AddButton {

@@ -2,23 +2,30 @@
   width: 100%;
   flex-shrink: 0;
   background: #56478f;
-  flex: auto;
+  display: flex;
+  align-items: center;
   padding: 5px;
 }
 
 .NavBarItem {
   color: #fff;
   font-family: Lato;
-  font-size: 25px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  padding: var(--s);
+  padding: 0 var(--s);
   display: inline-flex;
+}
+
+.NavBarTitle {
+  font-size: 20px;
+  margin: var(--s) auto var(--s) auto;
 }
 
 .NavBarGoogleAuth {
   display: inline-flex;
-  margin-right: 10px;
-  padding: var(--s);
+  margin: 0px var(--s) 0px;
+  padding: var(--s) var(--s) 0px;
+  flex-shrink: 1;
 }

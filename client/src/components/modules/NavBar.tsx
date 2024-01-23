@@ -19,8 +19,8 @@ const NavBar = (props: Props) => {
   return (
     <nav className="NavBar">
       <div className="NavBarItem">Menu button</div>
-      <div className="NavBarItem">My Favorite Things</div>
-      <div className="NavBarGoogleAuth">
+      <div className="NavBarItem NavBarTitle">My Favorite Things</div>
+      <div className="NavBarItem NavBarGoogleAuth">
         {props.userId ? (
           <button
             onClick={() => {
