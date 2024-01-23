@@ -53,13 +53,17 @@ const App = () => {
     <>
       <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
         <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
-        <BrowserRouter>
-          <Routes>
-            <Route element={<Home />} path="/" />
-            <Route element={<Add />} path="/add" />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        {userId === undefined ? (
+          <>Please log in to proceed.</>
+        ) : (
+          <BrowserRouter>
+            <Routes>
+              <Route element={<Home />} path="/" />
+              <Route element={<Add />} path="/add" />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        )}
       </GoogleOAuthProvider>
     </>
   );

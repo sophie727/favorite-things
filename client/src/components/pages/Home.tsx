@@ -51,11 +51,15 @@ const Home = (props: Props) => {
         <UtilBar />
       </div>
       <div>
-        {favoriteItems.map((item, index) => (
-          <div className="HomeFavoriteItemContainer" key={index}>
-            <FavoriteItem item={item} />
-          </div>
-        ))}
+        {favoriteItems.length > 0 ? (
+          <></>
+        ) : (
+          favoriteItems.map((item, index) => (
+            <div className="HomeFavoriteItemContainer" key={index}>
+              <FavoriteItem item={item} />
+            </div>
+          ))
+        )}
       </div>
     </>
   );
