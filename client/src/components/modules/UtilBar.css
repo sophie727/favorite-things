@@ -1,7 +1,6 @@
 .UtilBarContainer {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   justify-content: center;
   padding: var(--s);
   display: block;
@@ -16,7 +15,7 @@
 }
 
 .UtilBarFilter {
-  padding: 3px;
+  padding: 4.5px;
   width: 58px;
 }
 

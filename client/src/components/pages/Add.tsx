@@ -4,8 +4,14 @@ import "./Add.css";
 
 type Props = {};
 const Add = (props: Props) => {
-  const [tagOptions, setTagOptions] = useState(["", "cute things", "animals", "science"]);
+  const [tagOptions, setTagOptions] = useState([
+    "",
+    "cute things",
+    "animals",
+    "science",
+  ]);
   const [chosenTags, setChosenTags] = useState<string[]>([]);
+  const pressStar = () => {};
   return (
     <>
       <div>
@@ -37,24 +43,39 @@ const Add = (props: Props) => {
       </div>
       <div className="AddContent">
         <span>Stars:</span>
-        <span>
-          Star Star Star Star Star Note: Make these buttons that are shaped like stars somehow
+        <span className="AddStars">
+          <button className="AddStarButton" onClick={pressStar}>
+            &#9734;
+          </button>
+          <button className="AddStarButton" onClick={pressStar}>
+            &#9734;
+          </button>
+          <button className="AddStarButton" onClick={pressStar}>
+            &#9734;
+          </button>
+          <button className="AddStarButton" onClick={pressStar}>
+            &#9734;
+          </button>
+          <button className="AddStarButton" onClick={pressStar}>
+            &#9734;
+          </button>
         </span>
       </div>
       <div className="AddContent">
         <span>Description:</span>
         <span>
-          <input className="AddDescription" />
+          <textarea className="AddDescription" />
         </span>
-      </div>
-      <div className="AddContent">
-        <span>Image:</span> <span> Not quite sure what the input for this should look like.</span>
       </div>
       <div className="AddContent">
         <span>Links:</span>
         <span>
           <input className="AddItemName" />
         </span>
+      </div>
+      <div className="AddContent">
+        <span>Image:</span>{" "}
+        <span> Not quite sure what the input for this should look like.</span>
       </div>
       <div className="AddContent">
         <button className="AddButton" onClick={() => {}}>

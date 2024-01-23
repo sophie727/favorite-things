@@ -12,7 +12,10 @@
   border-radius: 10px;
   background: rgba(86, 71, 143, 0.4);
   width: 971px;
-  height: 36px;
+  max-width: 80%;
+  height: 27px;
+  border: none;
+  margin: var(--s);
 }
 
 .AddDescription {
@@ -20,12 +23,25 @@
   background: rgba(86, 71, 143, 0.4);
   width: 906px;
   height: 142px;
+  border: none;
+  margin: var(--s);
+  font-family: "Lato";
+  max-width: 76%;
+}
+
+.AddStarButton {
+  border: none;
+  background-color: white;
+  font-size: 15px;
+  color: #56478f;
 }
 
 .AddTags {
   border-radius: 10px;
   background: rgba(86, 71, 143, 0.4);
-  height: 36px;
+  height: 27px;
+  border: none;
+  margin: var(--s);
 }
 
 .AddedTag {
@@ -39,7 +55,9 @@
   line-height: normal;
 
   border-radius: 10px;
+  border: none;
   background: #56478f;
+  margin: 5px;
 
   height: 27px;
 }
@@ -59,4 +77,5 @@
   font-weight: 400;
   line-height: normal;
   border: none;
+  margin: var(--s);
 }
