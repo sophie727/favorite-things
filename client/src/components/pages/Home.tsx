@@ -39,6 +39,7 @@ const Home = (props: Props) => {
   useEffect(() => {
     get("/api/favorites", { filterTags: [], searchText: "" }).then((items) => {
       setFavoriteItems(items);
+      console.log(items);
     });
   }, []);
 
@@ -52,13 +53,13 @@ const Home = (props: Props) => {
       </div>
       <div>
         {favoriteItems.length > 0 ? (
-          <></>
-        ) : (
           favoriteItems.map((item, index) => (
             <div className="HomeFavoriteItemContainer" key={index}>
               <FavoriteItem item={item} />
             </div>
           ))
+        ) : (
+          <></>
         )}
       </div>
     </>

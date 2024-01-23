@@ -159,6 +159,35 @@ router.get("/favorites", auth.ensureLoggedIn, async (req, res) => {
   // TODO: Also check how we want filters to work: remove everything that doesn't have any of the tags, or keep only things with all tags?
 });
 
+router.post("/addFavorite", auth.ensureLoggedIn, (req, res) => {
+  const user_id = req.user?._id;
+  const newFavorite = new ItemModel({
+    picture: req.body.newFav.picture,
+    stars: req.body.newFav.stars,
+    name: req.body.newFav.name,
+    description: req.body.newFav.description,
+    user_id: user_id,
+  });
+  newFavorite.save().then((savedItem) => {
+    console.log(req.body.newFav);
+    const newLinks = req.body.newFav.links.map(
+      (link) =>
+        new LinkModel({
+          link: link,
+          parent_id: savedItem._id,
+        })
+    );
+    const newTags = req.body.newFav.tags.map(
+      (tag) => new TagModel({ tag: tag, parent_id: savedItem._id })
+    );
+    res.send(
+      Promise.all(
+        newLinks.map((linkModel) => linkModel.save()) + newTags.map((tagModel) => tagModel.save())
+      ).then(() => req.body.newFav)
+    );
+  });
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   const msg = `Api route not found: ${req.method} ${req.url}`;

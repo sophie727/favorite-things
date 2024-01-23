@@ -1,17 +1,46 @@
 import React, { useState } from "react";
+import { post } from "../../utilities";
 
 import "./Add.css";
 
 type Props = {};
+
+type Item = {
+  picture: string;
+  stars: number;
+  name: string;
+  description: string;
+  links: string[];
+  tags: string[];
+};
+
 const Add = (props: Props) => {
-  const [tagOptions, setTagOptions] = useState([
-    "",
-    "cute things",
-    "animals",
-    "science",
-  ]);
+  const [tagOptions, setTagOptions] = useState(["", "cute things", "animals", "science"]);
   const [chosenTags, setChosenTags] = useState<string[]>([]);
+
+  const [picture, setPicture] = useState("");
+  const [starCount, setStarCount] = useState(0);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [links, setLinks] = useState<string[]>([]);
+
   const pressStar = () => {};
+
+  const addFavorite = () => {
+    const favItem: Item = {
+      picture: picture,
+      stars: starCount,
+      name: name,
+      description: description,
+      links: links,
+      tags: chosenTags,
+    };
+    post("/api/addFavorite", { newFav: favItem }).then((newFav) => {
+      //TODO: ADD TO FAVORITE LIST!
+    });
+    // TODO: Clear the form.
+  };
+
   return (
     <>
       <div>
@@ -20,7 +49,7 @@ const Add = (props: Props) => {
       <div className="AddContent">
         <span>Item:</span>
         <span>
-          <input className="AddItemName" />
+          <input className="AddItemName" onChange={(event) => setName(event.target.value)} />
         </span>
       </div>
       <div className="AddContent">
@@ -44,27 +73,25 @@ const Add = (props: Props) => {
       <div className="AddContent">
         <span>Stars:</span>
         <span className="AddStars">
-          <button className="AddStarButton" onClick={pressStar}>
-            &#9734;
-          </button>
-          <button className="AddStarButton" onClick={pressStar}>
-            &#9734;
-          </button>
-          <button className="AddStarButton" onClick={pressStar}>
-            &#9734;
-          </button>
-          <button className="AddStarButton" onClick={pressStar}>
-            &#9734;
-          </button>
-          <button className="AddStarButton" onClick={pressStar}>
-            &#9734;
-          </button>
+          {[...Array(5).keys()].map((index) => (
+            <button
+              className="AddStarButton"
+              onClick={() => {
+                setStarCount(index + 1);
+              }}
+            >
+              {starCount > index ? <>&#9733;</> : <>&#9734;</>}
+            </button>
+          ))}
         </span>
       </div>
       <div className="AddContent">
         <span>Description:</span>
         <span>
-          <textarea className="AddDescription" />
+          <textarea
+            className="AddDescription"
+            onChange={(event) => setDescription(event.target.value)}
+          />
         </span>
       </div>
       <div className="AddContent">
@@ -75,10 +102,13 @@ const Add = (props: Props) => {
       </div>
       <div className="AddContent">
         <span>Image:</span>{" "}
-        <span> Not quite sure what the input for this should look like.</span>
+        <span>
+          {" "}
+          <input className="AddItemName" onChange={(event) => setPicture(event.target.value)} />
+        </span>
       </div>
       <div className="AddContent">
-        <button className="AddButton" onClick={() => {}}>
+        <button className="AddButton" onClick={addFavorite}>
           Add
         </button>
       </div>
