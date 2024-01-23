@@ -7,7 +7,7 @@ type Item = {
   stars: number;
   name: string;
   description: string;
-  links: string[];
+  link: string;
   tags: string[];
 };
 
@@ -36,13 +36,7 @@ const FavoriteItem = (props: Props) => {
           <p>{props.item.description}</p>
         </div>
         <div>
-          {props.item.links.map((link: string, index) => {
-            return (
-              <a href={link} key={index}>
-                {link}
-              </a>
-            );
-          })}
+          <a href={props.item.link}>{props.item.link}</a>
         </div>
         <div>
           {props.item.tags.map((tag: string, index) => {

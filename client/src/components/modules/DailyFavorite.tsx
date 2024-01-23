@@ -8,7 +8,7 @@ type Item = {
   stars: number;
   name: string;
   description: string;
-  links: string[];
+  link: string;
   tags: string[];
 };
 

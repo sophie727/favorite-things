@@ -4,7 +4,6 @@ import socketManager from "./server-socket";
 const router = express.Router();
 
 import ItemModel from "./models/Item";
-import LinkModel from "./models/Link";
 import TagModel from "./models/Tag";
 
 router.post("/login", auth.login);
@@ -34,6 +33,7 @@ type ItemType = {
   stars: number;
   name: string;
   description: string;
+  link: string;
   _id: string;
   user_id: string;
 };
@@ -43,7 +43,7 @@ type FavoriteItemType = {
   stars: number;
   name: string;
   description: string;
-  links: string[];
+  link: string;
   tags: string[];
 };
 
@@ -83,7 +83,7 @@ const defaultItem = {
   stars: 0,
   name: "Your Favorite Thing",
   description: "Super amazing",
-  links: [],
+  link: "",
   tags: [],
 };
 
@@ -113,18 +113,16 @@ router.get("/dailyfav", auth.ensureLoggedIn, async (req, res) => {
     } else {
       const randIndex = Math.floor(Math.random() * items.length);
       const favItem: ItemType = items[randIndex];
-      LinkModel.find({ parent_id: favItem._id }).then((links) => {
-        TagModel.find({ parent_id: favItem._id }).then((tags) => {
-          const fullItem: FavoriteItemType = {
-            picture: favItem.picture,
-            stars: favItem.stars,
-            name: favItem.name,
-            description: favItem.description,
-            links: links.map((link) => link.link),
-            tags: tags.map((tag) => tag.tag),
-          };
-          res.send(fullItem);
-        });
+      TagModel.find({ parent_id: favItem._id }).then((tags) => {
+        const fullItem: FavoriteItemType = {
+          picture: favItem.picture,
+          stars: favItem.stars,
+          name: favItem.name,
+          description: favItem.description,
+          link: favItem.link,
+          tags: tags.map((tag) => tag.tag),
+        };
+        res.send(fullItem);
       });
     }
   });
@@ -139,18 +137,16 @@ router.get("/favorites", auth.ensureLoggedIn, async (req, res) => {
     } else {
       const shuffledItems: ItemType[] = shuffleArray(items);
       const shuffledFullItems = shuffledItems.map((favItem) => {
-        return LinkModel.find({ parent_id: favItem._id }).then((links) => {
-          return TagModel.find({ parent_id: favItem._id }).then((tags) => {
-            const fullItem: FavoriteItemType = {
-              picture: favItem.picture,
-              stars: favItem.stars,
-              name: favItem.name,
-              description: favItem.description,
-              links: links.map((link) => link.link),
-              tags: tags.map((tag) => tag.tag),
-            };
-            return fullItem;
-          });
+        return TagModel.find({ parent_id: favItem._id }).then((tags) => {
+          const fullItem: FavoriteItemType = {
+            picture: favItem.picture,
+            stars: favItem.stars,
+            name: favItem.name,
+            description: favItem.description,
+            link: favItem.link,
+            tags: tags.map((tag) => tag.tag),
+          };
+          return fullItem;
         });
       });
       res.send(await Promise.all(shuffledFullItems));
@@ -166,25 +162,15 @@ router.post("/addFavorite", auth.ensureLoggedIn, (req, res) => {
     stars: req.body.newFav.stars,
     name: req.body.newFav.name,
     description: req.body.newFav.description,
+    link: req.body.newFav.link,
     user_id: user_id,
   });
   newFavorite.save().then((savedItem) => {
     console.log(req.body.newFav);
-    const newLinks = req.body.newFav.links.map(
-      (link) =>
-        new LinkModel({
-          link: link,
-          parent_id: savedItem._id,
-        })
-    );
     const newTags = req.body.newFav.tags.map(
       (tag) => new TagModel({ tag: tag, parent_id: savedItem._id })
     );
-    res.send(
-      Promise.all(
-        newLinks.map((linkModel) => linkModel.save()) + newTags.map((tagModel) => tagModel.save())
-      ).then(() => req.body.newFav)
-    );
+    res.send(Promise.all(newTags.map((tagModel) => tagModel.save())).then(() => req.body.newFav));
   });
 });
 

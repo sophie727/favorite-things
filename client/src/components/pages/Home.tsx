@@ -13,7 +13,7 @@ type Item = {
   stars: number;
   name: string;
   description: string;
-  links: string[];
+  link: string;
   tags: string[];
 };
 
@@ -23,7 +23,7 @@ const Home = (props: Props) => {
     stars: 0,
     name: "Your Favorite Thing",
     description: "Super amazing",
-    links: [],
+    link: "",
     tags: [],
   };
 

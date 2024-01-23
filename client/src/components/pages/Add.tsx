@@ -10,7 +10,7 @@ type Item = {
   stars: number;
   name: string;
   description: string;
-  links: string[];
+  link: string;
   tags: string[];
 };
 
@@ -22,9 +22,7 @@ const Add = (props: Props) => {
   const [starCount, setStarCount] = useState(0);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [links, setLinks] = useState<string[]>([]);
-
-  const pressStar = () => {};
+  const [link, setLink] = useState("");
 
   const addFavorite = () => {
     const favItem: Item = {
@@ -32,13 +30,23 @@ const Add = (props: Props) => {
       stars: starCount,
       name: name,
       description: description,
-      links: links,
+      link: link,
       tags: chosenTags,
     };
+    console.log(favItem);
     post("/api/addFavorite", { newFav: favItem }).then((newFav) => {
       //TODO: ADD TO FAVORITE LIST!
     });
     // TODO: Clear the form.
+  };
+
+  const removeTag = (tag) => {
+    const index = chosenTags.indexOf(tag);
+    if (index > -1) {
+      const newTags = [...chosenTags];
+      newTags.splice(index, 1);
+      setChosenTags(newTags);
+    }
   };
 
   return (
@@ -56,7 +64,9 @@ const Add = (props: Props) => {
         <span>Tags:</span>
         <span>
           {chosenTags.map((tag) => (
-            <button className="AddedTag">{tag}</button>
+            <button className="AddedTag" onClick={() => removeTag(tag)}>
+              {tag}
+            </button>
           ))}
           <select
             className="AddTags"
@@ -95,9 +105,9 @@ const Add = (props: Props) => {
         </span>
       </div>
       <div className="AddContent">
-        <span>Links:</span>
+        <span>Link:</span>
         <span>
-          <input className="AddItemName" />
+          <input className="AddItemName" onChange={(event) => setLink(event.target.value)} />
         </span>
       </div>
       <div className="AddContent">
