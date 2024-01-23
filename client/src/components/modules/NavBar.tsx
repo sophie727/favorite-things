@@ -19,7 +19,9 @@ const NavBar = (props: Props) => {
   return (
     <nav className="NavBar">
       <div className="NavBarItem">Menu button</div>
-      <div className="NavBarItem NavBarTitle">My Favorite Things</div>
+      <a className="NavBarItem NavBarTitle" href="/">
+        My Favorite Things
+      </a>
       <div className="NavBarItem NavBarGoogleAuth">
         {props.userId ? (
           <button

@@ -20,7 +20,7 @@ const UtilBar = (props: Props) => {
         </span>
       </button>
       <input className="SearchBar UtilBarItem" placeholder="Search" />
-      <a href="http://localhost:5050/add">
+      <a href="/add/">
         <button className="AddButton UtilBarButton UtilBarItem">+</button>
       </a>
     </div>

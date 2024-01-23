@@ -21,6 +21,7 @@
 .NavBarTitle {
   font-size: 20px;
   margin: var(--s) auto var(--s) auto;
+  text-decoration: none;
 }
 
 .NavBarGoogleAuth {

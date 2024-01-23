@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactComponentElement } from "react";
 
 import "./FavoriteItem.css";
 
@@ -13,15 +13,21 @@ type Item = {
 
 type Props = { item: Item };
 const FavoriteItem = (props: Props) => {
+  const stars: React.JSX.Element[] = [];
+  for (let i = 0; i < 5; i++) {
+    if (i < props.item.stars) {
+      stars.push(<span>&#9733;</span>);
+    } else {
+      stars.push(<span>&#9734;</span>);
+    }
+  }
   return (
     <div className="FavoriteItemContainer">
       <div className="FavoriteItemLeftCol">
         <div>
           <p>{props.item.picture}</p>
         </div>
-        <div>
-          <p>{props.item.stars} out of 5 stars</p>
-        </div>
+        <div id="FavoriteItemStars">{stars}</div>
       </div>
 
       <div className="FavoriteItemRightCol">
