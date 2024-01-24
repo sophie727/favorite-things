@@ -15,7 +15,7 @@ type Item = {
 };
 
 const Add = (props: Props) => {
-  const [tagOptions, setTagOptions] = useState(["", "cute things", "animals", "science"]);
+  const [tagOptions, setTagOptions] = useState(["", "cute things", "animals", "science"]); // TODO: Set this up better!
   const [chosenTags, setChosenTags] = useState<string[]>([]);
 
   const [picture, setPicture] = useState("");
@@ -36,8 +36,18 @@ const Add = (props: Props) => {
     console.log(favItem);
     post("/api/addFavorite", { newFav: favItem }).then((newFav) => {
       //TODO: ADD TO FAVORITE LIST!
+      for (const element of document.getElementsByTagName("input")) {
+        element.value = "";
+      }
+      for (const element of document.getElementsByTagName("textarea")) {
+        element.value = "";
+      }
+      setStarCount(0);
+      setChosenTags([]);
+      for (const element of document.getElementsByTagName("select")) {
+        element.selectedIndex = 0;
+      }
     });
-    // TODO: Clear the form.
   };
 
   const removeTag = (tag) => {
@@ -57,7 +67,7 @@ const Add = (props: Props) => {
       <div className="AddContent">
         <span>Item:</span>
         <span>
-          <input className="AddItemName" onChange={(event) => setName(event.target.value)} />
+          <input className="AddInput" onChange={(event) => setName(event.target.value)} />
         </span>
       </div>
       <div className="AddContent">
@@ -107,12 +117,12 @@ const Add = (props: Props) => {
       <div className="AddContent">
         <span>Link:</span>
         <span>
-          <input className="AddItemName" onChange={(event) => setLink(event.target.value)} />
+          <input className="AddInput" onChange={(event) => setLink(event.target.value)} />
         </span>
       </div>
       <div className="AddContent">
         <span>Image link:</span>{" "}
-        <input className="AddItemName" onChange={(event) => setPicture(event.target.value)} />
+        <input className="AddInput" onChange={(event) => setPicture(event.target.value)} />
       </div>
       <div className="AddContent">
         <button className="AddButton" onClick={addFavorite}>
