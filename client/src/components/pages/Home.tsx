@@ -29,6 +29,8 @@ const Home = (props: Props) => {
 
   const [dailyFavorite, setDailyFavorite] = useState<Item>(defaultItem);
   const [favoriteItems, setFavoriteItems] = useState<Item[]>([]);
+  const [filterTags, setFilterTags] = useState<string[]>([]);
+
   useEffect(() => {
     document.title = "Home";
     get("/api/dailyFav").then((item) => {
@@ -49,7 +51,11 @@ const Home = (props: Props) => {
         <DailyFavorite item={dailyFavorite} />
       </div>
       <div>
-        <UtilBar />
+        <UtilBar
+          tagOptions={props.tagOptions}
+          filterTags={filterTags}
+          setFilterTags={setFilterTags}
+        />
       </div>
       <div>
         {favoriteItems.length > 0 ? (
