@@ -3,8 +3,8 @@ import auth from "./auth";
 import socketManager from "./server-socket";
 const router = express.Router();
 
-import ItemModel from "./models/Item";
-import TagModel from "./models/Tag";
+import ItemModel from "./models/item";
+import TagModel from "./models/tag";
 import AllTagModel from "./models/AllTag";
 
 router.post("/login", auth.login);
