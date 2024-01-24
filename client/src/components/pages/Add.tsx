@@ -3,7 +3,10 @@ import { post } from "../../utilities";
 
 import "./Add.css";
 
-type Props = {};
+type Props = {
+  tagOptions: string[];
+  setTagOptions: React.Dispatch<React.SetStateAction<string[]>>;
+};
 
 type Item = {
   picture: string;
@@ -15,8 +18,6 @@ type Item = {
 };
 
 const Add = (props: Props) => {
-  // TODO: Set this up better! In particular, this should be visible from Home as well probably.
-  const [tagOptions, setTagOptions] = useState(["", "cute things", "animals", "science"]);
   const [newTag, setNewTag] = useState("");
 
   const [picture, setPicture] = useState("");
@@ -37,7 +38,7 @@ const Add = (props: Props) => {
     };
     console.log(favItem);
     post("/api/addFavorite", { newFav: favItem }).then((newFav) => {
-      //TODO: ADD TO FAVORITE LIST!
+      //TODO: ADD TO FAVORITE LIST! Needs to use sockets and stuff, save for after MVP because lazy.
       for (const element of document.getElementsByTagName("input")) {
         element.value = "";
       }
@@ -62,17 +63,30 @@ const Add = (props: Props) => {
   };
 
   const addNewTag = () => {
-    for (const tag of tagOptions) {
+    addChosenTag(newTag);
+    for (const tag of props.tagOptions) {
       if (tag === newTag) {
         return;
       }
     }
-    setTagOptions([...tagOptions].concat([newTag]));
 
-    const newTagInput = document.getElementById("newTagInput");
-    if (newTagInput instanceof HTMLInputElement) {
-      newTagInput.value = "";
+    post("/api/addTag", { newTag: newTag }).then(() => {
+      props.setTagOptions(props.tagOptions.concat([newTag]));
+
+      const newTagInput = document.getElementById("newTagInput");
+      if (newTagInput instanceof HTMLInputElement) {
+        newTagInput.value = "";
+      }
+    });
+  };
+
+  const addChosenTag = (newTag: string) => {
+    for (const tag of chosenTags) {
+      if (tag == newTag) {
+        return;
+      }
     }
+    setChosenTags(chosenTags.concat([newTag]));
   };
 
   return (
@@ -97,10 +111,10 @@ const Add = (props: Props) => {
           <select
             className="AddTags"
             onChange={(event) => {
-              setChosenTags(chosenTags.concat([event.target.value]));
+              addChosenTag(event.target.value);
             }}
           >
-            {tagOptions.map((tag) => (
+            {props.tagOptions.map((tag) => (
               <option>{tag}</option>
             ))}
           </select>

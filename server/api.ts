@@ -5,6 +5,7 @@ const router = express.Router();
 
 import ItemModel from "./models/Item";
 import TagModel from "./models/Tag";
+import AllTagModel from "./models/AllTag";
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -171,6 +172,23 @@ router.post("/addFavorite", auth.ensureLoggedIn, (req, res) => {
       (tag) => new TagModel({ tag: tag, parent_id: savedItem._id })
     );
     res.send(Promise.all(newTags.map((tagModel) => tagModel.save())).then(() => req.body.newFav));
+  });
+});
+
+router.get("/tags", auth.ensureLoggedIn, (req, res) => {
+  const user_id = req.user?._id;
+  AllTagModel.find({ user_id: user_id }).then((tags) => {
+    res.send(tags.map((tagObject) => tagObject.tag));
+  });
+});
+
+router.post("/addTag", auth.ensureLoggedIn, (req, res) => {
+  const newTag = new AllTagModel({
+    tag: req.body.newTag,
+    user_id: req.user?._id,
+  });
+  newTag.save().then((savedTag) => {
+    res.send(savedTag);
   });
 });
 

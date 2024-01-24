@@ -6,7 +6,7 @@ import UtilBar from "../modules/UtilBar";
 import FavoriteItem from "../modules/FavoriteItem";
 import { get } from "../../utilities";
 
-type Props = {};
+type Props = { tagOptions: string[] };
 
 type Item = {
   picture: string;

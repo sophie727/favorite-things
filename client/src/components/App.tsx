@@ -15,6 +15,7 @@ import Add from "./pages/Add";
 const GOOGLE_CLIENT_ID = "480391270274-2g6n3lmsb18t38qcem0vco150buo8l3v.apps.googleusercontent.com";
 
 const App = () => {
+  const [tagOptions, setTagOptions] = useState([""]);
   const [userId, setUserId] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -30,6 +31,12 @@ const App = () => {
           post("/api/initsocket", { socketid: socket.id });
         })
       );
+  }, []);
+
+  useEffect(() => {
+    get("/api/tags").then((tags: string[]) => {
+      setTagOptions([""].concat(tags));
+    });
   }, []);
 
   const handleLogin = (credentialResponse: CredentialResponse) => {
@@ -58,8 +65,11 @@ const App = () => {
         ) : (
           <BrowserRouter>
             <Routes>
-              <Route element={<Home />} path="/" />
-              <Route element={<Add />} path="/add" />
+              <Route element={<Home tagOptions={tagOptions} />} path="/" />
+              <Route
+                element={<Add tagOptions={tagOptions} setTagOptions={setTagOptions} />}
+                path="/add"
+              />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
