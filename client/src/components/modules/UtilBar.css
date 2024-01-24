@@ -35,10 +35,14 @@
   border: none;
 }
 
+.UtilBarPopupTextContainer {
+  margin: 0 20vw 0 20vw;
+  width: 40vw;
+}
+
 .UtilBarPopupText {
   visibility: hidden;
   background-color: #56478f;
-  width: 160px;
   text-align: center;
   display: block;
   padding: var(--s);
@@ -85,7 +89,7 @@
   border-radius: 10px;
   background: rgba(86, 71, 143, 0.4);
   border: none;
-  padding: 0px var(--s);
+  margin: 0px var(--s);
 }
 
 .AddButton {

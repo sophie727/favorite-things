@@ -92,13 +92,32 @@ const Add = (props: Props) => {
   return (
     <>
       <div>
-        <h1 className="AddContent">Add a favorite</h1>
+        <h1 className="AddContent AddTitle">Add a favorite</h1>
       </div>
       <div className="AddContent">
         <span>Item:</span>
         <span>
           <input className="AddInput" onChange={(event) => setName(event.target.value)} />
         </span>
+      </div>
+      <div className="AddContent">
+        <span>Description:</span>
+        <span>
+          <textarea
+            className="AddDescription"
+            onChange={(event) => setDescription(event.target.value)}
+          />
+        </span>
+      </div>
+      <div className="AddContent">
+        <span>Link:</span>
+        <span>
+          <input className="AddInput" onChange={(event) => setLink(event.target.value)} />
+        </span>
+      </div>
+      <div className="AddContent">
+        <span>Image link:</span>{" "}
+        <input className="AddInput" onChange={(event) => setPicture(event.target.value)} />
       </div>
       <div className="AddContent">
         <span>Tags:</span>
@@ -155,27 +174,8 @@ const Add = (props: Props) => {
           ))}
         </span>
       </div>
-      <div className="AddContent">
-        <span>Description:</span>
-        <span>
-          <textarea
-            className="AddDescription"
-            onChange={(event) => setDescription(event.target.value)}
-          />
-        </span>
-      </div>
-      <div className="AddContent">
-        <span>Link:</span>
-        <span>
-          <input className="AddInput" onChange={(event) => setLink(event.target.value)} />
-        </span>
-      </div>
-      <div className="AddContent">
-        <span>Image link:</span>{" "}
-        <input className="AddInput" onChange={(event) => setPicture(event.target.value)} />
-      </div>
-      <div className="AddContent">
-        <button className="AddButton" onClick={addFavorite}>
+      <div className="AddContent AddButtonContainer">
+        <button className="AddButton LargeAddButton" onClick={addFavorite}>
           Add
         </button>
       </div>
