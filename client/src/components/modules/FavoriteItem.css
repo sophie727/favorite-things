@@ -2,6 +2,15 @@ h1 {
   color: #3a297b;
 }
 
+.FavoriteItemPic {
+  width: 10vw;
+  border-radius: 10%;
+}
+
+#FavoriteItemStars {
+  font-size: 2vw;
+}
+
 .FavoriteItemContainer {
   color: #56478f;
 
@@ -23,6 +32,7 @@ h1 {
 
 .FavoriteItemRightCol {
   margin: 0 var(--s);
+  max-width: 80%;
 }
 
 .Tag {

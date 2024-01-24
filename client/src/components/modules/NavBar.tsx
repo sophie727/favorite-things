@@ -15,31 +15,41 @@ type Props = {
 
 const NavBar = (props: Props) => {
   const { handleLogin, handleLogout } = props;
-
+  const createMenu = () => {
+    var popup = document.getElementById("MenuPopup");
+    popup?.classList.toggle("show");
+  };
   return (
-    <nav className="NavBar">
-      <div className="NavBarItem">Menu button</div>
-      <a className="NavBarItem NavBarTitle" href="/">
-        My Favorite Things
-      </a>
-      <div className="NavBarItem NavBarGoogleAuth">
-        {props.userId ? (
-          <button
-            onClick={() => {
-              googleLogout();
-              handleLogout();
-            }}
-          >
-            Logout
-          </button>
-        ) : (
-          <GoogleLogin
-            onSuccess={handleLogin}
-            onError={() => console.log("Error Logging in")}
-          />
-        )}
-      </div>
-    </nav>
+    <>
+      <nav className="NavBar">
+        <button className="NavBarItem NavBarMenu" onClick={createMenu}>
+          <hr className="NavBarMenuLine"></hr>
+          <hr className="NavBarMenuLine"></hr>
+          <hr className="NavBarMenuLine"></hr>
+        </button>
+        <a className="NavBarItem NavBarTitle" href="/">
+          My Favorite Things
+        </a>
+        <div className="NavBarItem NavBarGoogleAuth">
+          {props.userId ? (
+            <button
+              className="button"
+              onClick={() => {
+                googleLogout();
+                handleLogout();
+              }}
+            >
+              Logout
+            </button>
+          ) : (
+            <GoogleLogin
+              onSuccess={handleLogin}
+              onError={() => console.log("Error Logging in")}
+            />
+          )}
+        </div>
+      </nav>
+    </>
   );
 };
 

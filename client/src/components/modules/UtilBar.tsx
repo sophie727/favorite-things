@@ -6,7 +6,9 @@ const UtilBar = (props: Props) => {
   const makeFiltersDropdown = () => {
     var popup = document.getElementById("FilterPopup");
     popup?.classList.toggle("show");
-    console.log("Clicked Filters Button");
+  };
+  const tagFilter = () => {
+    console.log("Clicked cute");
   };
   return (
     <div className="UtilBarContainer">
@@ -15,9 +17,16 @@ const UtilBar = (props: Props) => {
         onClick={makeFiltersDropdown}
       >
         Filters
-        <span className="UtilBarPopupText" id="FilterPopup">
-          Filter your favorites!
-        </span>
+        <div className="UtilBarPopupTextContainer">
+          <div className="UtilBarPopupText" id="FilterPopup">
+            <h2>Filter your favorites! </h2>
+            <p>Press the tag you wish to filter by:</p>
+            <button onClick={tagFilter} className="button">
+              {" "}
+              cute things
+            </button>
+          </div>
+        </div>
       </button>
       <input className="SearchBar UtilBarItem" placeholder="Search" />
       <a href="/add/">

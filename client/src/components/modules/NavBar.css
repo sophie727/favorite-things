@@ -18,6 +18,44 @@
   display: inline-flex;
 }
 
+.NavBarMenu {
+  display: flex;
+  flex-direction: column;
+  background-color: #56478f;
+  border: none;
+}
+
+.NavBarMenuLine {
+  width: 20px;
+  height: 2px;
+  background-color: white;
+  margin: 2px;
+  border: none;
+  border-radius: 1px;
+}
+
+.NavBarPopupTextContainer {
+  margin: 0 20vw 0 20vw;
+  width: 40vw;
+}
+
+.NavBarPopupText {
+  visibility: hidden;
+  background-color: #56478f;
+  text-align: center;
+  display: block;
+  padding: var(--s);
+  position: relative;
+  z-index: 1000;
+  margin: auto;
+}
+
+.NavBarPopupTextContainer .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
 .NavBarTitle {
   font-size: 20px;
   margin: var(--s) auto var(--s) auto;
@@ -29,4 +67,10 @@
   margin: 0px var(--s) 0px;
   padding: var(--s) var(--s) 0px;
   flex-shrink: 1;
+}
+
+.button {
+  border: none;
+  border-radius: 5px;
+  font-family: Lato;
 }

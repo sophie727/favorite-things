@@ -1,11 +1,16 @@
 .AddContent {
   color: #3a297b;
 
-  text-align: center;
+  text-align: right;
   font-family: Lato;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  padding: 0 10%;
+}
+
+.AddTitle {
+  text-align: center;
 }
 
 .AddInput {
@@ -21,12 +26,12 @@
 .AddDescription {
   border-radius: 10px;
   background: rgba(86, 71, 143, 0.4);
-  width: 906px;
+  width: 1000px;
   height: 142px;
   border: none;
-  margin: var(--s);
+  margin: var(--s) var(--s) 0 var(--s);
   font-family: "Lato";
-  max-width: 76%;
+  max-width: 80%;
 }
 
 .AddStarButton {
@@ -42,6 +47,7 @@
   height: 27px;
   border: none;
   margin: var(--s);
+  width: 10%;
 }
 
 .AddedTag {
@@ -62,10 +68,14 @@
   height: 27px;
 }
 
+#newTagInput {
+  width: 10%;
+}
+
 .AddButton {
   border-radius: 10px;
   background: #56478f;
-  width: 58px;
+  width: 30px;
   height: 27px;
   flex-shrink: 0;
 
@@ -78,4 +88,12 @@
   line-height: normal;
   border: none;
   margin: var(--s);
+}
+
+.LargeAddButton {
+  width: 45px;
+}
+
+.AddButtonContainer {
+  text-align: center;
 }
