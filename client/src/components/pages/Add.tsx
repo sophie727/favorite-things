@@ -15,14 +15,16 @@ type Item = {
 };
 
 const Add = (props: Props) => {
-  const [tagOptions, setTagOptions] = useState(["", "cute things", "animals", "science"]); // TODO: Set this up better!
-  const [chosenTags, setChosenTags] = useState<string[]>([]);
+  // TODO: Set this up better! In particular, this should be visible from Home as well probably.
+  const [tagOptions, setTagOptions] = useState(["", "cute things", "animals", "science"]);
+  const [newTag, setNewTag] = useState("");
 
   const [picture, setPicture] = useState("");
   const [starCount, setStarCount] = useState(0);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
+  const [chosenTags, setChosenTags] = useState<string[]>([]);
 
   const addFavorite = () => {
     const favItem: Item = {
@@ -59,6 +61,20 @@ const Add = (props: Props) => {
     }
   };
 
+  const addNewTag = () => {
+    for (const tag of tagOptions) {
+      if (tag === newTag) {
+        return;
+      }
+    }
+    setTagOptions([...tagOptions].concat([newTag]));
+
+    const newTagInput = document.getElementById("newTagInput");
+    if (newTagInput instanceof HTMLInputElement) {
+      newTagInput.value = "";
+    }
+  };
+
   return (
     <>
       <div>
@@ -80,14 +96,34 @@ const Add = (props: Props) => {
           ))}
           <select
             className="AddTags"
-            onChange={(thisObject) => {
-              setChosenTags(chosenTags.concat([thisObject.target.value]));
+            onChange={(event) => {
+              setChosenTags(chosenTags.concat([event.target.value]));
             }}
           >
             {tagOptions.map((tag) => (
               <option>{tag}</option>
             ))}
           </select>
+        </span>
+        <span>New Tag:</span>
+        <span>
+          <input
+            className="AddInput"
+            id="newTagInput"
+            onChange={(event) => {
+              setNewTag(event.target.value);
+            }}
+          />
+        </span>
+        <span>
+          <button
+            className="AddButton"
+            onClick={() => {
+              addNewTag();
+            }}
+          >
+            +
+          </button>
         </span>
       </div>
       <div className="AddContent">
