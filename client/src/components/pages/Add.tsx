@@ -86,6 +86,9 @@ const Add = (props: Props) => {
         return;
       }
     }
+    if (newTag == "") {
+      return;
+    }
     setChosenTags(chosenTags.concat([newTag]));
   };
 
