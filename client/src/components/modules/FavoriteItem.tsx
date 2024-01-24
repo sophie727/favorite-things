@@ -25,7 +25,7 @@ const FavoriteItem = (props: Props) => {
     <div className="FavoriteItemContainer">
       <div className="FavoriteItemLeftCol">
         <div>
-          <p>{props.item.picture}</p>
+          <img src={props.item.picture} />
         </div>
         <div id="FavoriteItemStars">{stars}</div>
       </div>

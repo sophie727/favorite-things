@@ -111,7 +111,8 @@ const Add = (props: Props) => {
         </span>
       </div>
       <div className="AddContent">
-        <span>Image:</span> <input type="file" accept="image/png, image/jpeg" />
+        <span>Image link:</span>{" "}
+        <input className="AddItemName" onChange={(event) => setPicture(event.target.value)} />
       </div>
       <div className="AddContent">
         <button className="AddButton" onClick={addFavorite}>
