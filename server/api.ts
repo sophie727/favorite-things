@@ -175,7 +175,7 @@ router.post("/addFavorite", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
-router.get("/tags", auth.ensureLoggedIn, (req, res) => {
+router.get("/tags", (req, res) => {
   const user_id = req.user?._id;
   AllTagModel.find({ user_id: user_id }).then((tags) => {
     res.send(tags.map((tagObject) => tagObject.tag));
