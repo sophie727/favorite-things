@@ -2,6 +2,6 @@
   width: 100%;
   height: auto;
   flex-shrink: 0;
-  background: #c1b7e7;
+  background: var(--primary--light);
   padding: 10px;
 }

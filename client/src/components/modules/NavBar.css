@@ -41,7 +41,7 @@
 
 .NavBarPopupText {
   visibility: hidden;
-  background-color: #56478f;
+  background-color: var(--primary);
   text-align: center;
   display: block;
   padding: var(--s);

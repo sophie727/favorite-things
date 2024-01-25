@@ -2,10 +2,10 @@
   width: 70%;
 
   border-width: 4px;
-  border-color: #56478f;
+  border-color: var(--primary);
   border-style: solid;
   border-radius: 16px;
 
   display: block;
-  margin: 0 auto var(--s) auto;
+  margin: var(--s) auto;
 }

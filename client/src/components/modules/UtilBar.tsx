@@ -28,36 +28,46 @@ const UtilBar = (props: Props) => {
     }
   };
   return (
-    <div className="UtilBarContainer">
-      {props.filterTags.map((tag) => (
-        <button className="AddedTag" onClick={() => removeTag(tag)}>
-          {tag}
-        </button>
-      ))}
-      <button className="UtilBarButton UtilBarItem UtilBarFilter" onClick={makeFiltersDropdown}>
-        Filters
-        <div className="UtilBarPopupTextContainer">
-          <div className="UtilBarPopupText" id="FilterPopup">
-            <h2>Filter your favorites! </h2>
-            <p>Click the tag you wish to filter by:</p>
-            {props.tagOptions.map((tag: string) => {
-              if (tag === "") {
-                return;
-              }
-              return (
-                <button onClick={() => addTagFilter(tag)} className="tagButton">
-                  {tag}
-                </button>
-              );
-            })}
+    <>
+      <div className="UtilBarContainer">
+        <button
+          className="UtilBarItem UtilBarButton UtilBarFilter"
+          onClick={makeFiltersDropdown}
+        >
+          Filters
+          <div className="UtilBarPopupTextContainer">
+            <div className="UtilBarPopupText" id="FilterPopup">
+              <h2>Filter your favorites! </h2>
+              <p>Click the tag you wish to filter by:</p>
+              {props.tagOptions.map((tag: string) => {
+                if (tag === "") {
+                  return;
+                }
+                return (
+                  <button
+                    onClick={() => addTagFilter(tag)}
+                    className="tagButton"
+                  >
+                    {tag}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </button>
-      <input className="SearchBar UtilBarItem" placeholder="Search" />
-      <a href="/add/">
-        <button className="AddButton UtilBarButton UtilBarItem">+</button>
-      </a>
-    </div>
+        </button>
+        <input className="UtilBarItem SearchBar" placeholder="Search" />
+        <a href="/add/">
+          <button className="UtilBarItem UtilBarButton AddButton">+</button>
+        </a>
+      </div>
+      <div className="TagButtons">
+        {props.filterTags.map((tag) => (
+          <button className="AddedTag" onClick={() => removeTag(tag)}>
+            {tag}
+          </button>
+        ))}
+      </div>
+    </>
   );
 };
 

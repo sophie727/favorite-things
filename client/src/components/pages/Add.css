@@ -1,5 +1,5 @@
 .AddContent {
-  color: #3a297b;
+  color: var(--primary--dark);
 
   text-align: right;
   font-family: Lato;
@@ -15,7 +15,7 @@
 
 .AddInput {
   border-radius: 10px;
-  background: rgba(86, 71, 143, 0.4);
+  background: var(--primary--dim);
   width: 971px;
   max-width: 80%;
   height: 27px;
@@ -25,7 +25,7 @@
 
 .AddDescription {
   border-radius: 10px;
-  background: rgba(86, 71, 143, 0.4);
+  background: var(--primary--dim);
   width: 1000px;
   height: 142px;
   border: none;
@@ -43,11 +43,11 @@
 
 .AddTags {
   border-radius: 10px;
-  background: rgba(86, 71, 143, 0.4);
+  background: var(--primary--dim);
   height: 27px;
   border: none;
   margin: var(--s);
-  width: 10%;
+  width: 100px;
 }
 
 .AddedTag {
@@ -62,19 +62,20 @@
 
   border-radius: 10px;
   border: none;
-  background: #56478f;
+  background: var(--tagcolor);
   margin: 5px;
 
   height: 27px;
 }
 
 #newTagInput {
-  width: 10%;
+  width: 100px;
+  height: 26px;
 }
 
 .AddButton {
   border-radius: 10px;
-  background: #56478f;
+  background: var(--primary);
   width: 30px;
   height: 27px;
   flex-shrink: 0;

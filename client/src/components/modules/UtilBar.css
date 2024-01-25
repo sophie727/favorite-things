@@ -2,8 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding: var(--s);
-  display: block;
+  padding: var(--s) 0 0 0;
   margin-left: auto;
   margin-right: auto;
   width: 80%;
@@ -11,20 +10,20 @@
 
 .UtilBarItem {
   flex: auto;
-  margin: 0 var(--s);
+  margin: var(--s);
 }
 
 .UtilBarFilter {
   padding: 4.5px;
-  width: 58px;
+  width: 55px;
+  flex: none;
 }
 
 .UtilBarButton {
   border-radius: 10px;
-  background: #56478f;
+  background: var(--primary);
   height: 27px;
   flex-shrink: 0;
-
   color: #fff;
   text-align: center;
   font-family: Lato;
@@ -42,7 +41,7 @@
 
 .UtilBarPopupText {
   visibility: hidden;
-  background-color: #56478f;
+  background-color: var(--primary);
   text-align: center;
   display: block;
   padding: var(--s);
@@ -77,9 +76,9 @@
 
 .SearchBar {
   width: 80%;
-  height: 27px;
-  flex-shrink: 0;
-  color: #56478f;
+  height: 26px;
+  flex-shrink: 1;
+  color: var(--primary);
 
   font-family: Lato;
   font-size: 15px;
@@ -87,15 +86,29 @@
   font-weight: 400;
   line-height: normal;
   border-radius: 10px;
-  background: rgba(86, 71, 143, 0.4);
+  background: var(--primary--dim);
   border: none;
-  margin: 0px var(--s);
+  margin: var(--s);
 }
 
 .AddButton {
   width: 27px;
   height: 27px;
-  flex-shrink: 0;
+  flex: none;
   border-radius: 30px;
-  background: #56478f;
+  background: var(--primary);
+  margin: var(--s);
+}
+
+.tagButton {
+  background-color: var(--tagcolor);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  margin: 0px 5px 5px 0px;
+}
+
+.TagButtons {
+  display: flex;
+  justify-content: center;
 }
