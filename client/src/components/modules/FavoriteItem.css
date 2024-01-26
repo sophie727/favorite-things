@@ -16,19 +16,19 @@
   font-weight: 400;
   line-height: normal;
 
-  width: 80%;
   display: flex;
   margin-left: auto;
   margin-right: auto;
 }
 
 .FavoriteItemLeftCol {
-  margin: var(--s);
+  margin: var(--m);
 }
 
 .FavoriteItemRightCol {
-  margin: 0 var(--s);
-  max-width: 80%;
+  padding: 0 var(--m);
+  max-width: 70%;
+  word-wrap: break-word;
 }
 
 .Tag {

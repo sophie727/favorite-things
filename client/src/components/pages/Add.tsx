@@ -100,7 +100,10 @@ const Add = (props: Props) => {
       <div className="AddContent">
         <span>Item:</span>
         <span>
-          <input className="AddInput" onChange={(event) => setName(event.target.value)} />
+          <input
+            className="AddInput"
+            onChange={(event) => setName(event.target.value)}
+          />
         </span>
       </div>
       <div className="AddContent">
@@ -115,12 +118,18 @@ const Add = (props: Props) => {
       <div className="AddContent">
         <span>Link:</span>
         <span>
-          <input className="AddInput" onChange={(event) => setLink(event.target.value)} />
+          <input
+            className="AddInput"
+            onChange={(event) => setLink(event.target.value)}
+          />
         </span>
       </div>
       <div className="AddContent">
         <span>Image link:</span>{" "}
-        <input className="AddInput" onChange={(event) => setPicture(event.target.value)} />
+        <input
+          className="AddInput"
+          onChange={(event) => setPicture(event.target.value)}
+        />
       </div>
       <div className="AddContent">
         <span>Tags:</span>
