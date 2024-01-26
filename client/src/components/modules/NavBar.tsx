@@ -15,18 +15,20 @@ type Props = {
 
 const NavBar = (props: Props) => {
   const { handleLogin, handleLogout } = props;
-  const createMenu = () => {
-    var popup = document.getElementById("MenuPopup");
-    popup?.classList.toggle("show");
-  };
   return (
     <>
       <nav className="NavBar">
-        <button className="NavBarItem NavBarMenu" onClick={createMenu}>
-          <hr className="NavBarMenuLine"></hr>
-          <hr className="NavBarMenuLine"></hr>
-          <hr className="NavBarMenuLine"></hr>
-        </button>
+        <div className="NavBarMenu">
+          <button className="NavBarItem NavBarMenuButton">
+            <hr className="NavBarMenuLine"></hr>
+            <hr className="NavBarMenuLine"></hr>
+            <hr className="NavBarMenuLine"></hr>
+          </button>
+          <div className="NavBarMenuDropdown">
+            <a href="/"> Home</a>
+            <a href="/add"> Add Page</a>
+          </div>
+        </div>
         <a className="NavBarItem NavBarTitle" href="/">
           My Favorite Things
         </a>

@@ -55,7 +55,7 @@ const UtilBar = (props: Props) => {
             </div>
           </div>
         </button>
-        <input className="UtilBarItem SearchBar" placeholder="Search" />
+        <input className="UtilBarItem SearchBar" placeholder=" Search" />
         <a href="/add/">
           <button className="UtilBarItem UtilBarButton AddButton">+</button>
         </a>

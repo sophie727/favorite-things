@@ -4,7 +4,7 @@
   background: #56478f;
   display: flex;
   align-items: center;
-  padding: 5px;
+  padding: 0px;
 }
 
 .NavBarItem {
@@ -14,15 +14,16 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  padding: 0 var(--s);
+  padding: 5px;
   display: inline-flex;
 }
 
-.NavBarMenu {
+.NavBarMenuButton {
   display: flex;
   flex-direction: column;
   background-color: #56478f;
   border: none;
+  padding: 15px;
 }
 
 .NavBarMenuLine {
@@ -34,27 +35,44 @@
   border-radius: 1px;
 }
 
-.NavBarPopupTextContainer {
-  margin: 0 20vw 0 20vw;
-  width: 40vw;
+.NavBarMenuDropdown {
+  display: none;
+  position: absolute;
+  width: 100%;
+  padding: 10px;
 }
 
-.NavBarPopupText {
-  visibility: hidden;
-  background-color: var(--primary);
-  text-align: center;
+.NavBarMenu:hover .NavBarMenuDropdown {
   display: block;
-  padding: var(--s);
-  position: relative;
-  z-index: 1000;
-  margin: auto;
+  width: 100px;
+  background-color: var(--primary--dark);
 }
 
-.NavBarPopupTextContainer .show {
-  visibility: visible;
-  -webkit-animation: fadeIn 1s;
-  animation: fadeIn 1s;
+.NavBarMenuDropdown a {
+  display: block;
+  color: white;
+  padding: 5px;
+  text-decoration: none;
 }
+
+.NavBarMenuDropdown a:hover {
+  background-color: var(--primary--light);
+  color: var(--primary--dark);
+}
+
+/*
+<div className="NavBarMenu">
+<button className="NavBarItem NavBarMenuButton" onClick={createMenu}>
+  <hr className="NavBarMenuLine"></hr>
+  <hr className="NavBarMenuLine"></hr>
+  <hr className="NavBarMenuLine"></hr>
+</button>
+<div className="NavBarMenuDropdown">
+  <a href="/"> Home</a>
+  <a href="/add"> Add Page</a>
+</div>
+</div>
+*/
 
 .NavBarTitle {
   font-size: 20px;
