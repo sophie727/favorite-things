@@ -11,8 +11,10 @@ import User from "../../../shared/User";
 import "../utilities.css";
 import NavBar from "./modules/NavBar";
 import Add from "./pages/Add";
+import Profile from "./pages/Profile";
 
-const GOOGLE_CLIENT_ID = "480391270274-2g6n3lmsb18t38qcem0vco150buo8l3v.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID =
+  "480391270274-2g6n3lmsb18t38qcem0vco150buo8l3v.apps.googleusercontent.com";
 
 const App = () => {
   const [tagOptions, setTagOptions] = useState([""]);
@@ -41,7 +43,10 @@ const App = () => {
 
   const handleLogin = (credentialResponse: CredentialResponse) => {
     const userToken = credentialResponse.credential;
-    const decodedCredential = jwt_decode(userToken as string) as { name: string; email: string };
+    const decodedCredential = jwt_decode(userToken as string) as {
+      name: string;
+      email: string;
+    };
     console.log(`Logged in as ${decodedCredential.name}`);
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
@@ -79,7 +84,11 @@ const App = () => {
   return (
     <>
       <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-        <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+        <NavBar
+          handleLogin={handleLogin}
+          handleLogout={handleLogout}
+          userId={userId}
+        />
         {userId === undefined ? (
           <>Please log in to proceed.</>
         ) : (
@@ -87,9 +96,13 @@ const App = () => {
             <Routes>
               <Route element={<Home tagOptions={tagOptions} userId={userId} />} path="/" />
               <Route
-                element={<Add tagOptions={tagOptions} setTagOptions={setTagOptions} />}
+                element={
+                  <Add tagOptions={tagOptions} setTagOptions={setTagOptions} />
+                }
                 path="/add"
               />
+              <Route element={<Profile />} path="/profile" />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

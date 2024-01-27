@@ -27,6 +27,7 @@ const NavBar = (props: Props) => {
           <div className="NavBarMenuDropdown">
             <a href="/"> Home</a>
             <a href="/add"> Add Page</a>
+            <a href="/profile"> Profile Page</a>
           </div>
         </div>
         <a className="NavBarItem NavBarTitle" href="/">

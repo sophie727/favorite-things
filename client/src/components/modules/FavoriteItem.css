@@ -1,6 +1,8 @@
 .FavoriteItemPic {
   width: 10vw;
+  height: 10vw;
   border-radius: 10%;
+  object-fit: cover;
 }
 
 #FavoriteItemStars {
@@ -23,6 +25,9 @@
 
 .FavoriteItemLeftCol {
   margin: var(--m);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
 
 .FavoriteItemRightCol {
