@@ -45,7 +45,7 @@ const Home = (props: Props) => {
       setFavoriteItems(items);
       console.log(items);
     });
-  }, [searchText]);
+  }, [filterTags, searchText]);
 
   const addFavorite = (newFav: Item, user_id: string) => {
     if (user_id !== props.userId) {

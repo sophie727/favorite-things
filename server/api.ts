@@ -131,12 +131,7 @@ router.get("/dailyfav", auth.ensureLoggedIn, async (req, res) => {
 
 router.get("/favorites", auth.ensureLoggedIn, async (req, res) => {
   const user_id = req.user?._id;
-  const searchTextUnknownType = req.query.searchText;
-  let searchText: string = "";
-
-  if (typeof searchTextUnknownType === "string") {
-    searchText = searchTextUnknownType;
-  }
+  const searchText = req.query.searchText as string;
 
   ItemModel.find({ user_id: user_id, name: { $regex: searchText, $options: "i" } }).then(
     async (items) => {
@@ -157,7 +152,25 @@ router.get("/favorites", auth.ensureLoggedIn, async (req, res) => {
             return fullItem;
           });
         });
-        res.send(await Promise.all(shuffledFullItems));
+        const filterTagsString = req.query.filterTags as string;
+        const filterTags = filterTagsString.split(",").filter((tag) => tag != "");
+
+        const filteredFullItems = (await Promise.all(shuffledFullItems)).filter((fullItem) => {
+          for (const filterTag of filterTags) {
+            let missing: boolean = true;
+            for (const availableTag of fullItem.tags) {
+              if (filterTag === availableTag) {
+                missing = false;
+                break;
+              }
+            }
+            if (missing) {
+              return false;
+            }
+          }
+          return true;
+        });
+        res.send(filteredFullItems);
       }
     }
   ); // TODO: Check how regexes work to fix this, look in req.query for stuff
@@ -175,7 +188,6 @@ router.post("/addFavorite", auth.ensureLoggedIn, (req, res) => {
     user_id: user_id,
   });
   newFavorite.save().then((savedItem) => {
-    console.log(req.body.newFav);
     const newTags = req.body.newFav.tags.map(
       (tag) => new TagModel({ tag: tag, parent_id: savedItem._id })
     );
