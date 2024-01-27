@@ -1,0 +1,13 @@
+.Profile {
+  display: flex;
+  margin: var(--l);
+}
+.ProfileColumn {
+  margin: var(--l);
+}
+.ProfilePicture {
+  border-radius: 100%;
+  width: 50vw;
+  height: 50vw;
+  object-fit: cover;
+}

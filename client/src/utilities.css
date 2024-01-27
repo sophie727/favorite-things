@@ -36,6 +36,12 @@
 
 h1 {
   color: #3a297b;
+  font-family: Lato;
+}
+
+p {
+  color: var(--primary);
+  font-family: Lato;
 }
 
 body {
