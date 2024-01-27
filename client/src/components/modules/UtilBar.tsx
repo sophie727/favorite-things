@@ -5,6 +5,7 @@ type Props = {
   tagOptions: string[];
   filterTags: string[];
   setFilterTags: React.Dispatch<React.SetStateAction<string[]>>;
+  setSearchText: React.Dispatch<React.SetStateAction<string>>;
 };
 const UtilBar = (props: Props) => {
   const makeFiltersDropdown = () => {
@@ -30,10 +31,7 @@ const UtilBar = (props: Props) => {
   return (
     <>
       <div className="UtilBarContainer">
-        <button
-          className="UtilBarItem UtilBarButton UtilBarFilter"
-          onClick={makeFiltersDropdown}
-        >
+        <button className="UtilBarItem UtilBarButton UtilBarFilter" onClick={makeFiltersDropdown}>
           Filters
           <div className="UtilBarPopupTextContainer">
             <div className="UtilBarPopupText" id="FilterPopup">
@@ -44,10 +42,7 @@ const UtilBar = (props: Props) => {
                   return;
                 }
                 return (
-                  <button
-                    onClick={() => addTagFilter(tag)}
-                    className="tagButton"
-                  >
+                  <button onClick={() => addTagFilter(tag)} className="tagButton">
                     {tag}
                   </button>
                 );
@@ -55,7 +50,13 @@ const UtilBar = (props: Props) => {
             </div>
           </div>
         </button>
-        <input className="UtilBarItem SearchBar" placeholder=" Search" />
+        <input
+          className="UtilBarItem SearchBar"
+          placeholder=" Search"
+          onChange={(event) => {
+            props.setSearchText(event.target.value);
+          }}
+        />
         <a href="/add/">
           <button className="UtilBarItem UtilBarButton AddButton">+</button>
         </a>

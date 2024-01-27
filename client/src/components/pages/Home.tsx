@@ -31,6 +31,7 @@ const Home = (props: Props) => {
   const [dailyFavorite, setDailyFavorite] = useState<Item>(defaultItem);
   const [favoriteItems, setFavoriteItems] = useState<Item[]>([]);
   const [filterTags, setFilterTags] = useState<string[]>([]);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     document.title = "Home";
@@ -40,11 +41,11 @@ const Home = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    get("/api/favorites", { filterTags: [], searchText: "" }).then((items) => {
+    get("/api/favorites", { filterTags: filterTags, searchText: searchText }).then((items) => {
       setFavoriteItems(items);
       console.log(items);
     });
-  }, []);
+  }, [searchText]);
 
   const addFavorite = (newFav: Item, user_id: string) => {
     if (user_id !== props.userId) {
@@ -73,6 +74,7 @@ const Home = (props: Props) => {
           tagOptions={props.tagOptions}
           filterTags={filterTags}
           setFilterTags={setFilterTags}
+          setSearchText={setSearchText}
         />
       </div>
       <div>

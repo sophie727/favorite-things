@@ -131,28 +131,36 @@ router.get("/dailyfav", auth.ensureLoggedIn, async (req, res) => {
 
 router.get("/favorites", auth.ensureLoggedIn, async (req, res) => {
   const user_id = req.user?._id;
+  const searchTextUnknownType = req.query.searchText;
+  let searchText: string = "";
 
-  ItemModel.find({ user_id: user_id }).then(async (items) => {
-    if (items.length == 0) {
-      res.send([]);
-    } else {
-      const shuffledItems: ItemType[] = shuffleArray(items);
-      const shuffledFullItems = shuffledItems.map((favItem) => {
-        return TagModel.find({ parent_id: favItem._id }).then((tags) => {
-          const fullItem: FavoriteItemType = {
-            picture: favItem.picture,
-            stars: favItem.stars,
-            name: favItem.name,
-            description: favItem.description,
-            link: favItem.link,
-            tags: tags.map((tag) => tag.tag),
-          };
-          return fullItem;
+  if (typeof searchTextUnknownType === "string") {
+    searchText = searchTextUnknownType;
+  }
+
+  ItemModel.find({ user_id: user_id, name: { $regex: searchText, $options: "i" } }).then(
+    async (items) => {
+      if (items.length == 0) {
+        res.send([]);
+      } else {
+        const shuffledItems: ItemType[] = shuffleArray(items);
+        const shuffledFullItems = shuffledItems.map((favItem) => {
+          return TagModel.find({ parent_id: favItem._id }).then((tags) => {
+            const fullItem: FavoriteItemType = {
+              picture: favItem.picture,
+              stars: favItem.stars,
+              name: favItem.name,
+              description: favItem.description,
+              link: favItem.link,
+              tags: tags.map((tag) => tag.tag),
+            };
+            return fullItem;
+          });
         });
-      });
-      res.send(await Promise.all(shuffledFullItems));
+        res.send(await Promise.all(shuffledFullItems));
+      }
     }
-  }); // TODO: Check how regexes work to fix this, look in req.query for stuff
+  ); // TODO: Check how regexes work to fix this, look in req.query for stuff
   // TODO: Also check how we want filters to work: remove everything that doesn't have any of the tags, or keep only things with all tags?
 });
 
