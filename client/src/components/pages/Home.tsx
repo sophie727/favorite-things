@@ -5,8 +5,9 @@ import DailyFavorite from "../modules/DailyFavorite";
 import UtilBar from "../modules/UtilBar";
 import FavoriteItem from "../modules/FavoriteItem";
 import { get } from "../../utilities";
+import { socket } from "../../client-socket";
 
-type Props = { tagOptions: string[] };
+type Props = { tagOptions: string[]; userId: string };
 
 type Item = {
   picture: string;
@@ -43,6 +44,23 @@ const Home = (props: Props) => {
       setFavoriteItems(items);
       console.log(items);
     });
+  }, []);
+
+  const addFavorite = (newFav: Item, user_id: string) => {
+    if (user_id !== props.userId) {
+      console.log(user_id, props.userId);
+      return;
+    }
+    setFavoriteItems((prevFavorites) => {
+      return prevFavorites.concat([newFav]);
+    });
+  };
+
+  useEffect(() => {
+    socket.on("addFav", addFavorite);
+    return () => {
+      socket.off("addFav", addFavorite);
+    };
   }, []);
 
   return (

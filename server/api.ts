@@ -171,6 +171,7 @@ router.post("/addFavorite", auth.ensureLoggedIn, (req, res) => {
     const newTags = req.body.newFav.tags.map(
       (tag) => new TagModel({ tag: tag, parent_id: savedItem._id })
     );
+    socketManager.getIo().emit("addFav", req.body.newFav, user_id);
     res.send(Promise.all(newTags.map((tagModel) => tagModel.save())).then(() => req.body.newFav));
   });
 });
@@ -188,6 +189,7 @@ router.post("/addTag", auth.ensureLoggedIn, (req, res) => {
     user_id: req.user?._id,
   });
   newTag.save().then((savedTag) => {
+    socketManager.getIo().emit("newTag", savedTag);
     res.send(savedTag);
   });
 });
