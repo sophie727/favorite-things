@@ -37,7 +37,7 @@ const App = () => {
     get("/api/tags").then((tags: string[]) => {
       setTagOptions([""].concat(tags));
     });
-  }, []);
+  }, [userId]);
 
   const handleLogin = (credentialResponse: CredentialResponse) => {
     const userToken = credentialResponse.credential;
@@ -54,6 +54,26 @@ const App = () => {
     post("/api/logout");
   };
 
+  const addTag = (newTag: { tag: string; _id: string; user_id: string }) => {
+    if (userId === newTag.user_id) {
+      setTagOptions((prevTagOptions) => {
+        for (const tag of prevTagOptions) {
+          if (newTag.tag === tag) {
+            return prevTagOptions;
+          }
+        }
+        return prevTagOptions.concat([newTag.tag]);
+      });
+    }
+  };
+
+  useEffect(() => {
+    socket.on("newTag", addTag);
+    return () => {
+      socket.off("newTag", addTag);
+    };
+  }, []);
+
   // NOTE:
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.
   return (
@@ -65,7 +85,7 @@ const App = () => {
         ) : (
           <BrowserRouter>
             <Routes>
-              <Route element={<Home tagOptions={tagOptions} />} path="/" />
+              <Route element={<Home tagOptions={tagOptions} userId={userId} />} path="/" />
               <Route
                 element={<Add tagOptions={tagOptions} setTagOptions={setTagOptions} />}
                 path="/add"
