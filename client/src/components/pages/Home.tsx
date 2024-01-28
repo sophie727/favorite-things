@@ -16,6 +16,7 @@ type Item = {
   description: string;
   link: string;
   tags: string[];
+  private: string;
 };
 
 const Home = (props: Props) => {
@@ -26,6 +27,7 @@ const Home = (props: Props) => {
     description: "Super amazing",
     link: "",
     tags: [],
+    private: "Public",
   };
 
   const [dailyFavorite, setDailyFavorite] = useState<Item>(defaultItem);
@@ -41,7 +43,10 @@ const Home = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    get("/api/favorites", { filterTags: filterTags, searchText: searchText }).then((items) => {
+    get("/api/favorites", {
+      filterTags: filterTags,
+      searchText: searchText,
+    }).then((items) => {
       setFavoriteItems(items);
       console.log(items);
     });
@@ -64,6 +69,14 @@ const Home = (props: Props) => {
     };
   }, []);
 
+  const makePrivate = (s) => {
+    if (s == "Private") {
+      return "Private";
+    } else {
+      return "Public";
+    }
+  };
+
   return (
     <>
       <div>
@@ -80,8 +93,17 @@ const Home = (props: Props) => {
       <div>
         {favoriteItems.length > 0 ? (
           favoriteItems.map((item, index) => (
-            <div className="HomeFavoriteItemContainer" key={index}>
-              <FavoriteItem item={item} />
+            <div className="HomeFavoriteItemContainer u-flex" key={index}>
+              <div className="HomeFavoriteItem">
+                {" "}
+                <FavoriteItem item={item} />
+              </div>
+              <div className="smallTexts">
+                <div className="smallText"> {makePrivate(item.private)}</div>
+                <a className="smallText" href="./add">
+                  Edit
+                </a>
+              </div>
             </div>
           ))
         ) : (

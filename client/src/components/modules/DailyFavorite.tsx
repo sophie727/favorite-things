@@ -10,6 +10,7 @@ type Item = {
   description: string;
   link: string;
   tags: string[];
+  private: string;
 };
 
 type Props = { item: Item };

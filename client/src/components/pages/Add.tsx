@@ -15,6 +15,7 @@ type Item = {
   description: string;
   link: string;
   tags: string[];
+  private: string;
 };
 
 const Add = (props: Props) => {
@@ -26,6 +27,7 @@ const Add = (props: Props) => {
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
   const [chosenTags, setChosenTags] = useState<string[]>([]);
+  const [chosenPrivate, setPrivate] = useState("");
 
   const addFavorite = () => {
     const favItem: Item = {
@@ -35,6 +37,7 @@ const Add = (props: Props) => {
       description: description,
       link: link,
       tags: chosenTags,
+      private: chosenPrivate,
     };
     console.log(favItem);
     post("/api/addFavorite", { newFav: favItem }).then((newFav) => {
@@ -185,6 +188,19 @@ const Add = (props: Props) => {
             </button>
           ))}
         </span>
+      </div>
+      <div className="AddContent u-flex-alignCenter u-rightJustify AddPrivate">
+        <span className="AddPrivateElement">Private: </span>
+        <label className="switch">
+          <input type="hidden" name="AddPrivateInput" value="Public" />
+          <input
+            type="checkbox"
+            name="AddPrivateInput"
+            value="Private"
+            onChange={(event) => setPrivate(event.target.value)}
+          />
+          <div className="slider"></div>
+        </label>
       </div>
       <div className="AddContent AddButtonContainer">
         <button className="AddButton LargeAddButton" onClick={addFavorite}>

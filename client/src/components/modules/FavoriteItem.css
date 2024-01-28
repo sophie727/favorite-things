@@ -36,6 +36,11 @@
   word-wrap: break-word;
 }
 
+.FavoriteItemSmallText {
+  font-size: 16px;
+  text-decoration: none;
+  margin: auto 0px auto auto;
+}
 .Tag {
   height: 19px;
   font-size: 10px;

@@ -6,5 +6,18 @@
   border-radius: 16px;
 
   display: block;
-  margin: var(--s) auto;
+  margin: 1% auto;
+  padding: 1%;
+}
+
+.smallTexts {
+  text-align: right;
+  flex-grow: 1;
+  color: var(--primary);
+  margin: var(--s);
+}
+
+.smallText {
+  margin: 5px;
+  text-decoration: none;
 }

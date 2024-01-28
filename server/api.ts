@@ -37,6 +37,7 @@ type ItemType = {
   link: string;
   _id: string;
   user_id: string;
+  private: string;
 };
 
 type FavoriteItemType = {
@@ -46,6 +47,7 @@ type FavoriteItemType = {
   description: string;
   link: string;
   tags: string[];
+  private: string;
 };
 
 /*const defaultFavorites: FavoriteItemType[] = [
@@ -86,6 +88,7 @@ const defaultItem = {
   description: "Super amazing",
   link: "",
   tags: [],
+  private: "Public",
 };
 
 const shuffleArray = (array) => {
@@ -99,7 +102,10 @@ const shuffleArray = (array) => {
     currentIndex--;
 
     // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
   }
 
   return array;
@@ -122,6 +128,7 @@ router.get("/dailyfav", auth.ensureLoggedIn, async (req, res) => {
           description: favItem.description,
           link: favItem.link,
           tags: tags.map((tag) => tag.tag),
+          private: favItem.private,
         };
         res.send(fullItem);
       });
@@ -133,29 +140,33 @@ router.get("/favorites", auth.ensureLoggedIn, async (req, res) => {
   const user_id = req.user?._id;
   const searchText = req.query.searchText as string;
 
-  ItemModel.find({ user_id: user_id, name: { $regex: searchText, $options: "i" } }).then(
-    async (items) => {
-      if (items.length == 0) {
-        res.send([]);
-      } else {
-        const shuffledItems: ItemType[] = shuffleArray(items);
-        const shuffledFullItems = shuffledItems.map((favItem) => {
-          return TagModel.find({ parent_id: favItem._id }).then((tags) => {
-            const fullItem: FavoriteItemType = {
-              picture: favItem.picture,
-              stars: favItem.stars,
-              name: favItem.name,
-              description: favItem.description,
-              link: favItem.link,
-              tags: tags.map((tag) => tag.tag),
-            };
-            return fullItem;
-          });
+  ItemModel.find({
+    user_id: user_id,
+    name: { $regex: searchText, $options: "i" },
+  }).then(async (items) => {
+    if (items.length == 0) {
+      res.send([]);
+    } else {
+      const shuffledItems: ItemType[] = shuffleArray(items);
+      const shuffledFullItems = shuffledItems.map((favItem) => {
+        return TagModel.find({ parent_id: favItem._id }).then((tags) => {
+          const fullItem: FavoriteItemType = {
+            picture: favItem.picture,
+            stars: favItem.stars,
+            name: favItem.name,
+            description: favItem.description,
+            link: favItem.link,
+            tags: tags.map((tag) => tag.tag),
+            private: favItem.private,
+          };
+          return fullItem;
         });
-        const filterTagsString = req.query.filterTags as string;
-        const filterTags = filterTagsString.split(",").filter((tag) => tag != "");
+      });
+      const filterTagsString = req.query.filterTags as string;
+      const filterTags = filterTagsString.split(",").filter((tag) => tag != "");
 
-        const filteredFullItems = (await Promise.all(shuffledFullItems)).filter((fullItem) => {
+      const filteredFullItems = (await Promise.all(shuffledFullItems)).filter(
+        (fullItem) => {
           for (const filterTag of filterTags) {
             let missing: boolean = true;
             for (const availableTag of fullItem.tags) {
@@ -169,11 +180,11 @@ router.get("/favorites", auth.ensureLoggedIn, async (req, res) => {
             }
           }
           return true;
-        });
-        res.send(filteredFullItems);
-      }
+        }
+      );
+      res.send(filteredFullItems);
     }
-  ); // TODO: Check how regexes work to fix this, look in req.query for stuff
+  }); // TODO: Check how regexes work to fix this, look in req.query for stuff
   // TODO: Also check how we want filters to work: remove everything that doesn't have any of the tags, or keep only things with all tags?
 });
 
@@ -186,13 +197,18 @@ router.post("/addFavorite", auth.ensureLoggedIn, (req, res) => {
     description: req.body.newFav.description,
     link: req.body.newFav.link,
     user_id: user_id,
+    private: req.body.newFav.private,
   });
   newFavorite.save().then((savedItem) => {
     const newTags = req.body.newFav.tags.map(
       (tag) => new TagModel({ tag: tag, parent_id: savedItem._id })
     );
     socketManager.getIo().emit("addFav", req.body.newFav, user_id);
-    res.send(Promise.all(newTags.map((tagModel) => tagModel.save())).then(() => req.body.newFav));
+    res.send(
+      Promise.all(newTags.map((tagModel) => tagModel.save())).then(
+        () => req.body.newFav
+      )
+    );
   });
 });
 

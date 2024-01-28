@@ -91,6 +91,71 @@
   margin: var(--s);
 }
 
+.AddPrivate {
+  justify-content: right;
+  margin: 8px;
+}
+
+.AddPrivateElement {
+  margin: var(--s);
+}
+
+.switch {
+  width: 60px;
+  height: 34px;
+  background-color: var(--primary--dim);
+  border-radius: 30px;
+  border: none;
+  color: white;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  color: none;
+  border-radius: 30px;
+}
+
+input:checked + .slider {
+  background-color: var(--primary);
+}
+
+input:focus + .slider {
+  box-shadow: none;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
 .LargeAddButton {
   width: 45px;
 }

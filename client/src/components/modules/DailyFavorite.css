@@ -3,5 +3,5 @@
   height: auto;
   flex-shrink: 0;
   background: var(--primary--light);
-  padding: 10px;
+  padding: 10px 0px;
 }

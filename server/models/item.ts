@@ -7,6 +7,7 @@ const ItemSchema = new Schema({
   description: String,
   link: String,
   user_id: String,
+  private: String,
 });
 
 export interface Item extends Document {
@@ -17,6 +18,7 @@ export interface Item extends Document {
   user_id: string;
   link: string;
   _id: string;
+  private: string;
 }
 const ItemModel = model<Item>("Item", ItemSchema);
 

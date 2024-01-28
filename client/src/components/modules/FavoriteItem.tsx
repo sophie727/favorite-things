@@ -9,6 +9,7 @@ type Item = {
   description: string;
   link: string;
   tags: string[];
+  private: string;
 };
 
 type Props = { item: Item };
@@ -29,7 +30,6 @@ const FavoriteItem = (props: Props) => {
         </div>
         <div id="FavoriteItemStars">{stars}</div>
       </div>
-
       <div className="FavoriteItemRightCol">
         <div>
           <h1>{props.item.name}</h1>
