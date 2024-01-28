@@ -12,6 +12,7 @@ import "../utilities.css";
 import NavBar from "./modules/NavBar";
 import Add from "./pages/Add";
 import Profile from "./pages/Profile";
+import ProfileEdit from "./pages/ProfileEdit";
 
 const GOOGLE_CLIENT_ID =
   "480391270274-2g6n3lmsb18t38qcem0vco150buo8l3v.apps.googleusercontent.com";
@@ -94,7 +95,10 @@ const App = () => {
         ) : (
           <BrowserRouter>
             <Routes>
-              <Route element={<Home tagOptions={tagOptions} userId={userId} />} path="/" />
+              <Route
+                element={<Home tagOptions={tagOptions} userId={userId} />}
+                path="/"
+              />
               <Route
                 element={
                   <Add tagOptions={tagOptions} setTagOptions={setTagOptions} />
@@ -102,7 +106,7 @@ const App = () => {
                 path="/add"
               />
               <Route element={<Profile />} path="/profile" />
-
+              <Route element={<ProfileEdit />} path="/profile%edit" />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

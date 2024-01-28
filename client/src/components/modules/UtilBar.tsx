@@ -31,7 +31,10 @@ const UtilBar = (props: Props) => {
   return (
     <>
       <div className="UtilBarContainer">
-        <button className="UtilBarItem UtilBarButton UtilBarFilter" onClick={makeFiltersDropdown}>
+        <button
+          className="UtilBarItem UtilBarButton UtilBarFilter"
+          onClick={makeFiltersDropdown}
+        >
           Filters
           <div className="UtilBarPopupTextContainer">
             <div className="UtilBarPopupText" id="FilterPopup">
@@ -42,7 +45,10 @@ const UtilBar = (props: Props) => {
                   return;
                 }
                 return (
-                  <button onClick={() => addTagFilter(tag)} className="tagButton">
+                  <button
+                    onClick={() => addTagFilter(tag)}
+                    className="tagButton"
+                  >
                     {tag}
                   </button>
                 );

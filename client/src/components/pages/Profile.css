@@ -1,13 +1,26 @@
 .Profile {
   display: flex;
+  margin: 2% 6%;
+}
+.ProfileLeftColumn {
   margin: var(--l);
 }
-.ProfileColumn {
+.ProfileRightColumn {
   margin: var(--l);
+  flex: auto;
 }
 .ProfilePicture {
   border-radius: 100%;
-  width: 50vw;
-  height: 50vw;
+  width: 40vw;
+  height: 40vw;
   object-fit: cover;
+}
+.ProfileEditButton {
+  font-size: 16px;
+  text-decoration: none;
+  margin: auto 0px auto auto;
+}
+
+.ProfileText {
+  color: var(--primary);
 }

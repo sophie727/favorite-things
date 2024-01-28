@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import "./Profile.css";
-import DailyFavorite from "../modules/DailyFavorite";
-import UtilBar from "../modules/UtilBar";
-import FavoriteItem from "../modules/FavoriteItem";
-import { get } from "../../utilities";
 
 type Props = {};
 
@@ -30,15 +26,24 @@ const Profile = (props: Props) => {
 
   return (
     <div className="Profile">
-      <div className="ProfileColumn">
+      <div className="ProfileLeftColumn">
         <img className="ProfilePicture" src={personalProfile.picture} />
       </div>
-      <div className="ProfileColumn">
-        <h1> Profile</h1>
-        <p> Name: {personalProfile.name}</p>
-        <p className="ProfileDescription"> {personalProfile.description} </p>
-        <p> Friends: {personalProfile.friends} </p>
-        <p> Friend Requests: {personalProfile.friends} </p>
+      <div className="ProfileRightColumn">
+        <div className="u-flex-alignCenter">
+          {" "}
+          <h1> Profile</h1>
+          <a href="/profile%edit" className="ProfileEditButton">
+            Edit
+          </a>
+        </div>
+        <div className="ProfileText">
+          {" "}
+          <p> Name: {personalProfile.name}</p>
+          <p className="ProfileDescription"> {personalProfile.description} </p>
+          <p> Friends: {personalProfile.friends} </p>
+          <p> Friend Requests: {personalProfile.friends} </p>
+        </div>
       </div>
     </div>
   );

@@ -31,7 +31,7 @@
   --xs: 4px;
   --s: 8px;
   --m: 16px;
-  --l: 24px;
+  --l: 2%;
 }
 
 h1 {
@@ -40,7 +40,6 @@ h1 {
 }
 
 p {
-  color: var(--primary);
   font-family: Lato;
 }
 
@@ -65,10 +64,12 @@ form {
 }
 
 .u-flex-justifyCenter {
+  display: flex;
   justify-content: center;
 }
 
 .u-flex-alignCenter {
+  display: flex;
   align-items: center;
 }
 
