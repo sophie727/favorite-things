@@ -12,7 +12,7 @@
 .FavoriteItemContainer {
   color: var(--primary);
 
-  font-family: Lato;
+  font-family: "Lato";
   font-size: 12px;
   font-style: normal;
   font-weight: 400;

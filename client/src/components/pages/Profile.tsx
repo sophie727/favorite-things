@@ -9,7 +9,8 @@ type Item = {
   name: string;
   description: string;
   friends: string[];
-  friendRequests: string[];
+  incomingFriendRequests: string[];
+  outgoingFriendRequests: string[];
 };
 
 const Profile = (props: Props) => {
@@ -19,7 +20,8 @@ const Profile = (props: Props) => {
     name: "FirstName LastName",
     description: "Web.design is the best, 10/10!",
     friends: [],
-    friendRequests: [],
+    outgoingFriendRequests: [],
+    incomingFriendRequests: [],
   };
 
   const [personalProfile, setPersonalProfile] = useState<Item>(defaultItem);
@@ -42,7 +44,18 @@ const Profile = (props: Props) => {
           <p> Name: {personalProfile.name}</p>
           <p className="ProfileDescription"> {personalProfile.description} </p>
           <p> Friends: {personalProfile.friends} </p>
-          <p> Friend Requests: {personalProfile.friends} </p>
+          <p>
+            {" "}
+            Incoming Friend Requests: {
+              personalProfile.incomingFriendRequests
+            }{" "}
+          </p>
+          <p>
+            {" "}
+            Outgoing Friend Requests: {
+              personalProfile.outgoingFriendRequests
+            }{" "}
+          </p>
         </div>
       </div>
     </div>

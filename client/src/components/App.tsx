@@ -13,6 +13,7 @@ import NavBar from "./modules/NavBar";
 import Add from "./pages/Add";
 import Profile from "./pages/Profile";
 import ProfileEdit from "./pages/ProfileEdit";
+import Help from "./pages/Help";
 
 const GOOGLE_CLIENT_ID =
   "480391270274-2g6n3lmsb18t38qcem0vco150buo8l3v.apps.googleusercontent.com";
@@ -107,6 +108,7 @@ const App = () => {
               />
               <Route element={<Profile />} path="/profile" />
               <Route element={<ProfileEdit />} path="/profile%edit" />
+              <Route element={<Help />} path="/help" />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

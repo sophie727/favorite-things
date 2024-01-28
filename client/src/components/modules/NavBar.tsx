@@ -28,6 +28,7 @@ const NavBar = (props: Props) => {
             <a href="/"> Home</a>
             <a href="/add"> Add Page</a>
             <a href="/profile"> Profile Page</a>
+            <a href="/help"> Help</a>
           </div>
         </div>
         <a className="NavBarItem NavBarTitle" href="/">
