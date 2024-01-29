@@ -17,10 +17,12 @@ const Help = (props: Props) => {
         </p>
         <p>
           If you click open your profile page, note that there are such things
-          as "friends." If you Edit your profile, you can add friends, after
-          which clicking on their icon will show you all their public favorites.
+          as "friends." To add friends, go to the Community page (or click on
+          the + button in your profile), search for your friend's name, click on
+          their profile, and send them a friend request. After you become
+          friends, you can see each others' public favorites!
         </p>
-        <p>Give our site a go, we hope you like it!</p>
+        <p>Give our site a go. We hope you like it!</p>
       </div>
     </div>
   );

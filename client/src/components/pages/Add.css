@@ -4,7 +4,6 @@
   text-align: right;
   font-family: Lato;
   font-style: normal;
-  font-weight: 400;
   line-height: normal;
   padding: 0 10%;
 }
@@ -76,7 +75,7 @@
 .AddButton {
   border-radius: 10px;
   background: var(--primary);
-  width: 30px;
+  width: 27px;
   height: 27px;
   flex-shrink: 0;
 

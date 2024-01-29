@@ -29,6 +29,7 @@ const NavBar = (props: Props) => {
             <a href="/add"> Add Page</a>
             <a href="/profile"> Profile Page</a>
             <a href="/help"> Help</a>
+            <a href="/community"> Community </a>
           </div>
         </div>
         <a className="NavBarItem NavBarTitle" href="/">

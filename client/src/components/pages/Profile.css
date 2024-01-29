@@ -24,3 +24,27 @@
 .ProfileText {
   color: var(--primary);
 }
+
+.ProfileAddButton {
+  border-radius: 10px;
+  background: var(--primary);
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-family: Lato;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: none;
+  margin-left: 5px;
+}
+
+.ProfileAddButton a {
+  text-decoration: none;
+  color: white;
+}

@@ -18,7 +18,7 @@ const Profile = (props: Props) => {
     picture:
       "https://i.pinimg.com/736x/05/d3/a5/05d3a51c5fa2940a2f0710957f1dbd0d.jpg",
     name: "FirstName LastName",
-    description: "Web.design is the best, 10/10!",
+    description: "Web.lab is the best, 10/10!",
     friends: [],
     outgoingFriendRequests: [],
     incomingFriendRequests: [],
@@ -43,7 +43,13 @@ const Profile = (props: Props) => {
           {" "}
           <p> Name: {personalProfile.name}</p>
           <p className="ProfileDescription"> {personalProfile.description} </p>
-          <p> Friends: {personalProfile.friends} </p>
+          <div>
+            <span> Friends: {personalProfile.friends} </span>
+            <button className="ProfileAddButton">
+              {" "}
+              <a href="./community"> + </a>{" "}
+            </button>
+          </div>
           <p>
             {" "}
             Incoming Friend Requests: {

@@ -100,9 +100,14 @@ const Home = (props: Props) => {
               </div>
               <div className="smallTexts">
                 <div className="smallText"> {makePrivate(item.private)}</div>
-                <a className="smallText" href="./add">
-                  Edit
-                </a>
+                <div>
+                  <a className="smallText" href="./add">
+                    Edit
+                  </a>
+                </div>
+                <div>
+                  <button className="HomeDelete">Delete</button>
+                </div>
               </div>
             </div>
           ))
