@@ -6,6 +6,8 @@ const router = express.Router();
 import ItemModel from "./models/item";
 import TagModel from "./models/tag";
 import AllTagModel from "./models/AllTag";
+import FriendRequestModel from "./models/FriendRequest";
+import ProfileTextModel from "./models/ProfileText";
 
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
@@ -50,37 +52,6 @@ type FavoriteItemType = {
   private: boolean;
   id: string;
 };
-
-/*const defaultFavorites: FavoriteItemType[] = [
-  {
-    picture: "floofy_cat_picture",
-    stars: 4,
-    name: "Floofy Cats",
-    description:
-      "This is a description about why floofy cats are so cute. I like floofy cats because they’re soft and cute. Woohoo :) I like cute things. cute things are very cute. yay. Beep boop yay!",
-    links: [
-      "https://play.google.com/store/apps/details?id=cat.wallpaper.backgrounds&hl=en_US&pli=1",
-    ],
-    tags: ["animals", "cute things"],
-  },
-  {
-    picture: "penguin_picture",
-    stars: 3,
-    name: "Penguins",
-    description:
-      "I love penguins. look at them. so wonderful. yay :) did you know that some random person on a cruise tried to sneak a penguin back home? He kept the penguin in his bathroom, but it was so stinky that the staff found the penguin. Moral of the story: if you want to escape kidnapping, just be very stinky, or something :shrug:",
-    links: ["https://www.vox.com/2015/1/20/7861749/penguins-explained"],
-    tags: ["animals", "cute things"],
-  },
-  {
-    picture: "big_bang_picture",
-    stars: 5,
-    name: "The Big Bang Theory",
-    description: "I mean, explosions are great, so naturally, big explosions are even greater.",
-    links: ["https://www.space.com/25126-big-bang-theory.html"],
-    tags: ["science"],
-  },
-];*/
 
 const defaultItem = {
   picture: "N/A.",
@@ -233,6 +204,87 @@ router.post("/addTag", auth.ensureLoggedIn, (req, res) => {
   newTag.save().then((savedTag) => {
     socketManager.getIo().emit("newTag", savedTag);
     res.send(savedTag);
+  });
+});
+
+//
+// Profile stuff
+//
+
+type ProfileType = {
+  picture: string;
+  name: string;
+  description: string;
+  friends: string[];
+  incomingFriendRequests: string[];
+  outgoingFriendRequests: string[];
+};
+type ProfileText = {
+  picture: string;
+  name: string;
+  description: string;
+};
+const defaultProfile: ProfileType = {
+  picture: "https://i.pinimg.com/736x/05/d3/a5/05d3a51c5fa2940a2f0710957f1dbd0d.jpg",
+  name: "FirstName LastName",
+  description: "Web.design is the best, 10/10!",
+  friends: [],
+  incomingFriendRequests: [],
+  outgoingFriendRequests: [],
+};
+
+router.get("/profile", auth.ensureLoggedIn, (req, res) => {
+  const user_id = req.user?._id;
+  ProfileTextModel.findOne({ user_id: user_id }).then((profileText) => {
+    if (profileText === null) {
+      res.send(defaultProfile);
+    } else {
+      const profile: ProfileType = {
+        picture: profileText.picture,
+        name: profileText.name,
+        description: profileText.description,
+        friends: [],
+        incomingFriendRequests: [],
+        outgoingFriendRequests: [],
+      };
+      FriendRequestModel.find({ $or: [{ first_id: user_id }, { second_id: user_id }] }).then(
+        (friendPairs) => {
+          profile.friends = friendPairs
+            .filter((friendPair) => friendPair.accepted)
+            .map((friendPair) =>
+              friendPair.first_id === user_id ? friendPair.second_id : friendPair.first_id
+            );
+          profile.incomingFriendRequests = friendPairs
+            .filter((friendPair) => !friendPair.accepted && friendPair.second_id === user_id)
+            .map((friendPair) => friendPair.first_id);
+          profile.outgoingFriendRequests = friendPairs
+            .filter((friendPair) => !friendPair.accepted && friendPair.first_id === user_id)
+            .map((friendPair) => friendPair.second_id);
+          res.send(profile);
+        }
+      );
+    }
+  });
+});
+
+router.post("/profile", auth.ensureLoggedIn, (req, res) => {
+  const user_id = req.user?._id;
+  ProfileTextModel.remove({ user_id: user_id }).then(() => {
+    const newProfileText = new ProfileTextModel({
+      picture: req.body.newProfileText.picture,
+      name: req.body.newProfileText.name,
+      description: req.body.newProfileText.description,
+      user_id: user_id,
+    });
+    console.log(newProfileText);
+    newProfileText.save().then((savedProfileText) => {
+      socketManager.getIo().emit("profileEdit", {
+        picture: savedProfileText.picture,
+        name: savedProfileText.name,
+        description: savedProfileText.description,
+      });
+      res.send(savedProfileText);
+    });
   });
 });
 

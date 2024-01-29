@@ -1,52 +1,99 @@
 import React, { useState, useEffect } from "react";
+import { get, post } from "../../utilities";
 
 import "./ProfileEdit.css";
 
-type Props = {};
-
-type Item = {
+type ProfileType = {
   picture: string;
   name: string;
   description: string;
   friends: string[];
-  friendRequests: string[];
+  incomingFriendRequests: string[];
+  outgoingFriendRequests: string[];
 };
 
-const ProfileEdit = (props: Props) => {
-  const defaultItem = {
-    picture:
-      "https://i.pinimg.com/736x/05/d3/a5/05d3a51c5fa2940a2f0710957f1dbd0d.jpg",
-    name: "FirstName LastName",
-    description: "Web.design is the best, 10/10!",
-    friends: [],
-    friendRequests: [],
-  };
+const defaultProfile: ProfileType = {
+  picture: "",
+  name: "",
+  description: "",
+  friends: [],
+  incomingFriendRequests: [],
+  outgoingFriendRequests: [],
+};
+type ProfileText = {
+  picture: string;
+  name: string;
+  description: string;
+};
 
-  const [personalProfile, setPersonalProfile] = useState<Item>(defaultItem);
+type Props = {};
+
+const ProfileEdit = (props: Props) => {
+  const [profile, setProfile] = useState(defaultProfile);
+  const [name, setName] = useState("");
+  const [picture, setPicture] = useState("");
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    get("/api/profile")
+      .then((newProfile) => {
+        console.log(newProfile);
+        setProfile(newProfile);
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    setName(profile.name);
+    setPicture(profile.picture);
+    setDescription(profile.description);
+  }, [profile]);
+
+  const changeProfile = () => {
+    const newProfileText: ProfileText = { picture: picture, name: name, description: description };
+    console.log(newProfileText);
+    post("/api/profile", { newProfileText: newProfileText });
+  };
 
   return (
     <div className="ProfileEdit">
-      <h1 className="u-textCenter">New Profile</h1>
+      <h1 className="u-textCenter">Edit Profile</h1>
       <div className="ProfileEditContent">
         <span>Name:</span>
         <span>
-          <input className="AddInput" />
+          <input
+            className="AddInput"
+            defaultValue={name}
+            onChange={(event) => setName(event.target.value)}
+          />
         </span>
       </div>
       <div className="ProfileEditContent">
         <span>Profile Image link:</span>
         <span>
-          <input className="AddInput" />
+          <input
+            className="AddInput"
+            defaultValue={picture}
+            onChange={(event) => setPicture(event.target.value)}
+          />
         </span>
       </div>
       <div className="ProfileEditContent">
         <span>Description:</span>
         <span>
-          <textarea className="AddDescription" />
+          <textarea
+            className="AddDescription"
+            defaultValue={description}
+            onChange={(event) => setDescription(event.target.value)}
+          />
         </span>
       </div>
       <div className="AddContent AddButtonContainer">
-        <button className="AddButton LargeAddButton">Add</button>
+        <a href="/profile">
+          <button className="AddButton LargeAddButton" onClick={changeProfile}>
+            Edit
+          </button>
+        </a>
       </div>
     </div>
   );

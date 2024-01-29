@@ -38,10 +38,7 @@ const Home = (props: Props) => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    document.title = "Home";
-    get("/api/dailyFav").then((item) => {
-      setDailyFavorite(item);
-    });
+    get("/api/dailyFav").then((item) => setDailyFavorite(item));
   }, []);
 
   useEffect(() => {
