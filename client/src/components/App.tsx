@@ -100,7 +100,7 @@ const App = () => {
               <Route element={<Profile userId={userId} />} path="/profile" />
               <Route element={<ProfileEdit userId={userId} />} path="/profile/edit" />
               <Route element={<Help />} path="/help" />
-              <Route element={<Community />} path="/community" />
+              <Route element={<Community userId={userId} />} path="/community" />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
