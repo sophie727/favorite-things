@@ -97,7 +97,7 @@ const App = () => {
                 element={<Add tagOptions={tagOptions} setTagOptions={setTagOptions} />}
                 path="/add"
               />
-              <Route element={<Profile />} path="/profile" />
+              <Route element={<Profile userId={userId} />} path="/profile" />
               <Route element={<ProfileEdit />} path="/profile/edit" />
               <Route element={<Help />} path="/help" />
               <Route element={<Community />} path="/community" />

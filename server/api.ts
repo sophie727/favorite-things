@@ -219,11 +219,6 @@ type ProfileType = {
   incomingFriendRequests: string[];
   outgoingFriendRequests: string[];
 };
-type ProfileText = {
-  picture: string;
-  name: string;
-  description: string;
-};
 const defaultProfile: ProfileType = {
   picture: "https://i.pinimg.com/736x/05/d3/a5/05d3a51c5fa2940a2f0710957f1dbd0d.jpg",
   name: "FirstName LastName",
@@ -234,7 +229,7 @@ const defaultProfile: ProfileType = {
 };
 
 router.get("/profile", auth.ensureLoggedIn, (req, res) => {
-  const user_id = req.user?._id;
+  const user_id = req.query.user_id as string;
   ProfileTextModel.findOne({ user_id: user_id }).then((profileText) => {
     if (profileText === null) {
       res.send(defaultProfile);
@@ -282,6 +277,7 @@ router.post("/profile", auth.ensureLoggedIn, (req, res) => {
         picture: savedProfileText.picture,
         name: savedProfileText.name,
         description: savedProfileText.description,
+        user_id: savedProfileText.user_id,
       });
       res.send(savedProfileText);
     });
