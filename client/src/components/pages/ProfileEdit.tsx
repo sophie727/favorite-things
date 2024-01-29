@@ -26,7 +26,7 @@ type ProfileText = {
   description: string;
 };
 
-type Props = {};
+type Props = { userId: string };
 
 const ProfileEdit = (props: Props) => {
   const [profile, setProfile] = useState(defaultProfile);
@@ -35,12 +35,10 @@ const ProfileEdit = (props: Props) => {
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    get("/api/profile")
-      .then((newProfile) => {
-        console.log(newProfile);
-        setProfile(newProfile);
-      })
-      .catch(() => {});
+    get("/api/profile", { user_id: props.userId }).then((newProfile) => {
+      console.log(newProfile);
+      setProfile(newProfile);
+    });
   }, []);
 
   useEffect(() => {
@@ -89,11 +87,9 @@ const ProfileEdit = (props: Props) => {
         </span>
       </div>
       <div className="AddContent AddButtonContainer">
-        <a href="/profile">
-          <button className="AddButton LargeAddButton" onClick={changeProfile}>
-            Edit
-          </button>
-        </a>
+        <button className="AddButton LargeAddButton" onClick={changeProfile}>
+          Edit
+        </button>
       </div>
     </div>
   );

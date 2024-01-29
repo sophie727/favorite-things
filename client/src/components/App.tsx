@@ -98,7 +98,7 @@ const App = () => {
                 path="/add"
               />
               <Route element={<Profile userId={userId} />} path="/profile" />
-              <Route element={<ProfileEdit />} path="/profile/edit" />
+              <Route element={<ProfileEdit userId={userId} />} path="/profile/edit" />
               <Route element={<Help />} path="/help" />
               <Route element={<Community />} path="/community" />
               <Route path="*" element={<NotFound />} />

@@ -31,17 +31,15 @@ const defaultProfile: ProfileType = {
 
 const Profile = (props: Props) => {
   const [profile, setProfile] = useState(defaultProfile);
-  const [currId, setCurrId] = useState("");
+  const [currID, setCurrID] = useState("");
 
   useEffect(() => {
-    get("/api/profile", { user_id: currId })
-      .then((myProfile) => {
-        console.log(currId);
-        console.log(myProfile);
-        setProfile(myProfile);
-      })
-      .catch(() => {});
-  }, [currId]);
+    get("/api/profile", { user_id: currID }).then((myProfile) => {
+      console.log("got profile for " + currID);
+      console.log(myProfile);
+      setProfile(myProfile);
+    });
+  }, [currID]);
 
   useEffect(() => {
     socket.on("profileEdit", changeProfileText);
@@ -54,21 +52,25 @@ const Profile = (props: Props) => {
     const urlParams = new URLSearchParams(window.location.search);
     const curr_id = urlParams.get("user");
     if (curr_id === null) {
-      setCurrId(props.userId);
+      setCurrID(props.userId);
     } else {
-      setCurrId(curr_id);
+      setCurrID(curr_id);
     }
   }, []);
 
   const changeProfileText = (profileText: ProfileText) => {
-    console.log(profileText);
-    if (profileText.user_id === currId) {
-      const newProfile = { ...profile };
-      newProfile.picture = profileText.picture;
-      newProfile.name = profileText.name;
-      newProfile.description = profileText.description;
-      setProfile(newProfile);
-    }
+    setCurrID((oldID) => {
+      if (oldID == profileText.user_id) {
+        setProfile((oldProfile) => {
+          const newProfile = { ...oldProfile };
+          newProfile.picture = profileText.picture;
+          newProfile.name = profileText.name;
+          newProfile.description = profileText.description;
+          return newProfile;
+        });
+      }
+      return oldID;
+    });
   };
 
   return (
@@ -80,7 +82,7 @@ const Profile = (props: Props) => {
         <div className="u-flex-alignCenter">
           {" "}
           <h1> Profile</h1>
-          {currId === props.userId ? (
+          {currID === props.userId ? (
             <a href="/profile/edit" className="ProfileEditButton">
               Edit
             </a>
@@ -92,7 +94,7 @@ const Profile = (props: Props) => {
           {" "}
           <p> Name: {profile.name}</p>
           <p className="ProfileDescription"> {profile.description} </p>
-          {currId === props.userId ? (
+          {currID === props.userId ? (
             <>
               <div>
                 <span> Friends: {profile.friends} </span>
