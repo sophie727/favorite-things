@@ -37,7 +37,7 @@ type ItemType = {
   link: string;
   _id: string;
   user_id: string;
-  private: string;
+  private: boolean;
 };
 
 type FavoriteItemType = {
@@ -47,7 +47,8 @@ type FavoriteItemType = {
   description: string;
   link: string;
   tags: string[];
-  private: string;
+  private: boolean;
+  id: string;
 };
 
 /*const defaultFavorites: FavoriteItemType[] = [
@@ -102,10 +103,7 @@ const shuffleArray = (array) => {
     currentIndex--;
 
     // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ];
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
   }
 
   return array;
@@ -129,6 +127,7 @@ router.get("/dailyfav", auth.ensureLoggedIn, async (req, res) => {
           link: favItem.link,
           tags: tags.map((tag) => tag.tag),
           private: favItem.private,
+          id: favItem._id,
         };
         res.send(fullItem);
       });
@@ -158,6 +157,7 @@ router.get("/favorites", auth.ensureLoggedIn, async (req, res) => {
             link: favItem.link,
             tags: tags.map((tag) => tag.tag),
             private: favItem.private,
+            id: favItem._id,
           };
           return fullItem;
         });
@@ -165,27 +165,24 @@ router.get("/favorites", auth.ensureLoggedIn, async (req, res) => {
       const filterTagsString = req.query.filterTags as string;
       const filterTags = filterTagsString.split(",").filter((tag) => tag != "");
 
-      const filteredFullItems = (await Promise.all(shuffledFullItems)).filter(
-        (fullItem) => {
-          for (const filterTag of filterTags) {
-            let missing: boolean = true;
-            for (const availableTag of fullItem.tags) {
-              if (filterTag === availableTag) {
-                missing = false;
-                break;
-              }
-            }
-            if (missing) {
-              return false;
+      const filteredFullItems = (await Promise.all(shuffledFullItems)).filter((fullItem) => {
+        for (const filterTag of filterTags) {
+          let missing: boolean = true;
+          for (const availableTag of fullItem.tags) {
+            if (filterTag === availableTag) {
+              missing = false;
+              break;
             }
           }
-          return true;
+          if (missing) {
+            return false;
+          }
         }
-      );
+        return true;
+      });
       res.send(filteredFullItems);
     }
-  }); // TODO: Check how regexes work to fix this, look in req.query for stuff
-  // TODO: Also check how we want filters to work: remove everything that doesn't have any of the tags, or keep only things with all tags?
+  });
 });
 
 router.post("/addFavorite", auth.ensureLoggedIn, (req, res) => {
@@ -203,12 +200,21 @@ router.post("/addFavorite", auth.ensureLoggedIn, (req, res) => {
     const newTags = req.body.newFav.tags.map(
       (tag) => new TagModel({ tag: tag, parent_id: savedItem._id })
     );
-    socketManager.getIo().emit("addFav", req.body.newFav, user_id);
-    res.send(
-      Promise.all(newTags.map((tagModel) => tagModel.save())).then(
-        () => req.body.newFav
-      )
-    );
+    const newFav = req.body.newFav;
+    newFav.id = savedItem._id;
+    socketManager.getIo().emit("addFav", newFav, user_id);
+    Promise.all(newTags.map((tagModel) => tagModel.save())).then(() => {
+      res.send(newFav);
+    });
+  });
+});
+
+router.post("/delFav", auth.ensureLoggedIn, (req, res) => {
+  ItemModel.remove({ _id: req.body.id }).then(() => {
+    TagModel.remove({ parent_id: req.body.id }).then(() => {
+      socketManager.getIo().emit("delFav", req.body.id);
+      res.send(req.body);
+    });
   });
 });
 

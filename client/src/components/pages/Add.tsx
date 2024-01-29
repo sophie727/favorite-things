@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { post } from "../../utilities";
 
 import "./Add.css";
@@ -15,7 +15,11 @@ type Item = {
   description: string;
   link: string;
   tags: string[];
-  private: string;
+  private: boolean;
+};
+type fullItem = {
+  item: Item;
+  id: string;
 };
 
 const Add = (props: Props) => {
@@ -27,7 +31,30 @@ const Add = (props: Props) => {
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
   const [chosenTags, setChosenTags] = useState<string[]>([]);
-  const [chosenPrivate, setPrivate] = useState("");
+  const [chosenPrivate, setPrivate] = useState(false);
+  const [oldId, setOldId] = useState<string | null>();
+
+  const postAddFav = (favItem: Item) => {
+    post("/api/addFavorite", { newFav: favItem }).then((newFav) => {
+      setPicture("");
+      for (const element of document.getElementsByTagName("input")) {
+        element.value = "";
+      }
+      for (const element of document.getElementsByTagName("textarea")) {
+        element.value = "";
+      }
+      setStarCount(0);
+      setName("");
+      setDescription("");
+      setLink("");
+      setChosenTags([]);
+      setPrivate(false);
+      setOldId(null);
+      for (const element of document.getElementsByTagName("select")) {
+        element.selectedIndex = 0;
+      }
+    });
+  };
 
   const addFavorite = () => {
     const favItem: Item = {
@@ -40,20 +67,12 @@ const Add = (props: Props) => {
       private: chosenPrivate,
     };
     console.log(favItem);
-    post("/api/addFavorite", { newFav: favItem }).then((newFav) => {
-      //TODO: ADD TO FAVORITE LIST! Needs to use sockets and stuff, save for after MVP because lazy.
-      for (const element of document.getElementsByTagName("input")) {
-        element.value = "";
-      }
-      for (const element of document.getElementsByTagName("textarea")) {
-        element.value = "";
-      }
-      setStarCount(0);
-      setChosenTags([]);
-      for (const element of document.getElementsByTagName("select")) {
-        element.selectedIndex = 0;
-      }
-    });
+
+    if (oldId !== null) {
+      post("/api/delFav", { id: oldId }).then(() => postAddFav(favItem));
+    } else {
+      postAddFav(favItem);
+    }
   };
 
   const removeTag = (tag) => {
@@ -95,6 +114,38 @@ const Add = (props: Props) => {
     setChosenTags(chosenTags.concat([newTag]));
   };
 
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const oldPicture = urlParams.get("picture");
+    const oldStars = urlParams.get("stars");
+    const oldName = urlParams.get("name");
+    const oldDescription = urlParams.get("description");
+    const oldLink = urlParams.get("link");
+    const oldTags = urlParams.get("tags")?.split(",");
+    const oldPrivate = urlParams.get("private") === "true";
+    const oldId = urlParams.get("oldId");
+    if (oldPicture !== null) {
+      setPicture(oldPicture);
+    }
+    if (oldStars !== null) {
+      setStarCount(Number(oldStars));
+    }
+    if (oldName !== null) {
+      setName(oldName);
+    }
+    if (oldDescription !== null) {
+      setDescription(oldDescription);
+    }
+    if (oldLink !== null) {
+      setLink(oldLink);
+    }
+    if (oldTags !== undefined) {
+      setChosenTags(oldTags);
+    }
+    setPrivate(oldPrivate);
+    setOldId(oldId);
+  }, []);
+
   return (
     <>
       <div>
@@ -106,6 +157,7 @@ const Add = (props: Props) => {
           <input
             className="AddInput"
             onChange={(event) => setName(event.target.value)}
+            defaultValue={name}
           />
         </span>
       </div>
@@ -115,6 +167,7 @@ const Add = (props: Props) => {
           <textarea
             className="AddDescription"
             onChange={(event) => setDescription(event.target.value)}
+            defaultValue={description}
           />
         </span>
       </div>
@@ -124,6 +177,7 @@ const Add = (props: Props) => {
           <input
             className="AddInput"
             onChange={(event) => setLink(event.target.value)}
+            defaultValue={link}
           />
         </span>
       </div>
@@ -132,6 +186,7 @@ const Add = (props: Props) => {
         <input
           className="AddInput"
           onChange={(event) => setPicture(event.target.value)}
+          defaultValue={picture}
         />
       </div>
       <div className="AddContent">
@@ -196,8 +251,8 @@ const Add = (props: Props) => {
           <input
             type="checkbox"
             name="AddPrivateInput"
-            value="Private"
-            onChange={(event) => setPrivate(event.target.value)}
+            checked={chosenPrivate}
+            onChange={() => setPrivate(!chosenPrivate)}
           />
           <div className="slider"></div>
         </label>

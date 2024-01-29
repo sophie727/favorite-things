@@ -3,17 +3,18 @@ import React from "react";
 import "./DailyFavorite.css";
 import FavoriteItem from "./FavoriteItem";
 
-type Item = {
+type fullItem = {
   picture: string;
   stars: number;
   name: string;
   description: string;
   link: string;
   tags: string[];
-  private: string;
+  private: boolean;
+  id: string;
 };
 
-type Props = { item: Item };
+type Props = { item: fullItem };
 const DailyFavorite = (props: Props) => {
   return (
     <div className="DailyFavorite">

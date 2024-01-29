@@ -2,17 +2,18 @@ import React, { ReactComponentElement } from "react";
 
 import "./FavoriteItem.css";
 
-type Item = {
+type fullItem = {
   picture: string;
   stars: number;
   name: string;
   description: string;
   link: string;
   tags: string[];
-  private: string;
+  private: boolean;
+  id: string;
 };
 
-type Props = { item: Item };
+type Props = { item: fullItem };
 const FavoriteItem = (props: Props) => {
   const stars: React.JSX.Element[] = [];
   for (let i = 0; i < 5; i++) {
