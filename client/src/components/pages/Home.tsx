@@ -43,6 +43,7 @@ const Home = (props: Props) => {
   const [searchText, setSearchText] = useState("");
   const [isFriend, setIsFriend] = useState(false);
   const [friendName, setFriendName] = useState("");
+  const [isSorted, setIsSorted] = useState(false);
 
   useEffect(() => {
     get("/api/dailyFav", { currID: props.currID }).then((item) => {
@@ -79,17 +80,23 @@ const Home = (props: Props) => {
       filterTags: filterTags,
       searchText: searchText,
       currID: props.currID,
-    }).then((items) => {
+    }).then((items: fullItem[]) => {
       props.setCurrID((id) => {
         console.log(id, props.currID);
         if (props.currID === id) {
+          setIsSorted((isSorted) => {
+            if (isSorted) {
+              items.sort((first, second) => second.stars - first.stars);
+            }
+            return isSorted;
+          });
           setFavoriteItems(items);
           console.log(items);
         }
         return id;
       });
     });
-  }, [filterTags, searchText, props.currID]);
+  }, [filterTags, searchText, props.currID, isSorted]);
 
   const addFavorite = (newFav: fullItem, user_id: string) => {
     props.setCurrID((id) => {
@@ -178,6 +185,8 @@ const Home = (props: Props) => {
           setFilterTags={setFilterTags}
           setSearchText={setSearchText}
           canAdd={props.currID === props.userId}
+          isSorted={isSorted}
+          setIsSorted={setIsSorted}
         />
       </div>
       <div>

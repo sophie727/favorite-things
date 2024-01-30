@@ -7,6 +7,8 @@ type Props = {
   setFilterTags: React.Dispatch<React.SetStateAction<string[]>>;
   setSearchText: React.Dispatch<React.SetStateAction<string>>;
   canAdd: boolean;
+  isSorted: boolean;
+  setIsSorted: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const UtilBar = (props: Props) => {
@@ -28,10 +30,7 @@ const UtilBar = (props: Props) => {
   return (
     <>
       <div className="UtilBarContainer">
-        <button
-          className="UtilBarItem UtilBarButton UtilBarFilter"
-          onClick={makeFiltersDropdown}
-        >
+        <button className="UtilBarItem UtilBarButton UtilBarFilter" onClick={makeFiltersDropdown}>
           Filters
           <div className="UtilBarPopupTextContainer">
             <div className="UtilBarPopupText" id="FilterPopup">
@@ -42,10 +41,7 @@ const UtilBar = (props: Props) => {
                   return;
                 }
                 return (
-                  <button
-                    onClick={() => addTagFilter(tag)}
-                    className="tagButton"
-                  >
+                  <button onClick={() => addTagFilter(tag)} className="tagButton">
                     {tag}
                   </button>
                 );
@@ -54,7 +50,7 @@ const UtilBar = (props: Props) => {
               <div>
                 {" "}
                 <p>Sort by: </p>
-                <input type="checkbox" />
+                <input type="checkbox" onClick={() => props.setIsSorted(!props.isSorted)} />
                 Star count
               </div>{" "}
             </div>
