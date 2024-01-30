@@ -127,9 +127,16 @@ const Home = (props: Props) => {
             }
           }
 
-          setFavoriteItems((prevFavorites) => {
-            console.log(prevFavorites, "prevFavorites");
-            return prevFavorites.concat([newFav]);
+          setIsSorted((is) => {
+            setFavoriteItems((prevFavorites) => {
+              console.log(prevFavorites, "prevFavorites");
+              const newFavorites = prevFavorites.concat([newFav]);
+              if (is) {
+                newFavorites.sort((first, second) => second.stars - first.stars);
+              }
+              return newFavorites;
+            });
+            return is;
           });
           return ft;
         });
