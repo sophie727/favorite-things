@@ -3,6 +3,7 @@
   text-align: center;
 }
 
-.CommunitySearchBarContainer {
-  text-align: center;
+.CommunitySortContainer {
+  margin: 2vw 1vw 2vw 0vw;
+  width: 20vw;
 }
