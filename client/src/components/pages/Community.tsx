@@ -19,9 +19,11 @@ const Community = (props: Props) => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    get("/api/profiles", { searchText: searchText }).then((profiles: ProfileText[]) => {
-      setProfiles(profiles);
-    });
+    get("/api/profiles", { searchText: searchText }).then(
+      (profiles: ProfileText[]) => {
+        setProfiles(profiles);
+      }
+    );
   }, [searchText]);
 
   useEffect(() => {
@@ -53,25 +55,50 @@ const Community = (props: Props) => {
           }
           return newProfiles;
         } else {
-          return oldProfiles.filter((oldProfile) => oldProfile.user_id !== profileText.user_id);
+          return oldProfiles.filter(
+            (oldProfile) => oldProfile.user_id !== profileText.user_id
+          );
         }
       });
       return st;
     });
   };
 
+  const makeFiltersDropdown = () => {
+    var popup = document.getElementById("FilterPopup");
+    popup?.classList.toggle("show");
+  };
+
   return (
     <div>
       <h1 className="CommunityTitle"> Community </h1>
-      <div className="CommunitySearchBarContainer">
-        {" "}
-        <input
-          className="SearchBar"
-          placeholder=" Search"
-          onChange={(event) => {
-            setSearchText(event.target.value);
-          }}
-        />
+      <div className="UtilBarContainer">
+        <div>
+          <button
+            className="UtilBarItem UtilBarButton UtilBarFilter"
+            onClick={makeFiltersDropdown}
+          >
+            Sort
+            <div className="UtilBarPopupTextContainer CommunitySortContainer">
+              <div className="UtilBarPopupText" id="FilterPopup">
+                <p>Sort by: </p>
+                <input type="checkbox" />
+                Alphabetical Order
+              </div>
+            </div>
+          </button>
+        </div>
+
+        <div>
+          {" "}
+          <input
+            className="SearchBar"
+            placeholder=" Search"
+            onChange={(event) => {
+              setSearchText(event.target.value);
+            }}
+          />
+        </div>
       </div>
       {profiles.map((profile) => (
         <div className="HomeFavoriteItemContainer">
