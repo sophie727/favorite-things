@@ -35,7 +35,7 @@
 
 .UtilBarPopupTextContainer {
   margin: 0 20vw 0 20vw;
-  width: 40vw;
+  width: 35vw;
 }
 
 .UtilBarPopupText {
@@ -46,7 +46,21 @@
   padding: var(--s);
   position: relative;
   z-index: 1000;
-  margin: auto;
+}
+
+.UtilBarPopupText h2 {
+  margin: 10px;
+}
+
+.UtilBarPopupText p {
+  margin: 5px;
+}
+
+.UtilBarPopupText hr {
+  border-radius: 5px;
+  height: 1px;
+  border: none;
+  background-color: white;
 }
 
 .UtilBarFilter .show {
