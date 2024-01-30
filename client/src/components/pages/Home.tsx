@@ -42,6 +42,7 @@ const Home = (props: Props) => {
   const [filterTags, setFilterTags] = useState<string[]>([]);
   const [searchText, setSearchText] = useState("");
   const [isFriend, setIsFriend] = useState(false);
+  const [friendName, setFriendName] = useState("");
 
   useEffect(() => {
     get("/api/dailyFav", { currID: props.currID }).then((item) => {
@@ -58,6 +59,14 @@ const Home = (props: Props) => {
         props.setCurrID((id) => {
           if (props.currID === id) {
             setIsFriend(pairs.length > 0);
+          }
+          return id;
+        });
+      });
+      get("/api/profile", { user_id: props.currID }).then((profile) => {
+        props.setCurrID((id) => {
+          if (props.currID === id) {
+            setFriendName(profile.name);
           }
           return id;
         });
@@ -115,9 +124,7 @@ const Home = (props: Props) => {
       });
     });
     console.log(id, "deleting");
-    setFavoriteItems((prevFavorites) =>
-      prevFavorites.filter((favItem) => favItem.id !== id)
-    );
+    setFavoriteItems((prevFavorites) => prevFavorites.filter((favItem) => favItem.id !== id));
   };
 
   useEffect(() => {
@@ -136,7 +143,7 @@ const Home = (props: Props) => {
         {props.userId === props.currID ? (
           <h1 className="u-textCenter">Your Favorites </h1>
         ) : (
-          <h1 className="u-textCenter">{props.currID}'s Favorites </h1>
+          <h1 className="u-textCenter">{friendName}'s Favorites </h1>
         )}
       </div>
       <div>
@@ -167,10 +174,7 @@ const Home = (props: Props) => {
                   <FavoriteItem item={item} />
                 </div>
                 <div className="smallTexts">
-                  <div className="smallText">
-                    {" "}
-                    {item.private ? "Private" : "Public"}
-                  </div>
+                  <div className="smallText"> {item.private ? "Private" : "Public"}</div>
                   <div>
                     <a className="smallText editButton" href={addLink}>
                       Edit
