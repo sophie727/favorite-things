@@ -82,8 +82,15 @@ const shuffleArray = (array) => {
 
 router.get("/dailyfav", auth.ensureLoggedIn, async (req, res) => {
   const user_id = req.user?._id;
+  const curr_id = req.query.currID as string;
+  const query: any = {
+    user_id: curr_id,
+  };
+  if (user_id !== curr_id) {
+    query.private = false;
+  }
 
-  ItemModel.find({ user_id: user_id }).then((items) => {
+  ItemModel.find(query).then((items) => {
     if (items.length == 0) {
       res.send(defaultItem);
     } else {
@@ -108,12 +115,19 @@ router.get("/dailyfav", auth.ensureLoggedIn, async (req, res) => {
 
 router.get("/favorites", auth.ensureLoggedIn, async (req, res) => {
   const user_id = req.user?._id;
+  const curr_id = req.query.currID as string;
   const searchText = req.query.searchText as string;
-
-  ItemModel.find({
-    user_id: user_id,
+  const query: any = {
+    user_id: curr_id,
     name: { $regex: searchText, $options: "i" },
-  }).then(async (items) => {
+  };
+  if (user_id !== curr_id) {
+    query.private = false;
+  }
+  console.log("querying", query);
+
+  ItemModel.find(query).then(async (items) => {
+    console.log(items);
     if (items.length == 0) {
       res.send([]);
     } else {
@@ -221,7 +235,7 @@ type ProfileType = {
   user_id: string;
 };
 const defaultProfile: ProfileType = {
-  picture: "N/A.",
+  picture: "https://i.pinimg.com/736x/05/d3/a5/05d3a51c5fa2940a2f0710957f1dbd0d.jpg",
   name: "FirstName LastName",
   description: "Web.lab is the best, 10/10!",
   friends: [],

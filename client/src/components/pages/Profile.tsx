@@ -46,10 +46,6 @@ const Profile = (props: Props) => {
   const [profile, setProfile] = useState(defaultProfile);
   const [isFriend, setIsFriend] = useState(false);
   const [isPending, setIsPending] = useState(false);
-  // TODO: Get the Go To Favorites button to go to the right spot.
-  // TODO: Get remove friend working
-  // TODO: All friends mixed list?
-  // TODO: Sorting the lists?
 
   useEffect(() => {
     socket.on("profileEdit", changeProfileText);
@@ -206,10 +202,14 @@ const Profile = (props: Props) => {
       <div className="ProfileLeftColumn">
         <img className="ProfilePicture" src={profile.picture} />
         <div className="u-flex-alignCenter">
-          <button className="ProfileGoToFavorites">
-            {" "}
-            <a href={"/?user=" + props.currID}> Go to Favorites </a>
-          </button>
+          {props.userId === props.currID || isFriend ? (
+            <button className="ProfileGoToFavorites">
+              {" "}
+              <a href={"/?user=" + props.currID}> Go to Favorites </a>
+            </button>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <div className="ProfileRightColumn">

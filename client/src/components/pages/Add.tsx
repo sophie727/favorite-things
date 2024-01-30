@@ -76,12 +76,7 @@ const Add = (props: Props) => {
   };
 
   const removeTag = (tag) => {
-    const index = chosenTags.indexOf(tag);
-    if (index > -1) {
-      const newTags = [...chosenTags];
-      newTags.splice(index, 1);
-      setChosenTags(newTags);
-    }
+    setChosenTags(chosenTags.filter((t) => t != tag));
   };
 
   const addNewTag = () => {
@@ -140,7 +135,7 @@ const Add = (props: Props) => {
       setLink(oldLink);
     }
     if (oldTags !== undefined) {
-      setChosenTags(oldTags);
+      setChosenTags(oldTags.filter((tag) => tag != ""));
     }
     setPrivate(oldPrivate);
     setOldId(oldId);

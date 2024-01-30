@@ -41,6 +41,7 @@ const Home = (props: Props) => {
   const [favoriteItems, setFavoriteItems] = useState<fullItem[]>([]);
   const [filterTags, setFilterTags] = useState<string[]>([]);
   const [searchText, setSearchText] = useState("");
+  const [isFriend, setIsFriend] = useState(false);
 
   useEffect(() => {
     get("/api/dailyFav", { currID: props.currID }).then((item) => {
@@ -52,6 +53,16 @@ const Home = (props: Props) => {
         return id;
       });
     });
+    if (props.currID !== props.userId) {
+      get("/api/isFriend", { friend_id: props.currID }).then((pairs) => {
+        props.setCurrID((id) => {
+          if (props.currID === id) {
+            setIsFriend(pairs.length > 0);
+          }
+          return id;
+        });
+      });
+    }
   }, [props.currID]);
 
   useEffect(() => {
@@ -61,6 +72,7 @@ const Home = (props: Props) => {
       currID: props.currID,
     }).then((items) => {
       props.setCurrID((id) => {
+        console.log(id, props.currID);
         if (props.currID === id) {
           setFavoriteItems(items);
           console.log(items);
@@ -73,6 +85,9 @@ const Home = (props: Props) => {
   const addFavorite = (newFav: fullItem, user_id: string) => {
     props.setCurrID((id) => {
       if (user_id !== id) {
+        return id;
+      }
+      if (newFav.private && user_id != props.userId) {
         return id;
       }
       console.log(newFav.id, "adding");
@@ -108,9 +123,9 @@ const Home = (props: Props) => {
     return () => {
       socket.off("delFav", delFavorite);
     };
-  });
+  }, []);
 
-  return (
+  return isFriend || props.userId === props.currID ? (
     <>
       <div>
         <DailyFavorite item={dailyFavorite} />
@@ -121,6 +136,7 @@ const Home = (props: Props) => {
           filterTags={filterTags}
           setFilterTags={setFilterTags}
           setSearchText={setSearchText}
+          canAdd={props.currID === props.userId}
         />
       </div>
       <div>
@@ -142,10 +158,7 @@ const Home = (props: Props) => {
                   <FavoriteItem item={item} />
                 </div>
                 <div className="smallTexts">
-                  <div className="smallText">
-                    {" "}
-                    {item.private ? "Private" : "Public"}
-                  </div>
+                  <div className="smallText"> {item.private ? "Private" : "Public"}</div>
                   <div>
                     <a className="smallText editButton" href={addLink}>
                       Edit
@@ -171,6 +184,8 @@ const Home = (props: Props) => {
         )}
       </div>
     </>
+  ) : (
+    <h1 className="u-textCenter">You haven't befriended this user yet!</h1>
   );
 };
 

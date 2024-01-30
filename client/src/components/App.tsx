@@ -26,7 +26,6 @@ const App = () => {
   const setID = (user_id: string) => {
     const urlParams = new URLSearchParams(window.location.search);
     const curr_id = urlParams.get("user");
-    console.log(user_id, curr_id, "doing stuff");
     if (curr_id === null) {
       console.log("setting curr_id to", user_id);
       setCurrID(user_id);

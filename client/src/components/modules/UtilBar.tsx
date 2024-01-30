@@ -6,7 +6,9 @@ type Props = {
   filterTags: string[];
   setFilterTags: React.Dispatch<React.SetStateAction<string[]>>;
   setSearchText: React.Dispatch<React.SetStateAction<string>>;
+  canAdd: boolean;
 };
+
 const UtilBar = (props: Props) => {
   const makeFiltersDropdown = () => {
     var popup = document.getElementById("FilterPopup");
@@ -21,20 +23,12 @@ const UtilBar = (props: Props) => {
     props.setFilterTags(props.filterTags.concat([newTag]));
   };
   const removeTag = (tag: string) => {
-    const index = props.filterTags.indexOf(tag);
-    if (index > -1) {
-      const newTags = [...props.filterTags];
-      newTags.splice(index, 1);
-      props.setFilterTags(newTags);
-    }
+    props.setFilterTags(props.filterTags.filter((t) => t != tag));
   };
   return (
     <>
       <div className="UtilBarContainer">
-        <button
-          className="UtilBarItem UtilBarButton UtilBarFilter"
-          onClick={makeFiltersDropdown}
-        >
+        <button className="UtilBarItem UtilBarButton UtilBarFilter" onClick={makeFiltersDropdown}>
           Filters
           <div className="UtilBarPopupTextContainer">
             <div className="UtilBarPopupText" id="FilterPopup">
@@ -45,10 +39,7 @@ const UtilBar = (props: Props) => {
                   return;
                 }
                 return (
-                  <button
-                    onClick={() => addTagFilter(tag)}
-                    className="tagButton"
-                  >
+                  <button onClick={() => addTagFilter(tag)} className="tagButton">
                     {tag}
                   </button>
                 );
@@ -63,9 +54,13 @@ const UtilBar = (props: Props) => {
             props.setSearchText(event.target.value);
           }}
         />
-        <a href="/add/">
-          <button className="UtilBarItem UtilBarButton AddButton">+</button>
-        </a>
+        {props.canAdd ? (
+          <a href="/add/">
+            <button className="UtilBarItem UtilBarButton AddButton">+</button>
+          </a>
+        ) : (
+          <></>
+        )}
       </div>
       <div className="TagButtons">
         {props.filterTags.map((tag) => (
