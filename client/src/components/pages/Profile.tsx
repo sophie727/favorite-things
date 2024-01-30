@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { get, post } from "../../utilities";
 import { socket } from "../../client-socket";
+import FriendProfileButton from "../modules/FriendProfileButton";
 
 import "./Profile.css";
 
@@ -34,6 +35,9 @@ const defaultProfile: ProfileType = {
 const Profile = (props: Props) => {
   const [profile, setProfile] = useState(defaultProfile);
   const [currID, setCurrID] = useState("");
+  const [incomingFriendProfiles, setIncomingFriendProfiles] = useState<ProfileText[]>([]);
+  const [outgoingFriendProfiles, setOutgoingFriendProfiles] = useState<ProfileText[]>([]);
+  const [friendProfiles, setFriendProfiles] = useState<ProfileText[]>([]);
 
   useEffect(() => {
     get("/api/profile", { user_id: currID }).then((myProfile) => {
@@ -106,7 +110,13 @@ const Profile = (props: Props) => {
           {currID === props.userId ? (
             <>
               <div>
-                <span> Friends: {profile.friends} </span>
+                <span>
+                  {" "}
+                  Friends:{" "}
+                  {profile.friends.map((friend: string) => (
+                    <FriendProfileButton friend_id={friend} />
+                  ))}{" "}
+                </span>
                 <button className="ProfileAddButton">
                   {" "}
                   <a href="/community"> + </a>{" "}
@@ -117,15 +127,9 @@ const Profile = (props: Props) => {
                 Incoming Friend Requests:{" "}
                 <div>
                   {" "}
-                  {profile.incomingFriendRequests.map(
-                    (friendRequest: string, index) => {
-                      return (
-                        <button className="ProfileFriendRequest" key={index}>
-                          {friendRequest}
-                        </button>
-                      );
-                    }
-                  )}
+                  {profile.incomingFriendRequests.map((friend: string) => (
+                    <FriendProfileButton friend_id={friend} />
+                  ))}
                 </div>
               </p>
               <p>
@@ -133,17 +137,9 @@ const Profile = (props: Props) => {
                 Outgoing Friend Requests:
                 <div>
                   {" "}
-                  {profile.outgoingFriendRequests.map(
-                    (friendRequest: string, index) => {
-                      return (
-                        <a href={"/profile?user=" + friendRequest.toString()}>
-                          <button className="ProfileFriendRequest" key={index}>
-                            {friendRequest}
-                          </button>
-                        </a>
-                      );
-                    }
-                  )}
+                  {profile.outgoingFriendRequests.map((friend: string) => (
+                    <FriendProfileButton friend_id={friend} />
+                  ))}
                 </div>
               </p>
             </>

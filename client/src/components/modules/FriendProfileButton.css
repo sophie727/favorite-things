@@ -1,0 +1,10 @@
+.ProfileFriendRequest {
+  text-decoration: none;
+  margin: auto 0px auto auto;
+  color: white;
+  background-color: var(--primary);
+  border-radius: 10px;
+  padding: 5px;
+  border: none;
+  margin: 2px;
+}
