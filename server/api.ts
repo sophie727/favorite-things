@@ -311,7 +311,7 @@ router.post("/friend", auth.ensureLoggedIn, (req, res) => {
         accepted: false,
       });
       newFriendPair.save().then((savedPair) => {
-        socketManager.getIo().emit("friendChange", newFriendPair);
+        socketManager.getIo().emit("newFriends", newFriendPair);
         res.send(newFriendPair);
       });
     } else {
@@ -337,11 +337,51 @@ router.post("/friend", auth.ensureLoggedIn, (req, res) => {
           newFriendPair.accepted = true;
         }
         newFriendPair.save().then((savedPair) => {
-          socketManager.getIo().emit("friendChange", newFriendPair);
+          socketManager.getIo().emit("newFriends", newFriendPair);
           res.send(newFriendPair);
         });
       });
     }
+  });
+});
+
+router.post("/unfriend", auth.ensureLoggedIn, (req, res) => {
+  const user_id = req.user?._id;
+  const friend_id = req.body.friend_id;
+  FriendRequestModel.remove({
+    $or: [
+      { first_id: user_id, second_id: friend_id },
+      { second_id: user_id, first_id: friend_id },
+    ],
+  }).then(() => {
+    socketManager.getIo().emit("delFriends", user_id, friend_id);
+    res.send({ user_id: user_id, friend_id: friend_id });
+  });
+});
+
+router.get("/isFriend", auth.ensureLoggedIn, (req, res) => {
+  const user_id = req.user?._id;
+  const friend_id = req.query.friend_id as string;
+  FriendRequestModel.find({
+    accepted: true,
+    $or: [
+      { first_id: user_id, second_id: friend_id },
+      { second_id: user_id, first_id: friend_id },
+    ],
+  }).then((pairs) => {
+    res.send(pairs);
+  });
+});
+
+router.get("/isPending", auth.ensureLoggedIn, (req, res) => {
+  const user_id = req.user?._id;
+  const friend_id = req.query.friend_id as string;
+  FriendRequestModel.find({
+    first_id: user_id,
+    second_id: friend_id,
+    accepted: false,
+  }).then((pairs) => {
+    res.send(pairs);
   });
 });
 
