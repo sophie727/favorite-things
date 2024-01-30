@@ -4,6 +4,8 @@ import { socket } from "../../client-socket";
 
 import "./Profile.css";
 
+// TODO: Make things look different when you're friends?
+
 type ProfileType = {
   picture: string;
   name: string;
@@ -73,6 +75,10 @@ const Profile = (props: Props) => {
     });
   };
 
+  const sendFriendRequest = () => {
+    post("/api/friend", { friend_id: currID });
+  };
+
   return (
     <div className="Profile">
       <div className="ProfileLeftColumn">
@@ -87,7 +93,10 @@ const Profile = (props: Props) => {
               Edit
             </a>
           ) : (
-            <a className="ProfileEditButton"> Add Friend </a>
+            <a className="ProfileEditButton" onClick={sendFriendRequest}>
+              {" "}
+              Add Friend{" "}
+            </a>
           )}
         </div>
         <div className="ProfileText">

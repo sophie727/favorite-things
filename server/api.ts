@@ -295,6 +295,30 @@ router.get("/profiles", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+router.post("/friend", auth.ensureLoggedIn, (req, res) => {
+  const user_id = req.user?._id;
+  const friend_id = req.body.friend_id;
+  FriendRequestModel.find({
+    $or: [
+      { first_id: user_id, second_id: friend_id },
+      { second_id: user_id, first_id: friend_id },
+    ],
+  }).then((pairs) => {
+    if (pairs.length > 0) {
+      res.send(pairs);
+    }
+    const newFriendPair = new FriendRequestModel({
+      first_id: user_id,
+      second_id: friend_id,
+      accepted: false,
+    });
+    newFriendPair.save().then((savedPair) => {
+      socketManager.getIo().emit("friendChange", newFriendPair);
+      res.send(newFriendPair);
+    });
+  });
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   const msg = `Api route not found: ${req.method} ${req.url}`;
