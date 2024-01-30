@@ -41,8 +41,12 @@ const FriendProfileButton = (props: Props) => {
     }
   };
 
+  const sendRequest = () => {
+    post("/api/friend", { friend_id: props.friend_id });
+  };
+
   return (
-    <button className="ProfileFriendRequest">
+    <button className="ProfileFriendRequest" onClick={() => sendRequest()}>
       <span>
         <img className="ProfilFriendRequestPic" src={friendProfile.picture} />
       </span>
