@@ -48,7 +48,11 @@ const ProfileEdit = (props: Props) => {
   }, [profile]);
 
   const changeProfile = () => {
-    const newProfileText: ProfileText = { picture: picture, name: name, description: description };
+    const newProfileText: ProfileText = {
+      picture: picture,
+      name: name,
+      description: description,
+    };
     console.log(newProfileText);
     post("/api/profile", { newProfileText: newProfileText });
   };
@@ -87,9 +91,11 @@ const ProfileEdit = (props: Props) => {
         </span>
       </div>
       <div className="AddContent AddButtonContainer">
-        <button className="AddButton LargeAddButton" onClick={changeProfile}>
-          Edit
-        </button>
+        <a href="/profile">
+          <button className="AddButton UpdateButton" onClick={changeProfile}>
+            Update
+          </button>
+        </a>
       </div>
     </div>
   );

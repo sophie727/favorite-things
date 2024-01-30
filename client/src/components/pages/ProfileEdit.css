@@ -3,3 +3,7 @@
   padding: 0 10%;
   color: var(--primary);
 }
+
+.UpdateButton {
+  width: 60px;
+}
