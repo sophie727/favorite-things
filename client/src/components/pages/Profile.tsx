@@ -35,8 +35,12 @@ const defaultProfile: ProfileType = {
 const Profile = (props: Props) => {
   const [profile, setProfile] = useState(defaultProfile);
   const [currID, setCurrID] = useState("");
-  const [incomingFriendProfiles, setIncomingFriendProfiles] = useState<ProfileText[]>([]);
-  const [outgoingFriendProfiles, setOutgoingFriendProfiles] = useState<ProfileText[]>([]);
+  const [incomingFriendProfiles, setIncomingFriendProfiles] = useState<
+    ProfileText[]
+  >([]);
+  const [outgoingFriendProfiles, setOutgoingFriendProfiles] = useState<
+    ProfileText[]
+  >([]);
   const [friendProfiles, setFriendProfiles] = useState<ProfileText[]>([]);
 
   useEffect(() => {
@@ -125,7 +129,7 @@ const Profile = (props: Props) => {
               <p>
                 {" "}
                 Incoming Friend Requests:{" "}
-                <div>
+                <div className="u-flex">
                   {" "}
                   {profile.incomingFriendRequests.map((friend: string) => (
                     <FriendProfileButton friend_id={friend} />
@@ -135,7 +139,7 @@ const Profile = (props: Props) => {
               <p>
                 {" "}
                 Outgoing Friend Requests:
-                <div>
+                <div className="u-flex">
                   {" "}
                   {profile.outgoingFriendRequests.map((friend: string) => (
                     <FriendProfileButton friend_id={friend} />

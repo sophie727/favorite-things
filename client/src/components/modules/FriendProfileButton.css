@@ -4,7 +4,17 @@
   color: white;
   background-color: var(--primary);
   border-radius: 10px;
-  padding: 5px;
   border: none;
   margin: 2px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.ProfilFriendRequestPic {
+  width: 25px;
+  height: 25px;
+  justify-content: center;
+  padding: 1px;
+  border-radius: 100%;
 }
