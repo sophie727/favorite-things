@@ -48,7 +48,7 @@ const FriendProfileButton = (props: Props) => {
   return (
     <button className="ProfileFriendRequest" onClick={() => sendRequest()}>
       <span>
-        <img src={friendProfile.picture} />
+        <img className="ProfilFriendRequestPic" src={friendProfile.picture} />
       </span>
       <span>{friendProfile.name}</span>
     </button>
