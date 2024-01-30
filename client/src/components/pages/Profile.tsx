@@ -91,9 +91,12 @@ const Profile = (props: Props) => {
     <div className="Profile">
       <div className="ProfileLeftColumn">
         <img className="ProfilePicture" src={profile.picture} />
-        <a href="/" className="u-flex-alignCenter">
-          <button className="ProfileGoToFavorites">Go to Favorites</button>
-        </a>{" "}
+        <div className="u-flex-alignCenter">
+          <button className="ProfileGoToFavorites">
+            {" "}
+            <a href="/"> Go to Favorites </a>
+          </button>
+        </div>
       </div>
       <div className="ProfileRightColumn">
         <div className="u-flex-alignCenter">
@@ -120,19 +123,24 @@ const Profile = (props: Props) => {
                 <span>
                   {" "}
                   Friends:{" "}
-                  {profile.friends.map((friend: string) => (
-                    <FriendProfileButton friend_id={friend} />
-                  ))}{" "}
+                  <button className="ProfileAddButton">
+                    {" "}
+                    <a href="/community"> + </a>{" "}
+                  </button>
+                  <div className="FriendRequests">
+                    {profile.friends.map((friend: string) => (
+                      <a href={"/profile?user=" + friend}>
+                        {" "}
+                        <FriendProfileButton friend_id={friend} />
+                      </a>
+                    ))}{" "}
+                  </div>
                 </span>
-                <button className="ProfileAddButton">
-                  {" "}
-                  <a href="/community"> + </a>{" "}
-                </button>
               </div>
               <p>
                 {" "}
                 Incoming Friend Requests:{" "}
-                <div className="u-flex">
+                <div className="FriendRequests">
                   {" "}
                   {profile.incomingFriendRequests.map((friend: string) => (
                     <FriendProfileButton friend_id={friend} />
@@ -142,7 +150,7 @@ const Profile = (props: Props) => {
               <p>
                 {" "}
                 Outgoing Friend Requests:
-                <div className="u-flex">
+                <div className="FriendRequests">
                   {" "}
                   {profile.outgoingFriendRequests.map((friend: string) => (
                     <FriendProfileButton friend_id={friend} />
