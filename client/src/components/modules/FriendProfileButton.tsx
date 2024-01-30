@@ -47,10 +47,10 @@ const FriendProfileButton = (props: Props) => {
 
   const buttonInternals = (
     <>
-      <span>
+      <div>
         <img className="ProfilFriendRequestPic" src={friendProfile.picture} />
-      </span>
-      <span>{friendProfile.name}</span>
+      </div>
+      <div>{friendProfile.name}</div>
     </>
   );
 

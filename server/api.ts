@@ -74,7 +74,10 @@ const shuffleArray = (array) => {
     currentIndex--;
 
     // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
   }
 
   return array;
@@ -136,21 +139,23 @@ router.get("/favorites", auth.ensureLoggedIn, async (req, res) => {
       const filterTagsString = req.query.filterTags as string;
       const filterTags = filterTagsString.split(",").filter((tag) => tag != "");
 
-      const filteredFullItems = (await Promise.all(shuffledFullItems)).filter((fullItem) => {
-        for (const filterTag of filterTags) {
-          let missing: boolean = true;
-          for (const availableTag of fullItem.tags) {
-            if (filterTag === availableTag) {
-              missing = false;
-              break;
+      const filteredFullItems = (await Promise.all(shuffledFullItems)).filter(
+        (fullItem) => {
+          for (const filterTag of filterTags) {
+            let missing: boolean = true;
+            for (const availableTag of fullItem.tags) {
+              if (filterTag === availableTag) {
+                missing = false;
+                break;
+              }
+            }
+            if (missing) {
+              return false;
             }
           }
-          if (missing) {
-            return false;
-          }
+          return true;
         }
-        return true;
-      });
+      );
       res.send(filteredFullItems);
     }
   });
@@ -220,7 +225,7 @@ type ProfileType = {
   outgoingFriendRequests: string[];
 };
 const defaultProfile: ProfileType = {
-  picture: "https://i.pinimg.com/736x/05/d3/a5/05d3a51c5fa2940a2f0710957f1dbd0d.jpg",
+  picture: "N/A.",
   name: "FirstName LastName",
   description: "Web.lab is the best, 10/10!",
   friends: [],
@@ -242,22 +247,30 @@ router.get("/profile", auth.ensureLoggedIn, (req, res) => {
         incomingFriendRequests: [],
         outgoingFriendRequests: [],
       };
-      FriendRequestModel.find({ $or: [{ first_id: user_id }, { second_id: user_id }] }).then(
-        (friendPairs) => {
-          profile.friends = friendPairs
-            .filter((friendPair) => friendPair.accepted)
-            .map((friendPair) =>
-              friendPair.first_id === user_id ? friendPair.second_id : friendPair.first_id
-            );
-          profile.incomingFriendRequests = friendPairs
-            .filter((friendPair) => !friendPair.accepted && friendPair.second_id === user_id)
-            .map((friendPair) => friendPair.first_id);
-          profile.outgoingFriendRequests = friendPairs
-            .filter((friendPair) => !friendPair.accepted && friendPair.first_id === user_id)
-            .map((friendPair) => friendPair.second_id);
-          res.send(profile);
-        }
-      );
+      FriendRequestModel.find({
+        $or: [{ first_id: user_id }, { second_id: user_id }],
+      }).then((friendPairs) => {
+        profile.friends = friendPairs
+          .filter((friendPair) => friendPair.accepted)
+          .map((friendPair) =>
+            friendPair.first_id === user_id
+              ? friendPair.second_id
+              : friendPair.first_id
+          );
+        profile.incomingFriendRequests = friendPairs
+          .filter(
+            (friendPair) =>
+              !friendPair.accepted && friendPair.second_id === user_id
+          )
+          .map((friendPair) => friendPair.first_id);
+        profile.outgoingFriendRequests = friendPairs
+          .filter(
+            (friendPair) =>
+              !friendPair.accepted && friendPair.first_id === user_id
+          )
+          .map((friendPair) => friendPair.second_id);
+        res.send(profile);
+      });
     }
   });
 });
