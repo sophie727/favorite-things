@@ -24,6 +24,7 @@
   background-color: #56478f;
   border: none;
   padding: 15px;
+  cursor: pointer;
 }
 
 .NavBarMenuLine {
@@ -91,4 +92,5 @@
   border: none;
   border-radius: 5px;
   font-family: Lato;
+  cursor: pointer;
 }

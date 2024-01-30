@@ -253,6 +253,10 @@ const Profile = (props: Props) => {
               <div>
                 {" "}
                 Friends:{" "}
+                <a href="/community">
+                  {" "}
+                  <button className="AddButton">+</button>
+                </a>
                 <div className="FriendRequests">
                   {profile.friends.map((friend: string) => (
                     <FriendProfileButton

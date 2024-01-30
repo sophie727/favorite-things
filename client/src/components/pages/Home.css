@@ -21,6 +21,13 @@
   margin: 5px;
   text-decoration: none;
 }
+.editButton {
+  color: var(--primary);
+}
+
+.editButton :visited {
+  color: var(--primary);
+}
 
 .HomeDelete {
   border: none;
@@ -29,4 +36,5 @@
   font-weight: 350;
   font-size: 17px;
   color: var(--primary);
+  cursor: pointer;
 }

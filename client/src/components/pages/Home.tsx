@@ -118,9 +118,12 @@ const Home = (props: Props) => {
                   <FavoriteItem item={item} />
                 </div>
                 <div className="smallTexts">
-                  <div className="smallText"> {item.private ? "Private" : "Public"}</div>
+                  <div className="smallText">
+                    {" "}
+                    {item.private ? "Private" : "Public"}
+                  </div>
                   <div>
-                    <a className="smallText" href={addLink}>
+                    <a className="smallText editButton" href={addLink}>
                       Edit
                     </a>
                   </div>
