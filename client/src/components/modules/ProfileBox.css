@@ -1,3 +1,7 @@
+.ProfileBox {
+  text-decoration: none;
+}
+
 .ProfileBoxPic {
   width: 10vw;
   height: 10vw;
@@ -30,4 +34,5 @@
   padding: 0 var(--m);
   max-width: 70%;
   word-wrap: break-word;
+  text-decoration: none;
 }

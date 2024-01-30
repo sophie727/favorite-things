@@ -23,7 +23,7 @@ type ProfileText = {
 type Props = { userId: string };
 
 const defaultProfile: ProfileType = {
-  picture: "https://i.pinimg.com/736x/05/d3/a5/05d3a51c5fa2940a2f0710957f1dbd0d.jpg",
+  picture: "N/A.",
   name: "FirstName LastName",
   description: "Web.lab is the best, 10/10!",
   friends: [],
@@ -93,7 +93,7 @@ const Profile = (props: Props) => {
               Edit
             </a>
           ) : (
-            <a className="ProfileEditButton" onClick={sendFriendRequest}>
+            <a className="ProfileAddFriendButton" onClick={sendFriendRequest}>
               {" "}
               Add Friend{" "}
             </a>
@@ -112,8 +112,40 @@ const Profile = (props: Props) => {
                   <a href="/community"> + </a>{" "}
                 </button>
               </div>
-              <p> Incoming Friend Requests: {profile.incomingFriendRequests} </p>
-              <p> Outgoing Friend Requests: {profile.outgoingFriendRequests} </p>
+              <p>
+                {" "}
+                Incoming Friend Requests:{" "}
+                <div>
+                  {" "}
+                  {profile.incomingFriendRequests.map(
+                    (friendRequest: string, index) => {
+                      return (
+                        <button className="ProfileFriendRequest" key={index}>
+                          {friendRequest}
+                        </button>
+                      );
+                    }
+                  )}
+                </div>
+              </p>
+              <p>
+                {" "}
+                Outgoing Friend Requests:
+                <div>
+                  {" "}
+                  {profile.outgoingFriendRequests.map(
+                    (friendRequest: string, index) => {
+                      return (
+                        <a href={"/profile?user=" + friendRequest.toString()}>
+                          <button className="ProfileFriendRequest" key={index}>
+                            {friendRequest}
+                          </button>
+                        </a>
+                      );
+                    }
+                  )}
+                </div>
+              </p>
             </>
           ) : (
             <></>

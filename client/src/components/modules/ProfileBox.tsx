@@ -12,15 +12,15 @@ type Item = {
 type Props = { item: Item };
 const ProfileBox = (props: Props) => {
   return (
-    <a href={"/profile?user=" + props.item.user_id}>
+    <a href={"/profile?user=" + props.item.user_id} className="ProfileBox">
       <div className="ProfileBoxContainer">
         <div className="ProfileBoxLeftCol">
           <img className="ProfileBoxPic" src={props.item.picture} />
         </div>
-        <div className="profileBoxRightCol">
+        <div className="ProfileBoxRightCol">
           <div>
             <h1>{props.item.name}</h1>
-            <p>{props.item.description}</p>
+            <p> {props.item.description}</p>
           </div>
         </div>
       </div>
