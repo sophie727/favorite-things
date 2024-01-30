@@ -29,9 +29,15 @@ const App = () => {
     if (curr_id === null) {
       console.log("setting curr_id to", user_id);
       setCurrID(user_id);
+      get("/api/tags", { curr_id: user_id }).then((tags: string[]) => {
+        setTagOptions([""].concat(tags));
+      });
     } else {
       console.log("setting curr_id to", curr_id);
       setCurrID(curr_id);
+      get("/api/tags", { curr_id: curr_id }).then((tags: string[]) => {
+        setTagOptions([""].concat(tags));
+      });
     }
   };
 
@@ -50,12 +56,6 @@ const App = () => {
         })
       );
   }, []);
-
-  useEffect(() => {
-    get("/api/tags").then((tags: string[]) => {
-      setTagOptions([""].concat(tags));
-    });
-  }, [userId]);
 
   const handleLogin = (credentialResponse: CredentialResponse) => {
     const userToken = credentialResponse.credential;
@@ -77,16 +77,21 @@ const App = () => {
   };
 
   const addTag = (newTag: { tag: string; _id: string; user_id: string }) => {
-    if (userId === newTag.user_id) {
-      setTagOptions((prevTagOptions) => {
-        for (const tag of prevTagOptions) {
-          if (newTag.tag === tag) {
-            return prevTagOptions;
+    console.log("got addTag", newTag);
+    setCurrID((id) => {
+      if (id === newTag.user_id) {
+        console.log("setting tag options");
+        setTagOptions((prevTagOptions) => {
+          for (const tag of prevTagOptions) {
+            if (newTag.tag === tag) {
+              return prevTagOptions;
+            }
           }
-        }
-        return prevTagOptions.concat([newTag.tag]);
-      });
-    }
+          return prevTagOptions.concat([newTag.tag]);
+        });
+      }
+      return id;
+    });
   };
 
   useEffect(() => {

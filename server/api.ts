@@ -204,8 +204,8 @@ router.post("/delFav", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.get("/tags", (req, res) => {
-  const user_id = req.user?._id;
-  AllTagModel.find({ user_id: user_id }).then((tags) => {
+  const curr_id = req.query.curr_id as string;
+  AllTagModel.find({ user_id: curr_id }).then((tags) => {
     res.send(tags.map((tagObject) => tagObject.tag));
   });
 });
