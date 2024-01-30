@@ -304,18 +304,44 @@ router.post("/friend", auth.ensureLoggedIn, (req, res) => {
       { second_id: user_id, first_id: friend_id },
     ],
   }).then((pairs) => {
-    if (pairs.length > 0) {
-      res.send(pairs);
+    if (pairs.length === 0) {
+      const newFriendPair = new FriendRequestModel({
+        first_id: user_id,
+        second_id: friend_id,
+        accepted: false,
+      });
+      newFriendPair.save().then((savedPair) => {
+        socketManager.getIo().emit("friendChange", newFriendPair);
+        res.send(newFriendPair);
+      });
+    } else {
+      let hasOtherSide = false;
+      for (const pair of pairs) {
+        if (pair.first_id === friend_id || pair.accepted) {
+          hasOtherSide = true;
+          break;
+        }
+      }
+      FriendRequestModel.remove({
+        $or: [
+          { first_id: user_id, second_id: friend_id },
+          { second_id: user_id, first_id: friend_id },
+        ],
+      }).then(() => {
+        const newFriendPair = new FriendRequestModel({
+          first_id: user_id,
+          second_id: friend_id,
+          accepted: false,
+        });
+        if (hasOtherSide) {
+          newFriendPair.accepted = true;
+        }
+        newFriendPair.save().then((savedPair) => {
+          socketManager.getIo().emit("friendChange", newFriendPair);
+          res.send(newFriendPair);
+        });
+      });
     }
-    const newFriendPair = new FriendRequestModel({
-      first_id: user_id,
-      second_id: friend_id,
-      accepted: false,
-    });
-    newFriendPair.save().then((savedPair) => {
-      socketManager.getIo().emit("friendChange", newFriendPair);
-      res.send(newFriendPair);
-    });
   });
 });
 
