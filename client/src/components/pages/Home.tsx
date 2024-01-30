@@ -100,8 +100,33 @@ const Home = (props: Props) => {
         return id;
       }
       console.log(newFav.id, "adding");
-      setFavoriteItems((prevFavorites) => {
-        return prevFavorites.concat([newFav]);
+      setSearchText((st) => {
+        // Checking to see if we match the searchtext
+        if (!RegExp(st, "i").test(newFav.name)) {
+          return st;
+        }
+        setFilterTags((ft) => {
+          // Checking to see if we have the tags
+          for (const tag1 of ft) {
+            let found = false;
+            for (const tag2 of newFav.tags) {
+              if (tag1 === tag2) {
+                found = true;
+                break;
+              }
+            }
+            if (!found) {
+              return ft;
+            }
+          }
+
+          setFavoriteItems((prevFavorites) => {
+            console.log(prevFavorites, "prevFavorites");
+            return prevFavorites.concat([newFav]);
+          });
+          return ft;
+        });
+        return st;
       });
       return id;
     });
@@ -173,25 +198,29 @@ const Home = (props: Props) => {
                   {" "}
                   <FavoriteItem item={item} />
                 </div>
-                <div className="smallTexts">
-                  <div className="smallText"> {item.private ? "Private" : "Public"}</div>
-                  <div>
-                    <a className="smallText editButton" href={addLink}>
-                      Edit
-                    </a>
+                {props.userId === props.currID ? (
+                  <div className="smallTexts">
+                    <div className="smallText"> {item.private ? "Private" : "Public"}</div>
+                    <div>
+                      <a className="smallText editButton" href={addLink}>
+                        Edit
+                      </a>
+                    </div>
+                    <div>
+                      <button
+                        className="HomeDelete"
+                        onClick={() => {
+                          console.log("deleted", item);
+                          post("/api/delFav", { id: item.id });
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                  <div>
-                    <button
-                      className="HomeDelete"
-                      onClick={() => {
-                        console.log("deleted", item);
-                        post("/api/delFav", { id: item.id });
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
+                ) : (
+                  <></>
+                )}
               </div>
             );
           })

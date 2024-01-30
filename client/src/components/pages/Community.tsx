@@ -32,23 +32,31 @@ const Community = (props: Props) => {
   }, []);
 
   const changeProfile = (profileText: ProfileText) => {
-    setProfiles((oldProfiles) => {
-      if (props.userId === profileText.user_id) {
-        return oldProfiles;
-      }
-      let found = false;
-      const newProfiles = oldProfiles.map((oldProfile) => {
-        if (oldProfile.user_id === profileText.user_id) {
-          found = true;
-          return profileText;
+    setSearchText((st) => {
+      const matches = RegExp("^" + st, "i").test(profileText.name);
+      setProfiles((oldProfiles) => {
+        if (props.userId === profileText.user_id) {
+          return oldProfiles;
+        }
+        let found = false;
+        if (matches) {
+          const newProfiles = oldProfiles.map((oldProfile) => {
+            if (oldProfile.user_id === profileText.user_id) {
+              found = true;
+              return profileText;
+            } else {
+              return oldProfile;
+            }
+          });
+          if (!found) {
+            newProfiles.push(profileText);
+          }
+          return newProfiles;
         } else {
-          return oldProfile;
+          return oldProfiles.filter((oldProfile) => oldProfile.user_id !== profileText.user_id);
         }
       });
-      if (!found) {
-        newProfiles.push(profileText);
-      }
-      return newProfiles;
+      return st;
     });
   };
 
