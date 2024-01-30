@@ -18,7 +18,7 @@ const defaultProfile: ProfileText = {
   user_id: "",
 };
 
-type Props = { friend_id: string };
+type Props = { friend_id: string; is_incoming: boolean };
 
 const FriendProfileButton = (props: Props) => {
   const [friendProfile, setFriendProfile] = useState(defaultProfile);
@@ -45,14 +45,29 @@ const FriendProfileButton = (props: Props) => {
     post("/api/friend", { friend_id: props.friend_id });
   };
 
-  return (
-    <button className="ProfileFriendRequest" onClick={() => sendRequest()}>
+  const buttonInternals = (
+    <>
       <span>
         <img className="ProfilFriendRequestPic" src={friendProfile.picture} />
       </span>
       <span>{friendProfile.name}</span>
+    </>
+  );
+
+  const acceptFriendButton = (
+    <button className="ProfileFriendRequest" onClick={() => sendRequest()}>
+      {buttonInternals}
     </button>
   );
+  const visitFriendButton = (
+    <a href={"/profile?user=" + props.friend_id}>
+      <button className="ProfileFriendRequest" onClick={() => sendRequest()}>
+        {buttonInternals}
+      </button>
+    </a>
+  );
+
+  return props.is_incoming ? acceptFriendButton : visitFriendButton;
 };
 
 export default FriendProfileButton;

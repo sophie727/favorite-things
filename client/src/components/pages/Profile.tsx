@@ -35,21 +35,11 @@ const defaultProfile: ProfileType = {
 const Profile = (props: Props) => {
   const [profile, setProfile] = useState(defaultProfile);
   const [currID, setCurrID] = useState("");
-  const [incomingFriendProfiles, setIncomingFriendProfiles] = useState<
-    ProfileText[]
-  >([]);
-  const [outgoingFriendProfiles, setOutgoingFriendProfiles] = useState<
-    ProfileText[]
-  >([]);
-  const [friendProfiles, setFriendProfiles] = useState<ProfileText[]>([]);
-
-  useEffect(() => {
-    get("/api/profile", { user_id: currID }).then((myProfile) => {
-      console.log("got profile for " + currID);
-      console.log(myProfile);
-      setProfile(myProfile);
-    });
-  }, [currID]);
+  const [isFriend, setIsFriend] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+  // TODO: figure out the setIsFriend properly
+  // TODO: Get the sockets for moving friends around working properly
+  // TODO: Figure out how to only setCurrID once, instead of every time things happen
 
   useEffect(() => {
     socket.on("profileEdit", changeProfileText);
@@ -62,11 +52,20 @@ const Profile = (props: Props) => {
     const urlParams = new URLSearchParams(window.location.search);
     const curr_id = urlParams.get("user");
     if (curr_id === null) {
-      setCurrID(props.userId);
+      setID(props.userId);
     } else {
-      setCurrID(curr_id);
+      setID(curr_id);
     }
   }, []);
+
+  const setID = (id) => {
+    setCurrID(id);
+    get("/api/profile", { user_id: id }).then((myProfile) => {
+      console.log("got profile for " + id);
+      console.log(myProfile);
+      setProfile(myProfile);
+    });
+  };
 
   const changeProfileText = (profileText: ProfileText) => {
     setCurrID((oldID) => {
@@ -87,6 +86,10 @@ const Profile = (props: Props) => {
     post("/api/friend", { friend_id: currID });
   };
 
+  const removeFriend = () => {
+    post("/api/unfriend", { friend_id: currID });
+  };
+
   return (
     <div className="Profile">
       <div className="ProfileLeftColumn">
@@ -102,6 +105,11 @@ const Profile = (props: Props) => {
           {currID === props.userId ? (
             <a href="/profile/edit" className="ProfileEditButton">
               Edit
+            </a>
+          ) : isFriend ? (
+            <a className="ProfileAddFriendButton" onClick={removeFriend}>
+              {" "}
+              Remove Friend{" "}
             </a>
           ) : (
             <a className="ProfileAddFriendButton" onClick={sendFriendRequest}>
@@ -121,7 +129,7 @@ const Profile = (props: Props) => {
                   {" "}
                   Friends:{" "}
                   {profile.friends.map((friend: string) => (
-                    <FriendProfileButton friend_id={friend} />
+                    <FriendProfileButton friend_id={friend} is_incoming={false} />
                   ))}{" "}
                 </span>
                 <button className="ProfileAddButton">
@@ -135,7 +143,7 @@ const Profile = (props: Props) => {
                 <div className="u-flex">
                   {" "}
                   {profile.incomingFriendRequests.map((friend: string) => (
-                    <FriendProfileButton friend_id={friend} />
+                    <FriendProfileButton friend_id={friend} is_incoming={true} />
                   ))}
                 </div>
               </p>
@@ -145,7 +153,7 @@ const Profile = (props: Props) => {
                 <div className="u-flex">
                   {" "}
                   {profile.outgoingFriendRequests.map((friend: string) => (
-                    <FriendProfileButton friend_id={friend} />
+                    <FriendProfileButton friend_id={friend} is_incoming={false} />
                   ))}
                 </div>
               </p>
