@@ -16,6 +16,10 @@
   object-fit: cover;
 }
 
+.Profile a {
+  text-decoration: none;
+}
+
 .ProfileGoToFavorites {
   margin: 5px auto;
   font-size: 16px;
@@ -25,6 +29,11 @@
   border-radius: 10px;
   padding: 5px;
   border: none;
+  cursor: pointer;
+}
+
+.ProfileGoToFavorites :visited {
+  color: white;
 }
 
 .ProfileEditButton {
@@ -41,6 +50,7 @@
   background-color: var(--primary);
   border-radius: 10px;
   padding: 5px;
+  cursor: pointer;
 }
 
 .ProfileText {
@@ -69,4 +79,9 @@
 .ProfileAddButton a {
   text-decoration: none;
   color: white;
+}
+
+.FriendRequests {
+  display: flex;
+  flex-wrap: wrap;
 }
