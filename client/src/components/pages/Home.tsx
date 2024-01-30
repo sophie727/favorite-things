@@ -7,7 +7,12 @@ import FavoriteItem from "../modules/FavoriteItem";
 import { get, post } from "../../utilities";
 import { socket } from "../../client-socket";
 
-type Props = { tagOptions: string[]; userId: string };
+type Props = {
+  tagOptions: string[];
+  userId: string;
+  currID: string;
+  setCurrID: React.Dispatch<React.SetStateAction<string>>;
+};
 
 type fullItem = {
   picture: string;
@@ -38,27 +43,43 @@ const Home = (props: Props) => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    get("/api/dailyFav").then((item) => setDailyFavorite(item));
-  }, []);
+    get("/api/dailyFav", { currID: props.currID }).then((item) => {
+      props.setCurrID((id) => {
+        if (props.currID === id) {
+          console.log("setting daily fav");
+          setDailyFavorite(item);
+        }
+        return id;
+      });
+    });
+  }, [props.currID]);
 
   useEffect(() => {
     get("/api/favorites", {
       filterTags: filterTags,
       searchText: searchText,
+      currID: props.currID,
     }).then((items) => {
-      setFavoriteItems(items);
-      console.log(items);
+      props.setCurrID((id) => {
+        if (props.currID === id) {
+          setFavoriteItems(items);
+          console.log(items);
+        }
+        return id;
+      });
     });
-  }, [filterTags, searchText]);
+  }, [filterTags, searchText, props.currID]);
 
   const addFavorite = (newFav: fullItem, user_id: string) => {
-    if (user_id !== props.userId) {
-      console.log(user_id, props.userId);
-      return;
-    }
-    console.log(newFav.id, "adding");
-    setFavoriteItems((prevFavorites) => {
-      return prevFavorites.concat([newFav]);
+    props.setCurrID((id) => {
+      if (user_id !== id) {
+        return id;
+      }
+      console.log(newFav.id, "adding");
+      setFavoriteItems((prevFavorites) => {
+        return prevFavorites.concat([newFav]);
+      });
+      return id;
     });
   };
 
@@ -70,13 +91,16 @@ const Home = (props: Props) => {
   }, []);
 
   const delFavorite = (id: string) => {
-    if (dailyFavorite.id === id) {
-      get("/api/dailyFav").then((item) => {
-        setDailyFavorite(item);
+    get("/api/dailyFav").then((item) => {
+      setDailyFavorite((dailyFav) => {
+        if (dailyFavorite.id === id) {
+          return item;
+        }
+        return dailyFav;
       });
-    }
+    });
     console.log(id, "deleting");
-    setFavoriteItems(favoriteItems.filter((favItem) => favItem.id !== id));
+    setFavoriteItems((prevFavorites) => prevFavorites.filter((favItem) => favItem.id !== id));
   };
 
   useEffect(() => {

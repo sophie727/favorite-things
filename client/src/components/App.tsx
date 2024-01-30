@@ -21,6 +21,20 @@ const GOOGLE_CLIENT_ID = "480391270274-2g6n3lmsb18t38qcem0vco150buo8l3v.apps.goo
 const App = () => {
   const [tagOptions, setTagOptions] = useState([""]);
   const [userId, setUserId] = useState<string | undefined>(undefined);
+  const [currID, setCurrID] = useState("");
+
+  const setID = (user_id: string) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const curr_id = urlParams.get("user");
+    console.log(user_id, curr_id, "doing stuff");
+    if (curr_id === null) {
+      console.log("setting curr_id to", user_id);
+      setCurrID(user_id);
+    } else {
+      console.log("setting curr_id to", curr_id);
+      setCurrID(curr_id);
+    }
+  };
 
   useEffect(() => {
     get("/api/whoami")
@@ -28,6 +42,7 @@ const App = () => {
         if (user._id) {
           // They are registed in the database and currently logged in.
           setUserId(user._id);
+          setID(user._id);
         }
       })
       .then(() =>
@@ -52,6 +67,7 @@ const App = () => {
     console.log(`Logged in as ${decodedCredential.name}`);
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
+      setID(user._id);
       post("/api/initsocket", { socketid: socket.id });
     });
   };
@@ -92,12 +108,25 @@ const App = () => {
         ) : (
           <BrowserRouter>
             <Routes>
-              <Route element={<Home tagOptions={tagOptions} userId={userId} />} path="/" />
+              <Route
+                element={
+                  <Home
+                    tagOptions={tagOptions}
+                    userId={userId}
+                    currID={currID}
+                    setCurrID={setCurrID}
+                  />
+                }
+                path="/"
+              />
               <Route
                 element={<Add tagOptions={tagOptions} setTagOptions={setTagOptions} />}
                 path="/add"
               />
-              <Route element={<Profile userId={userId} />} path="/profile" />
+              <Route
+                element={<Profile userId={userId} currID={currID} setCurrID={setCurrID} />}
+                path="/profile"
+              />
               <Route element={<ProfileEdit userId={userId} />} path="/profile/edit" />
               <Route element={<Help />} path="/help" />
               <Route element={<Community userId={userId} />} path="/community" />

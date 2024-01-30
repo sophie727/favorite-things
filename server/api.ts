@@ -218,6 +218,7 @@ type ProfileType = {
   friends: string[];
   incomingFriendRequests: string[];
   outgoingFriendRequests: string[];
+  user_id: string;
 };
 const defaultProfile: ProfileType = {
   picture: "https://i.pinimg.com/736x/05/d3/a5/05d3a51c5fa2940a2f0710957f1dbd0d.jpg",
@@ -226,11 +227,14 @@ const defaultProfile: ProfileType = {
   friends: [],
   incomingFriendRequests: [],
   outgoingFriendRequests: [],
+  user_id: "",
 };
 
 router.get("/profile", auth.ensureLoggedIn, (req, res) => {
-  const user_id = req.query.user_id as string;
-  ProfileTextModel.findOne({ user_id: user_id }).then((profileText) => {
+  const curr_id = req.query.user_id as string;
+  const user_id = req.user?._id;
+
+  ProfileTextModel.findOne({ user_id: curr_id }).then((profileText) => {
     if (profileText === null) {
       res.send(defaultProfile);
     } else {
@@ -241,7 +245,12 @@ router.get("/profile", auth.ensureLoggedIn, (req, res) => {
         friends: [],
         incomingFriendRequests: [],
         outgoingFriendRequests: [],
+        user_id: curr_id,
       };
+      if (user_id !== curr_id) {
+        res.send(profile);
+        return;
+      }
       FriendRequestModel.find({ $or: [{ first_id: user_id }, { second_id: user_id }] }).then(
         (friendPairs) => {
           profile.friends = friendPairs

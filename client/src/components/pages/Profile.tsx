@@ -5,8 +5,6 @@ import FriendProfileButton from "../modules/FriendProfileButton";
 
 import "./Profile.css";
 
-// TODO: Make things look different when you're friends?
-
 type ProfileType = {
   picture: string;
   name: string;
@@ -14,6 +12,7 @@ type ProfileType = {
   friends: string[];
   incomingFriendRequests: string[];
   outgoingFriendRequests: string[];
+  user_id: string;
 };
 type ProfileText = {
   picture: string;
@@ -27,7 +26,11 @@ type FriendRequest = {
   accepted: boolean;
 };
 
-type Props = { userId: string };
+type Props = {
+  userId: string;
+  currID: string;
+  setCurrID: React.Dispatch<React.SetStateAction<string>>;
+};
 
 const defaultProfile: ProfileType = {
   picture: "N/A.",
@@ -36,15 +39,13 @@ const defaultProfile: ProfileType = {
   friends: [],
   incomingFriendRequests: [],
   outgoingFriendRequests: [],
+  user_id: "",
 };
 
 const Profile = (props: Props) => {
   const [profile, setProfile] = useState(defaultProfile);
-  const [currID, setCurrID] = useState("");
   const [isFriend, setIsFriend] = useState(false);
   const [isPending, setIsPending] = useState(false);
-  // TODO: figure out the setIsFriend properly, and get these to use sockets too
-  // TODO: Get the sockets for moving friends around working properly
   // TODO: Get the Go To Favorites button to go to the right spot.
   // TODO: Get remove friend working
   // TODO: All friends mixed list?
@@ -58,31 +59,36 @@ const Profile = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const curr_id = urlParams.get("user");
-    if (curr_id === null) {
-      setID(props.userId);
-    } else {
-      setID(curr_id);
-    }
-  }, []);
-
-  const setID = (id) => {
-    setCurrID(id);
-    get("/api/profile", { user_id: id }).then((myProfile) => {
-      console.log("got profile for " + id);
-      console.log(myProfile);
-      setProfile(myProfile);
+    get("/api/profile", { user_id: props.currID }).then((myProfile) => {
+      props.setCurrID((id) => {
+        console.log("got profile for " + myProfile.user_id);
+        console.log(myProfile);
+        if (myProfile.user_id === id) {
+          console.log("setting profile!", myProfile.user_id, id);
+          setProfile(myProfile);
+        }
+        return id;
+      });
     });
-    if (id !== props.userId) {
-      get("/api/isFriend", { friend_id: id }).then((pairs) => {
-        setIsFriend(pairs.length > 0);
+    if (props.currID !== props.userId) {
+      get("/api/isFriend", { friend_id: props.currID }).then((pairs) => {
+        props.setCurrID((id) => {
+          if (props.currID === id) {
+            setIsFriend(pairs.length > 0);
+          }
+          return id;
+        });
       });
-      get("/api/isPending", { friend_id: id }).then((pairs) => {
-        setIsPending(pairs.length > 0);
+      get("/api/isPending", { friend_id: props.currID }).then((pairs) => {
+        props.setCurrID((id) => {
+          if (props.currID === id) {
+            setIsPending(pairs.length > 0);
+          }
+          return id;
+        });
       });
     }
-  };
+  }, [props.currID]);
 
   useEffect(() => {
     socket.on("newFriends", processNewFriends);
@@ -99,8 +105,8 @@ const Profile = (props: Props) => {
   });
 
   const processNewFriends = (newFriendsPair: FriendRequest) => {
-    if (newFriendsPair.first_id === props.userId || newFriendsPair.second_id === props.userId) {
-      setCurrID((id) => {
+    props.setCurrID((id) => {
+      if (newFriendsPair.first_id === props.userId || newFriendsPair.second_id === props.userId) {
         if (props.userId === id) {
           // Looking at your page when friendship is made!
           const other_id =
@@ -138,15 +144,14 @@ const Profile = (props: Props) => {
             setIsPending(true);
           }
         }
-
-        return id;
-      });
-    }
+      }
+      return id;
+    });
   };
 
   const processDelFriends = (first_id: string, second_id: string) => {
-    if (first_id === props.userId || second_id === props.userId) {
-      setCurrID((id) => {
+    props.setCurrID((id) => {
+      if (first_id === props.userId || second_id === props.userId) {
         // Use this janky code to actually access the correct currID
         if (props.userId === id) {
           // Looking at your page while you stop being friends
@@ -167,15 +172,15 @@ const Profile = (props: Props) => {
           setIsFriend(false);
           setIsPending(false);
         }
-
-        return id;
-      });
-    }
+      }
+      return id;
+    });
   };
 
   const changeProfileText = (profileText: ProfileText) => {
-    setCurrID((oldID) => {
-      if (oldID == profileText.user_id) {
+    props.setCurrID((id) => {
+      console.log(id, "currID");
+      if (id == profileText.user_id) {
         setProfile((oldProfile) => {
           const newProfile = { ...oldProfile };
           newProfile.picture = profileText.picture;
@@ -184,16 +189,16 @@ const Profile = (props: Props) => {
           return newProfile;
         });
       }
-      return oldID;
+      return id;
     });
   };
 
   const sendFriendRequest = () => {
-    post("/api/friend", { friend_id: currID });
+    post("/api/friend", { friend_id: props.currID });
   };
 
   const removeFriend = () => {
-    post("/api/unfriend", { friend_id: currID });
+    post("/api/unfriend", { friend_id: props.currID });
   };
 
   return (
@@ -203,7 +208,7 @@ const Profile = (props: Props) => {
         <div className="u-flex-alignCenter">
           <button className="ProfileGoToFavorites">
             {" "}
-            <a href="/"> Go to Favorites </a>
+            <a href={"/?user=" + props.currID}> Go to Favorites </a>
           </button>
         </div>
       </div>
@@ -211,7 +216,7 @@ const Profile = (props: Props) => {
         <div className="u-flex-alignCenter">
           {" "}
           <h1> Profile</h1>
-          {currID === props.userId ? (
+          {props.currID === props.userId ? (
             <a href="/profile/edit" className="ProfileEditButton">
               Edit
             </a>
@@ -236,7 +241,7 @@ const Profile = (props: Props) => {
           {" "}
           <p> Name: {profile.name}</p>
           <p className="ProfileDescription"> {profile.description} </p>
-          {currID === props.userId ? (
+          {props.currID === props.userId ? (
             <>
               <div>
                 <span>

@@ -91,11 +91,11 @@ const ProfileEdit = (props: Props) => {
         </span>
       </div>
       <div className="AddContent AddButtonContainer">
-        <a href="/profile">
-          <button className="AddButton UpdateButton" onClick={changeProfile}>
-            Update
-          </button>
-        </a>
+        {/*<a href="/profile">*/}
+        <button className="AddButton UpdateButton" onClick={changeProfile}>
+          Update
+        </button>
+        {/*</a>*/}
       </div>
     </div>
   );
