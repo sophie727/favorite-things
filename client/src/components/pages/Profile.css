@@ -15,6 +15,18 @@
   height: 40vw;
   object-fit: cover;
 }
+
+.ProfileGoToFavorites {
+  margin: 5px auto;
+  font-size: 16px;
+  text-decoration: none;
+  color: white;
+  background-color: var(--primary);
+  border-radius: 10px;
+  padding: 5px;
+  border: none;
+}
+
 .ProfileEditButton {
   font-size: 16px;
   text-decoration: none;

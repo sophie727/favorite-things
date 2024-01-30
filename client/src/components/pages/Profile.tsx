@@ -91,6 +91,9 @@ const Profile = (props: Props) => {
     <div className="Profile">
       <div className="ProfileLeftColumn">
         <img className="ProfilePicture" src={profile.picture} />
+        <a href="/" className="u-flex-alignCenter">
+          <button className="ProfileGoToFavorites">Go to Favorites</button>
+        </a>{" "}
       </div>
       <div className="ProfileRightColumn">
         <div className="u-flex-alignCenter">
