@@ -38,6 +38,7 @@
   background-color: white;
   font-size: 15px;
   color: #56478f;
+  cursor: pointer;
 }
 
 .AddTags {
@@ -88,6 +89,7 @@
   line-height: normal;
   border: none;
   margin: var(--s);
+  cursor: pointer;
 }
 
 .AddPrivate {

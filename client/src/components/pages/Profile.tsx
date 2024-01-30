@@ -105,8 +105,8 @@ const Profile = (props: Props) => {
   });
 
   const processNewFriends = (newFriendsPair: FriendRequest) => {
-    props.setCurrID((id) => {
-      if (newFriendsPair.first_id === props.userId || newFriendsPair.second_id === props.userId) {
+    if (newFriendsPair.first_id === props.userId || newFriendsPair.second_id === props.userId) {
+      props.setCurrID((id) => {
         if (props.userId === id) {
           // Looking at your page when friendship is made!
           const other_id =
@@ -144,9 +144,9 @@ const Profile = (props: Props) => {
             setIsPending(true);
           }
         }
-      }
-      return id;
-    });
+        return id;
+      });
+    }
   };
 
   const processDelFriends = (first_id: string, second_id: string) => {
@@ -244,13 +244,17 @@ const Profile = (props: Props) => {
           {props.currID === props.userId ? (
             <>
               <div>
-                <span>
+                {" "}
+                Friends:{" "}
+                <a href="/community">
                   {" "}
-                  Friends:{" "}
+                  <button className="AddButton">+</button>
+                </a>
+                <div className="FriendRequests">
                   {profile.friends.map((friend: string) => (
                     <FriendProfileButton friend_id={friend} is_incoming={false} />
                   ))}{" "}
-                </span>
+                </div>
               </div>
               <p>
                 {" "}
