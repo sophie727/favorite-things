@@ -17,14 +17,18 @@ type Props = { userId: string };
 const Community = (props: Props) => {
   const [profiles, setProfiles] = useState<ProfileText[]>([]);
   const [searchText, setSearchText] = useState("");
+  const [isSorted, setIsSorted] = useState(true);
 
   useEffect(() => {
-    get("/api/profiles", { searchText: searchText }).then(
-      (profiles: ProfileText[]) => {
-        setProfiles(profiles);
+    get("/api/profiles", { searchText: searchText }).then((profiles: ProfileText[]) => {
+      if (isSorted) {
+        profiles.sort((first, second) =>
+          first.name.toLowerCase() < second.name.toLowerCase() ? -1 : 1
+        );
       }
-    );
-  }, [searchText]);
+      setProfiles(profiles);
+    });
+  }, [searchText, isSorted]);
 
   useEffect(() => {
     socket.on("profileEdit", changeProfile);
@@ -36,29 +40,35 @@ const Community = (props: Props) => {
   const changeProfile = (profileText: ProfileText) => {
     setSearchText((st) => {
       const matches = RegExp("^" + st, "i").test(profileText.name);
-      setProfiles((oldProfiles) => {
-        if (props.userId === profileText.user_id) {
-          return oldProfiles;
-        }
-        let found = false;
-        if (matches) {
-          const newProfiles = oldProfiles.map((oldProfile) => {
-            if (oldProfile.user_id === profileText.user_id) {
-              found = true;
-              return profileText;
-            } else {
-              return oldProfile;
-            }
-          });
-          if (!found) {
-            newProfiles.push(profileText);
+      setIsSorted((is) => {
+        setProfiles((oldProfiles) => {
+          if (props.userId === profileText.user_id) {
+            return oldProfiles;
           }
-          return newProfiles;
-        } else {
-          return oldProfiles.filter(
-            (oldProfile) => oldProfile.user_id !== profileText.user_id
-          );
-        }
+          let found = false;
+          if (matches) {
+            const newProfiles = oldProfiles.map((oldProfile) => {
+              if (oldProfile.user_id === profileText.user_id) {
+                found = true;
+                return profileText;
+              } else {
+                return oldProfile;
+              }
+            });
+            if (!found) {
+              newProfiles.push(profileText);
+            }
+            if (is) {
+              newProfiles.sort((first, second) =>
+                first.name.toLowerCase() < second.name.toLowerCase() ? -1 : 1
+              );
+            }
+            return newProfiles;
+          } else {
+            return oldProfiles.filter((oldProfile) => oldProfile.user_id !== profileText.user_id);
+          }
+        });
+        return is;
       });
       return st;
     });
@@ -74,15 +84,12 @@ const Community = (props: Props) => {
       <h1 className="CommunityTitle"> Community </h1>
       <div className="UtilBarContainer">
         <div>
-          <button
-            className="UtilBarItem UtilBarButton UtilBarFilter"
-            onClick={makeFiltersDropdown}
-          >
+          <button className="UtilBarItem UtilBarButton UtilBarFilter" onClick={makeFiltersDropdown}>
             Sort
             <div className="UtilBarPopupTextContainer CommunitySortContainer">
               <div className="UtilBarPopupText" id="FilterPopup">
                 <p>Sort by: </p>
-                <input type="checkbox" />
+                <input type="checkbox" checked={isSorted} onClick={() => setIsSorted(!isSorted)} />
                 Alphabetical Order
               </div>
             </div>

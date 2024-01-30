@@ -51,7 +51,11 @@ const UtilBar = (props: Props) => {
                 <div>
                   {" "}
                   <p>Sort by: </p>
-                  <input type="checkbox" onClick={() => props.setIsSorted(!props.isSorted)} />
+                  <input
+                    type="checkbox"
+                    checked={props.isSorted}
+                    onClick={() => props.setIsSorted(!props.isSorted)}
+                  />
                   Star count
                 </div>{" "}
               </div>
