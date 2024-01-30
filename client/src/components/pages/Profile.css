@@ -32,7 +32,11 @@
   cursor: pointer;
 }
 
-.ProfileGoToFavorites :visited {
+.ProfileGoToFavorites a {
+  color: white;
+}
+
+.ProfileGoToFavorites a :visited {
   color: white;
 }
 

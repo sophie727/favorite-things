@@ -115,7 +115,9 @@ const Home = (props: Props) => {
       });
     });
     console.log(id, "deleting");
-    setFavoriteItems((prevFavorites) => prevFavorites.filter((favItem) => favItem.id !== id));
+    setFavoriteItems((prevFavorites) =>
+      prevFavorites.filter((favItem) => favItem.id !== id)
+    );
   };
 
   useEffect(() => {
@@ -129,6 +131,13 @@ const Home = (props: Props) => {
     <>
       <div>
         <DailyFavorite item={dailyFavorite} />
+      </div>
+      <div>
+        {props.userId === props.currID ? (
+          <h1 className="u-textCenter">Your Favorites </h1>
+        ) : (
+          <h1 className="u-textCenter">{props.currID}'s Favorites </h1>
+        )}
       </div>
       <div>
         <UtilBar
@@ -158,7 +167,10 @@ const Home = (props: Props) => {
                   <FavoriteItem item={item} />
                 </div>
                 <div className="smallTexts">
-                  <div className="smallText"> {item.private ? "Private" : "Public"}</div>
+                  <div className="smallText">
+                    {" "}
+                    {item.private ? "Private" : "Public"}
+                  </div>
                   <div>
                     <a className="smallText editButton" href={addLink}>
                       Edit
