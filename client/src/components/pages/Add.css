@@ -33,12 +33,26 @@
   max-width: 80%;
 }
 
+.AddStarsContainer {
+  display: flex;
+  justify-content: right;
+}
+
+.AddStars {
+  display: flex;
+}
+
 .AddStarButton {
   border: none;
   background-color: white;
   font-size: 15px;
   color: #56478f;
   cursor: pointer;
+}
+
+.AddStarButtonContainer :hover {
+  color: var(--primary--dark);
+  font-weight: 900;
 }
 
 .AddTags {
@@ -48,8 +62,20 @@
   border: none;
   margin: var(--s);
   width: 100px;
+  cursor: pointer;
 }
 
+.AddedTags {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  flex-wrap: wrap;
+}
+
+.AddedTagContainer {
+  margin: 5px;
+  border-radius: 10px;
+}
 .AddedTag {
   color: #fff;
 
@@ -63,9 +89,10 @@
   border-radius: 10px;
   border: none;
   background: var(--tagcolor);
-  margin: 5px;
 
   height: 27px;
+
+  cursor: pointer;
 }
 
 #newTagInput {
@@ -76,8 +103,8 @@
 .AddButton {
   border-radius: 10px;
   background: var(--primary);
-  width: 27px;
-  height: 27px;
+  width: 28px;
+  height: 28px;
   flex-shrink: 0;
 
   color: #fff;

@@ -184,25 +184,25 @@ const Add = (props: Props) => {
           defaultValue={picture}
         />
       </div>
-      <div className="AddContent">
+      <div className="AddContent AddedTags">
         <span>Tags:</span>
-        <span>
-          {chosenTags.map((tag) => (
+        {chosenTags.map((tag) => (
+          <div className="AddedTagContainer blueButtonDarken">
             <button className="AddedTag" onClick={() => removeTag(tag)}>
               {tag}
-            </button>
+            </button>{" "}
+          </div>
+        ))}
+        <select
+          className="AddTags"
+          onChange={(event) => {
+            addChosenTag(event.target.value);
+          }}
+        >
+          {props.tagOptions.map((tag) => (
+            <option>{tag}</option>
           ))}
-          <select
-            className="AddTags"
-            onChange={(event) => {
-              addChosenTag(event.target.value);
-            }}
-          >
-            {props.tagOptions.map((tag) => (
-              <option>{tag}</option>
-            ))}
-          </select>
-        </span>
+        </select>
         <span>New Tag:</span>
         <span>
           <input
@@ -213,7 +213,7 @@ const Add = (props: Props) => {
             }}
           />
         </span>
-        <span>
+        <span className="buttonDarken">
           <button
             className="AddButton"
             onClick={() => {
@@ -224,18 +224,20 @@ const Add = (props: Props) => {
           </button>
         </span>
       </div>
-      <div className="AddContent">
+      <div className="AddContent AddStarsContainer">
         <span>Stars:</span>
         <span className="AddStars">
           {[...Array(5).keys()].map((index) => (
-            <button
-              className="AddStarButton"
-              onClick={() => {
-                setStarCount(index + 1);
-              }}
-            >
-              {starCount > index ? <>&#9733;</> : <>&#9734;</>}
-            </button>
+            <div className="AddStarButtonContainer">
+              <button
+                className="AddStarButton"
+                onClick={() => {
+                  setStarCount(index + 1);
+                }}
+              >
+                {starCount > index ? <>&#9733;</> : <>&#9734;</>}
+              </button>
+            </div>
           ))}
         </span>
       </div>
@@ -252,7 +254,7 @@ const Add = (props: Props) => {
           <div className="slider"></div>
         </label>
       </div>
-      <div className="AddContent AddButtonContainer">
+      <div className="AddContent AddButtonContainer buttonDarken">
         <button className="AddButton LargeAddButton" onClick={addFavorite}>
           Add
         </button>

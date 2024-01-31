@@ -23,6 +23,7 @@
   --primary--light: #c1b7e7;
   --primary--dim: #bbb6d2;
   --tagcolor: #0058b7; /* green: #0f6808,  blue: #0053ae */
+  --tagcolor--dark: #00458e;
   --darkgrey: #d4d4d4;
   --medgrey: #e0e0e0;
   --grey: #f7f7f7;
@@ -48,6 +49,14 @@ body {
   padding: 0;
   font-family: "Lato", sans-serif;
   font-weight: 300;
+}
+
+.buttonDarken :hover {
+  background-color: var(--primary--dark);
+}
+
+.blueButtonDarken :hover {
+  background-color: var(--tagcolor--dark);
 }
 
 form {

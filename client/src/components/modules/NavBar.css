@@ -90,7 +90,10 @@
 
 .button {
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
+  height: 25px;
   font-family: Lato;
   cursor: pointer;
+  background-color: var(--tagcolor);
+  color: white;
 }

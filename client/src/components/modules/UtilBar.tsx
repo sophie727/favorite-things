@@ -31,27 +31,42 @@ const UtilBar = (props: Props) => {
     <>
       <div className="UtilBarContainer">
         <div>
-          <button className="UtilBarItem UtilBarButton UtilBarFilter" onClick={makeFiltersDropdown}>
-            Filters
+          <button className="UtilBarFilter">
+            <div className="buttonDarken">
+              <div className="UtilBarFilterText" onClick={makeFiltersDropdown}>
+                Filters
+              </div>
+            </div>
             <div className="UtilBarPopupTextContainer">
               <div className="UtilBarPopupText" id="FilterPopup">
-                <h2>Filter your favorites! </h2>
+                <div className="u-flex">
+                  <h2 className="popupTitle">Filter your favorites! </h2>
+                  <p className="xButton" onClick={makeFiltersDropdown}>
+                    x
+                  </p>
+                </div>
                 <p>Click the tag you wish to filter by:</p>
                 {props.tagOptions.map((tag: string) => {
                   if (tag === "") {
                     return;
                   }
                   return (
-                    <button onClick={() => addTagFilter(tag)} className="tagButton">
-                      {tag}
-                    </button>
+                    <span className="blueButtonDarken tagButtons">
+                      <button
+                        onClick={() => addTagFilter(tag)}
+                        className="tagButton"
+                      >
+                        {tag}
+                      </button>
+                    </span>
                   );
                 })}
-                <hr></hr>
+                <hr />
                 <div>
                   {" "}
                   <p>Sort by: </p>
                   <input
+                    className="sortCheckbox"
                     type="checkbox"
                     checked={props.isSorted}
                     onClick={() => props.setIsSorted(!props.isSorted)}
@@ -70,7 +85,7 @@ const UtilBar = (props: Props) => {
           }}
         />
         {props.canAdd ? (
-          <a href="/add/">
+          <a className="buttonDarken" href="/add/">
             <button className="UtilBarItem UtilBarButton AddButton">+</button>
           </a>
         ) : (
@@ -79,9 +94,11 @@ const UtilBar = (props: Props) => {
       </div>
       <div className="TagButtons">
         {props.filterTags.map((tag) => (
-          <button className="AddedTag" onClick={() => removeTag(tag)}>
-            {tag}
-          </button>
+          <div className="AddedTagContainer blueButtonDarken">
+            <button className="AddedTag" onClick={() => removeTag(tag)}>
+              {tag}
+            </button>
+          </div>
         ))}
       </div>
     </>

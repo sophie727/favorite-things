@@ -35,7 +35,7 @@ const NavBar = (props: Props) => {
         <a className="NavBarItem NavBarTitle" href="/">
           My Favorite Things
         </a>
-        <div className="NavBarItem NavBarGoogleAuth">
+        <div className="NavBarItem NavBarGoogleAuth blueButtonDarken">
           {props.userId ? (
             <button
               className="button"

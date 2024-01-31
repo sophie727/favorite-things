@@ -20,6 +20,10 @@
   text-decoration: none;
 }
 
+.ProfileGoToFavoritesContainer {
+  margin: 5px auto;
+}
+
 .ProfileGoToFavorites {
   margin: 5px auto;
   font-size: 16px;
@@ -46,10 +50,12 @@
   margin: auto 0px auto auto;
   color: var(--primary);
 }
+.ProfileAddFriendButtonContainer {
+  margin: auto 0px auto auto;
+}
 .ProfileAddFriendButton {
   font-size: 16px;
   text-decoration: none;
-  margin: auto 0px auto auto;
   color: white;
   background-color: var(--primary);
   border-radius: 10px;

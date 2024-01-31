@@ -101,7 +101,10 @@ const Profile = (props: Props) => {
   });
 
   const processNewFriends = (newFriendsPair: FriendRequest) => {
-    if (newFriendsPair.first_id === props.userId || newFriendsPair.second_id === props.userId) {
+    if (
+      newFriendsPair.first_id === props.userId ||
+      newFriendsPair.second_id === props.userId
+    ) {
       props.setCurrID((id) => {
         if (props.userId === id) {
           // Looking at your page when friendship is made!
@@ -111,28 +114,33 @@ const Profile = (props: Props) => {
               : newFriendsPair.first_id;
           setProfile((currProfile) => {
             const newProfile: ProfileType = { ...currProfile };
-            newProfile.friends = newProfile.friends.filter((friend) => friend != other_id);
-            newProfile.incomingFriendRequests = newProfile.incomingFriendRequests.filter(
+            newProfile.friends = newProfile.friends.filter(
               (friend) => friend != other_id
             );
-            newProfile.outgoingFriendRequests = newProfile.outgoingFriendRequests.filter(
-              (friend) => friend != other_id
-            );
+            newProfile.incomingFriendRequests =
+              newProfile.incomingFriendRequests.filter(
+                (friend) => friend != other_id
+              );
+            newProfile.outgoingFriendRequests =
+              newProfile.outgoingFriendRequests.filter(
+                (friend) => friend != other_id
+              );
             if (newFriendsPair.accepted) {
               newProfile.friends = newProfile.friends.concat([other_id]);
             } else if (newFriendsPair.first_id === props.userId) {
-              newProfile.outgoingFriendRequests = newProfile.outgoingFriendRequests.concat([
-                other_id,
-              ]);
+              newProfile.outgoingFriendRequests =
+                newProfile.outgoingFriendRequests.concat([other_id]);
             } else {
-              newProfile.incomingFriendRequests = newProfile.incomingFriendRequests.concat([
-                other_id,
-              ]);
+              newProfile.incomingFriendRequests =
+                newProfile.incomingFriendRequests.concat([other_id]);
             }
 
             return newProfile;
           });
-        } else if (newFriendsPair.first_id === id || newFriendsPair.second_id === id) {
+        } else if (
+          newFriendsPair.first_id === id ||
+          newFriendsPair.second_id === id
+        ) {
           if (newFriendsPair.accepted) {
             setIsFriend(true);
             setIsPending(false);
@@ -154,13 +162,17 @@ const Profile = (props: Props) => {
           const other_id = first_id === props.userId ? second_id : first_id;
           setProfile((currProfile) => {
             const newProfile: ProfileType = { ...currProfile };
-            newProfile.friends = newProfile.friends.filter((friend) => friend != other_id);
-            newProfile.incomingFriendRequests = newProfile.incomingFriendRequests.filter(
+            newProfile.friends = newProfile.friends.filter(
               (friend) => friend != other_id
             );
-            newProfile.outgoingFriendRequests = newProfile.outgoingFriendRequests.filter(
-              (friend) => friend != other_id
-            );
+            newProfile.incomingFriendRequests =
+              newProfile.incomingFriendRequests.filter(
+                (friend) => friend != other_id
+              );
+            newProfile.outgoingFriendRequests =
+              newProfile.outgoingFriendRequests.filter(
+                (friend) => friend != other_id
+              );
             return newProfile;
           });
         } else if (first_id === id || second_id === id) {
@@ -203,10 +215,12 @@ const Profile = (props: Props) => {
         <img className="ProfilePicture" src={profile.picture} />
         <div className="u-flex-alignCenter">
           {props.userId === props.currID || isFriend ? (
-            <button className="ProfileGoToFavorites">
-              {" "}
-              <a href={"/?user=" + props.currID}> Go to Favorites </a>
-            </button>
+            <div className="ProfileGoToFavoritesContainer buttonDarken">
+              <button className="ProfileGoToFavorites">
+                {" "}
+                <a href={"/?user=" + props.currID}> Go to Favorites </a>
+              </button>
+            </div>
           ) : (
             <></>
           )}
@@ -221,20 +235,26 @@ const Profile = (props: Props) => {
               Edit
             </a>
           ) : isFriend ? (
-            <a className="ProfileAddFriendButton" onClick={removeFriend}>
-              {" "}
-              Remove Friend{" "}
-            </a>
+            <div className="buttonDarken ProfileAddFriendButtonContainer">
+              <a className="ProfileAddFriendButton" onClick={removeFriend}>
+                {" "}
+                Remove Friend{" "}
+              </a>
+            </div>
           ) : isPending ? (
-            <a className="ProfileAddFriendButton" onClick={removeFriend}>
-              {" "}
-              Withdraw Friend Request{" "}
-            </a>
+            <div className="buttonDarken ProfileAddFriendButtonContainer">
+              <a className="ProfileAddFriendButton" onClick={removeFriend}>
+                {" "}
+                Withdraw Friend Request{" "}
+              </a>{" "}
+            </div>
           ) : (
-            <a className="ProfileAddFriendButton" onClick={sendFriendRequest}>
-              {" "}
-              Add Friend{" "}
-            </a>
+            <div className="buttonDarken ProfileAddFriendButtonContainer">
+              <a className="ProfileAddFriendButton" onClick={sendFriendRequest}>
+                {" "}
+                Add Friend{" "}
+              </a>
+            </div>
           )}
         </div>
         <div className="ProfileText">
@@ -246,13 +266,18 @@ const Profile = (props: Props) => {
               <div>
                 {" "}
                 Friends:{" "}
-                <a href="/community">
+                <a href="/community" className="buttonDarken">
                   {" "}
                   <button className="AddButton">+</button>
                 </a>
                 <div className="FriendRequests">
                   {profile.friends.map((friend: string) => (
-                    <FriendProfileButton friend_id={friend} is_incoming={false} />
+                    <div className="buttonDarken">
+                      <FriendProfileButton
+                        friend_id={friend}
+                        is_incoming={false}
+                      />
+                    </div>
                   ))}{" "}
                 </div>
               </div>
@@ -262,7 +287,12 @@ const Profile = (props: Props) => {
                 <div className="FriendRequests">
                   {" "}
                   {profile.incomingFriendRequests.map((friend: string) => (
-                    <FriendProfileButton friend_id={friend} is_incoming={true} />
+                    <div className="buttonDarken">
+                      <FriendProfileButton
+                        friend_id={friend}
+                        is_incoming={true}
+                      />{" "}
+                    </div>
                   ))}
                 </div>
               </p>
@@ -272,7 +302,12 @@ const Profile = (props: Props) => {
                 <div className="FriendRequests">
                   {" "}
                   {profile.outgoingFriendRequests.map((friend: string) => (
-                    <FriendProfileButton friend_id={friend} is_incoming={false} />
+                    <div className="buttonDarken">
+                      <FriendProfileButton
+                        friend_id={friend}
+                        is_incoming={false}
+                      />
+                    </div>
                   ))}
                 </div>
               </p>

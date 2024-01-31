@@ -3,11 +3,37 @@
   text-align: center;
 }
 
+.SortButtonText {
+  border-radius: 10px;
+  width: 40px;
+  height: 24px;
+  margin-top: 4px;
+  padding-top: 3px;
+  background-color: var(--primary);
+}
+
 .CommunitySortContainer {
-  margin: 2vw 1vw 2vw 0vw;
+  margin: 0 24vw 0 24vw;
   width: 20vw;
+  border-radius: 10px;
+  word-break: break-word;
+}
+
+.CommunitySortContainer .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 0.5s;
+  animation: fadeIn 0.5s;
+}
+
+.CommunityBarSort {
+  padding: 4.5px;
+  width: 40px;
+  flex: none;
+  background-color: white;
+  align-items: center;
 }
 
 .CommunitySearch {
+  margin-left: 10px;
   width: 64vw;
 }

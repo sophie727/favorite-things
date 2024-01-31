@@ -88,15 +88,20 @@ const Community = (props: Props) => {
       <h1 className="CommunityTitle"> Community </h1>
       <div className="UtilBarContainer">
         <div>
-          <button
-            className="UtilBarItem UtilBarButton UtilBarFilter"
-            onClick={makeFiltersDropdown}
-          >
-            Sort
+          <button className="UtilBarButton CommunityBarSort buttonDarken">
+            <div className="SortButtonText" onClick={makeFiltersDropdown}>
+              Sort
+            </div>
             <div className="UtilBarPopupTextContainer CommunitySortContainer">
               <div className="UtilBarPopupText" id="FilterPopup">
-                <p>Sort by: </p>
+                <div className="u-flex">
+                  <h2 className="popupTitle">Sort by: </h2>
+                  <p className="xButton" onClick={makeFiltersDropdown}>
+                    x
+                  </p>
+                </div>
                 <input
+                  className="sortCheckbox"
                   type="checkbox"
                   checked={isSorted}
                   onClick={() => setIsSorted(!isSorted)}
@@ -119,9 +124,7 @@ const Community = (props: Props) => {
         </div>
       </div>
       {profiles.map((profile) => (
-        <div className="HomeFavoriteItemContainer">
-          <ProfileBox item={profile}></ProfileBox>
-        </div>
+        <ProfileBox item={profile}></ProfileBox>
       ))}
     </div>
   );

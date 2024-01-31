@@ -13,9 +13,47 @@
 }
 
 .UtilBarFilter {
-  padding: 4.5px;
-  width: 55px;
   flex: none;
+  width: 55px;
+  padding: 4.5px;
+  background-color: white;
+  align-items: center;
+  height: 27px;
+  border: none;
+
+  color: #fff;
+  text-align: center;
+  font-family: Lato;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: none;
+}
+
+.UtilBarFilterTextContainer {
+  padding: 0px;
+  border-radius: 10px;
+  height: 27px;
+  text-align: center;
+  font-family: Lato;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: none;
+}
+
+.UtilBarFilterText {
+  background-color: var(--primary);
+  cursor: pointer;
+
+  border-radius: 10px;
+  width: 55px;
+  height: 24.5px;
+  margin-top: 3.5px;
+  padding-top: 3.5px;
+  background-color: var(--primary);
 }
 
 .UtilBarButton {
@@ -34,22 +72,36 @@
 }
 
 .UtilBarPopupTextContainer {
-  margin: 0 20vw 0 20vw;
+  visibility: hidden;
+  margin: 5vw 20vw 0 20vw;
   width: 35vw;
+  border-radius: 10px;
+  background-color: rpg(0, 0, 0, 0);
 }
 
 .UtilBarPopupText {
   visibility: hidden;
-  background-color: var(--primary);
+  background-color: var(--primary--dark);
   text-align: center;
   display: block;
   padding: var(--s);
   position: relative;
   z-index: 1000;
+  border-radius: 10px;
 }
 
-.UtilBarPopupText h2 {
+.popupTitle {
   margin: 10px;
+  word-break: break-word;
+  flex-grow: 1;
+}
+
+.xButton {
+  margin: 1px;
+  text-align: right;
+  flex-grow: 0;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 .UtilBarPopupText p {
@@ -62,11 +114,14 @@
   border: none;
   background-color: white;
 }
+.popupHoriz :hover {
+  background-color: white;
+}
 
-.UtilBarFilter .show {
+.UtilBarPopupTextContainer .show {
   visibility: visible;
-  -webkit-animation: fadeIn 1s;
-  animation: fadeIn 1s;
+  -webkit-animation: fadeIn 0.5s;
+  animation: fadeIn 0.5s;
 }
 
 @-webkit-keyframes fadeIn {
@@ -102,6 +157,7 @@
   background: var(--primary--dim);
   border: none;
   margin: var(--s);
+  margin-left: 20px;
 }
 
 .AddButton {
@@ -119,9 +175,23 @@
   border: none;
   border-radius: 10px;
   margin: 0px 5px 5px 0px;
+  cursor: pointer;
+}
+
+.tagButton :hover {
+  background-color: var(--tagcolor--dark);
 }
 
 .TagButtons {
   display: flex;
+  flex-direction: row;
   justify-content: center;
+}
+
+.TagButtons :hover {
+  background-color: var(--tagcolor--dark);
+}
+
+.sortCheckbox {
+  cursor: pointer;
 }
