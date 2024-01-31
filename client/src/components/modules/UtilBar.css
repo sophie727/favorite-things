@@ -14,7 +14,7 @@
 
 .UtilBarFilter {
   flex: none;
-  width: 55px;
+  width: 80px;
   padding: 4.5px;
   background-color: white;
   align-items: center;
@@ -156,7 +156,7 @@
   background: var(--primary--dim);
   border: none;
   margin: var(--s);
-  margin-left: 20px;
+  margin-left: 0px;
 }
 
 .AddButton {
