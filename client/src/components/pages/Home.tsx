@@ -229,7 +229,7 @@ const Home = (props: Props) => {
                         Edit
                       </a>
                     </div>
-                    <div>
+                    <div className="HomeDeleteContainer">
                       <button
                         className="HomeDelete"
                         onClick={() => {
