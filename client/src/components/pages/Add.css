@@ -195,6 +195,7 @@ input:checked + .slider:before {
   background: var(--primary);
   color: white;
   text-align: left;
+  justify-content: left;
 }
 
 .AddButtonContainer {
