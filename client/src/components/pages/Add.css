@@ -104,7 +104,6 @@
 .AddButton {
   border-radius: 10px;
   background: var(--primary);
-  flex-shrink: 0;
 
   color: #fff;
   text-align: center;
