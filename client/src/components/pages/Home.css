@@ -22,6 +22,7 @@
 
 .smallText {
   margin: 5px;
+  margin-right: 0px;
   text-decoration: none;
 }
 .editButton {
@@ -41,4 +42,6 @@
   color: var(--primary);
   cursor: pointer;
   text-align: right;
+  padding: 0px;
+  padding-top: 3px;
 }
