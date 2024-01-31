@@ -220,7 +220,7 @@ const Add = (props: Props) => {
               addNewTag();
             }}
           >
-            +
+            <span>+</span>
           </button>
         </span>
       </div>
