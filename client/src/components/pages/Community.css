@@ -13,10 +13,11 @@
 }
 
 .CommunitySortContainer {
-  margin: 0 24vw 0 24vw;
+  margin: 20vw 24vw 0vw 24vw;
   width: 20vw;
   border-radius: 10px;
   word-break: break-word;
+  position: fixed;
 }
 
 .CommunitySortContainer .show {

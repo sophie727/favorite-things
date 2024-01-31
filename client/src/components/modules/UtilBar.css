@@ -73,10 +73,11 @@
 
 .UtilBarPopupTextContainer {
   visibility: hidden;
-  margin: 5vw 20vw 0 20vw;
+  margin: -6vw 22vw 0vw 22vw;
   width: 35vw;
   border-radius: 10px;
   background-color: rpg(0, 0, 0, 0);
+  position: fixed;
 }
 
 .UtilBarPopupText {
