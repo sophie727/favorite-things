@@ -36,6 +36,12 @@
   flex: none;
   background-color: white;
   align-items: center;
+  color: white;
+  flex-shrink: 0;
+  border: none;
+
+  font-family: "Lato";
+  font-size: 15px;
 }
 
 .CommunitySearch {

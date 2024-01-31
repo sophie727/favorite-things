@@ -88,7 +88,7 @@ const Community = (props: Props) => {
       <h1 className="CommunityTitle"> Community </h1>
       <div className="UtilBarContainer">
         <div>
-          <button className="UtilBarButton CommunityBarSort buttonDarken">
+          <button className="CommunityBarSort buttonDarken">
             <div className="SortButtonText" onClick={makeFiltersDropdown}>
               Sort
             </div>
