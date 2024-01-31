@@ -3,6 +3,22 @@
   padding-top: var(--pageTopPadding);
 }
 
+.CommunityBarSort {
+  padding: 4.5px;
+  padding-right: 10px;
+  width: 65px;
+  height: 50px;
+  flex: none;
+  background-color: white;
+  align-items: center;
+  color: white;
+  flex-shrink: 0;
+  border: none;
+
+  font-family: "Lato";
+  font-size: 15px;
+}
+
 .SortButtonText {
   border-radius: 10px;
   width: 40px;
@@ -26,22 +42,6 @@
   visibility: visible;
   -webkit-animation: fadeIn 0.5s;
   animation: fadeIn 0.5s;
-}
-
-.CommunityBarSort {
-  padding: 4.5px;
-  padding-right: 10px;
-  width: 70px;
-  height: 50px;
-  flex: none;
-  background-color: white;
-  align-items: center;
-  color: white;
-  flex-shrink: 0;
-  border: none;
-
-  font-family: "Lato";
-  font-size: 15px;
 }
 
 .CommunitySearch {
