@@ -104,8 +104,6 @@
 .AddButton {
   border-radius: 10px;
   background: var(--primary);
-  width: 28px;
-  height: 28px;
   flex-shrink: 0;
 
   color: #fff;
