@@ -192,10 +192,10 @@ input:checked + .slider:before {
   border-radius: 10px;
   border: none;
   margin: 10px 4px 5px 0px;
-  padding-left: 8px;
+  padding: 0px;
   background: var(--primary);
   color: white;
-  text-align: left;
+  text-align: center;
 }
 
 .AddButtonContainer {
