@@ -35,17 +35,19 @@ const NavBar = (props: Props) => {
         <a className="NavBarItem NavBarTitle" href="/">
           My Favorite Things
         </a>
-        <div className="NavBarItem NavBarGoogleAuth blueButtonDarken">
+        <div className="NavBarItem NavBarGoogleAuth">
           {props.userId ? (
-            <button
-              className="button"
-              onClick={() => {
-                googleLogout();
-                handleLogout();
-              }}
-            >
-              Logout
-            </button>
+            <div className="blueButtonDarken">
+              <button
+                className="button"
+                onClick={() => {
+                  googleLogout();
+                  handleLogout();
+                }}
+              >
+                Logout
+              </button>
+            </div>
           ) : (
             <GoogleLogin
               onSuccess={handleLogin}

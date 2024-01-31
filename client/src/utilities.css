@@ -54,6 +54,10 @@ body {
   font-weight: 300;
 }
 
+.paddingTop {
+  padding-top: var(--pageTopPadding);
+}
+
 .buttonDarken :hover {
   background-color: var(--primary--dark);
 }

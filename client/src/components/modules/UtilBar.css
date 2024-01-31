@@ -75,7 +75,6 @@
   visibility: hidden;
   margin: -6vw 22vw 0vw 22vw;
   width: 35vw;
-  border-radius: 10px;
   background-color: rpg(0, 0, 0, 0);
   position: fixed;
 }
@@ -88,7 +87,6 @@
   padding: var(--s);
   position: relative;
   z-index: 1000;
-  border-radius: 10px;
 }
 
 .popupTitle {

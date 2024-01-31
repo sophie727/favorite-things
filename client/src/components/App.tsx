@@ -16,7 +16,8 @@ import ProfileEdit from "./pages/ProfileEdit";
 import Help from "./pages/Help";
 import Community from "./pages/Community";
 
-const GOOGLE_CLIENT_ID = "480391270274-2g6n3lmsb18t38qcem0vco150buo8l3v.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID =
+  "480391270274-2g6n3lmsb18t38qcem0vco150buo8l3v.apps.googleusercontent.com";
 
 const App = () => {
   const [tagOptions, setTagOptions] = useState([""]);
@@ -106,9 +107,13 @@ const App = () => {
   return (
     <>
       <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-        <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+        <NavBar
+          handleLogin={handleLogin}
+          handleLogout={handleLogout}
+          userId={userId}
+        />
         {userId === undefined ? (
-          <>Please log in to proceed.</>
+          <div className="paddingTop">Please log in to proceed.</div>
         ) : (
           <BrowserRouter>
             <Routes>
@@ -124,16 +129,30 @@ const App = () => {
                 path="/"
               />
               <Route
-                element={<Add tagOptions={tagOptions} setTagOptions={setTagOptions} />}
+                element={
+                  <Add tagOptions={tagOptions} setTagOptions={setTagOptions} />
+                }
                 path="/add"
               />
               <Route
-                element={<Profile userId={userId} currID={currID} setCurrID={setCurrID} />}
+                element={
+                  <Profile
+                    userId={userId}
+                    currID={currID}
+                    setCurrID={setCurrID}
+                  />
+                }
                 path="/profile"
               />
-              <Route element={<ProfileEdit userId={userId} />} path="/profile/edit" />
+              <Route
+                element={<ProfileEdit userId={userId} />}
+                path="/profile/edit"
+              />
               <Route element={<Help />} path="/help" />
-              <Route element={<Community userId={userId} />} path="/community" />
+              <Route
+                element={<Community userId={userId} />}
+                path="/community"
+              />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
