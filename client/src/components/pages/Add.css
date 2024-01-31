@@ -116,6 +116,7 @@
   border: none;
   margin: var(--s);
   cursor: pointer;
+  padding: auto;
 }
 
 .AddPrivate {
