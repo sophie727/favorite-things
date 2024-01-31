@@ -132,7 +132,9 @@ const Home = (props: Props) => {
               console.log(prevFavorites, "prevFavorites");
               const newFavorites = prevFavorites.concat([newFav]);
               if (is) {
-                newFavorites.sort((first, second) => second.stars - first.stars);
+                newFavorites.sort(
+                  (first, second) => second.stars - first.stars
+                );
               }
               return newFavorites;
             });
@@ -163,7 +165,9 @@ const Home = (props: Props) => {
       });
     });
     console.log(id, "deleting");
-    setFavoriteItems((prevFavorites) => prevFavorites.filter((favItem) => favItem.id !== id));
+    setFavoriteItems((prevFavorites) =>
+      prevFavorites.filter((favItem) => favItem.id !== id)
+    );
   };
 
   useEffect(() => {
@@ -178,7 +182,7 @@ const Home = (props: Props) => {
       <div>
         <DailyFavorite item={dailyFavorite} />
       </div>
-      <div>
+      <div className="HomeTitle">
         {props.userId === props.currID ? (
           <h1 className="u-textCenter">Your Favorites </h1>
         ) : (
@@ -216,7 +220,10 @@ const Home = (props: Props) => {
                 </div>
                 {props.userId === props.currID ? (
                   <div className="smallTexts">
-                    <div className="smallText"> {item.private ? "Private" : "Public"}</div>
+                    <div className="smallText">
+                      {" "}
+                      {item.private ? "Private" : "Public"}
+                    </div>
                     <div>
                       <a className="smallText editButton" href={addLink}>
                         Edit

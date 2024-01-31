@@ -1,6 +1,7 @@
 .Profile {
   display: flex;
-  margin: 2% 6%;
+  margin: 0% 6%;
+  padding-top: var(--pageTopPadding);
 }
 .ProfileLeftColumn {
   margin: var(--l);

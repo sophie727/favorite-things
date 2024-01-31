@@ -2,6 +2,7 @@
   text-align: right;
   padding: 0 10%;
   color: var(--primary);
+  padding-top: var(--pageTopPadding);
 }
 
 .UpdateButton {

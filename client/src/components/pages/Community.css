@@ -1,6 +1,6 @@
 .CommunityTitle {
-  margin-top: 2%;
   text-align: center;
+  padding-top: var(--pageTopPadding);
 }
 
 .SortButtonText {

@@ -10,6 +10,7 @@
 
 .AddTitle {
   text-align: center;
+  padding-top: var(--pageTopPadding);
 }
 
 .AddInput {

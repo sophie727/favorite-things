@@ -33,11 +33,14 @@
   --s: 8px;
   --m: 16px;
   --l: 2%;
+
+  --pageTopPadding: 60px;
 }
 
 h1 {
   color: #3a297b;
   font-family: Lato;
+  margin: 0px;
 }
 
 p {

@@ -4,4 +4,5 @@
   flex-shrink: 0;
   background: var(--primary--light);
   padding: 10px 0px;
+  padding-top: var(--pageTopPadding);
 }
