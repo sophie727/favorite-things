@@ -255,7 +255,7 @@ const Add = (props: Props) => {
         </label>
       </div>
       <div className="AddContent AddButtonContainer buttonDarken">
-        <button className="AddButton LargeAddButton" onClick={addFavorite}>
+        <button className="LargeAddButton" onClick={addFavorite}>
           Add
         </button>
       </div>
