@@ -184,7 +184,7 @@ input:checked + .slider:before {
 }
 
 .LargeAddButton {
-  width: 40px;
+  width: 45px;
   height: 27px;
   font-size: 15px;
   font-family: "Lato";
@@ -192,6 +192,7 @@ input:checked + .slider:before {
   border-radius: 10px;
   border: none;
   margin: 10px 4px 5px 0px;
+  padding-left: 8px;
   background: var(--primary);
   color: white;
   text-align: left;
