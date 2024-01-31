@@ -184,7 +184,7 @@ input:checked + .slider:before {
 }
 
 .LargeAddButton {
-  width: 45px;
+  width: 40px;
   height: 27px;
   font-size: 15px;
   font-family: "Lato";
@@ -194,23 +194,8 @@ input:checked + .slider:before {
   margin: 10px 4px 5px 0px;
   background: var(--primary);
   color: white;
+  text-align: left;
 }
-
-/*
-.Tag {
-  height: 19px;
-  font-size: 10px;
-  flex-shrink: 0;
-  border-radius: 10px;
-  border: none;
-  margin: 10px 4px 5px 0px;
-  background: var(--tagcolor);
-  color: white;
-}
-
-
-
-*/
 
 .AddButtonContainer {
   text-align: center;
