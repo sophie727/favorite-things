@@ -256,7 +256,7 @@ const Add = (props: Props) => {
       </div>
       <div className="AddContent AddButtonContainer buttonDarken">
         <button className="LargeAddButton" onClick={addFavorite}>
-          Add
+          <span>Add</span>
         </button>
       </div>
     </>
