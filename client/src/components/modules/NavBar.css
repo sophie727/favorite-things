@@ -62,20 +62,6 @@
   color: var(--primary--dark);
 }
 
-/*
-<div className="NavBarMenu">
-<button className="NavBarItem NavBarMenuButton" onClick={createMenu}>
-  <hr className="NavBarMenuLine"></hr>
-  <hr className="NavBarMenuLine"></hr>
-  <hr className="NavBarMenuLine"></hr>
-</button>
-<div className="NavBarMenuDropdown">
-  <a href="/"> Home</a>
-  <a href="/add"> Add Page</a>
-</div>
-</div>
-*/
-
 .NavBarTitle {
   font-size: 20px;
   margin: var(--s) auto var(--s) auto;
@@ -87,6 +73,7 @@
   margin: 0px var(--s) 0px;
   padding: var(--s) var(--s) 0px;
   flex-shrink: 1;
+  background-color: var(--primary);
 }
 
 .button {
