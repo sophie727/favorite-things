@@ -20,14 +20,16 @@ const Community = (props: Props) => {
   const [isSorted, setIsSorted] = useState(true);
 
   useEffect(() => {
-    get("/api/profiles", { searchText: searchText }).then((profiles: ProfileText[]) => {
-      if (isSorted) {
-        profiles.sort((first, second) =>
-          first.name.toLowerCase() < second.name.toLowerCase() ? -1 : 1
-        );
+    get("/api/profiles", { searchText: searchText }).then(
+      (profiles: ProfileText[]) => {
+        if (isSorted) {
+          profiles.sort((first, second) =>
+            first.name.toLowerCase() < second.name.toLowerCase() ? -1 : 1
+          );
+        }
+        setProfiles(profiles);
       }
-      setProfiles(profiles);
-    });
+    );
   }, [searchText, isSorted]);
 
   useEffect(() => {
@@ -65,7 +67,9 @@ const Community = (props: Props) => {
             }
             return newProfiles;
           } else {
-            return oldProfiles.filter((oldProfile) => oldProfile.user_id !== profileText.user_id);
+            return oldProfiles.filter(
+              (oldProfile) => oldProfile.user_id !== profileText.user_id
+            );
           }
         });
         return is;
@@ -84,12 +88,19 @@ const Community = (props: Props) => {
       <h1 className="CommunityTitle"> Community </h1>
       <div className="UtilBarContainer">
         <div>
-          <button className="UtilBarItem UtilBarButton UtilBarFilter" onClick={makeFiltersDropdown}>
+          <button
+            className="UtilBarItem UtilBarButton UtilBarFilter"
+            onClick={makeFiltersDropdown}
+          >
             Sort
             <div className="UtilBarPopupTextContainer CommunitySortContainer">
               <div className="UtilBarPopupText" id="FilterPopup">
                 <p>Sort by: </p>
-                <input type="checkbox" checked={isSorted} onClick={() => setIsSorted(!isSorted)} />
+                <input
+                  type="checkbox"
+                  checked={isSorted}
+                  onClick={() => setIsSorted(!isSorted)}
+                />
                 Alphabetical Order
               </div>
             </div>
@@ -99,7 +110,7 @@ const Community = (props: Props) => {
         <div>
           {" "}
           <input
-            className="SearchBar"
+            className="SearchBar CommunitySearch"
             placeholder=" Search"
             onChange={(event) => {
               setSearchText(event.target.value);
