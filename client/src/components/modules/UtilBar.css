@@ -19,7 +19,7 @@
   padding-right: 10px;
   background-color: white;
   align-items: center;
-  height: 55px;
+  height: 6vw;
   border: none;
 
   color: #fff;
@@ -52,7 +52,7 @@
   border-radius: 10px;
   width: 55px;
   height: 24.5px;
-  margin-top: 3.5px;
+  margin-top: -5px;
   padding-top: 1.5px;
   background-color: var(--primary);
 }
